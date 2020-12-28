@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AuthApiService from '../../services/auth-api-service';
 import UserContext from '../../contexts/UserContext';
 
 function LoginForm(props) {
   const userContext = useContext(UserContext);
-
   const [error, setError] = useState(null);
 
   function handleSubmit(ev) {
@@ -58,7 +58,10 @@ function LoginForm(props) {
       </div>
       <button type='submit'>
         Login
-        </button>
+      </button>
+      {' '}
+      <Link to='/register'>Don't have an account?</Link>
+
     </form>
   )
 }
