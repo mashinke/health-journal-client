@@ -1,7 +1,4 @@
 # Health Journal - RESTful API client
 
-## Demo account credentials: 
+An app to help track, manage, and gain insights from your health information.
 
-## User Stories
-
-### Screenshots
