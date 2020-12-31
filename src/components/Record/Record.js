@@ -4,7 +4,7 @@ import {
   NumberDisplay,
   BooleanDisplay,
   RangeDisplay
-} from '../Field/Field';
+} from '../DisplayField/DisplayField';
 
 function Record(props) {
   const bodyFields = props.fields.map(
@@ -18,7 +18,6 @@ function Record(props) {
           Field = BooleanDisplay;
           break;
         case 'range':
-          console.log('range, value', props)
           Field = RangeDisplay;
           break;
         default:
@@ -27,7 +26,6 @@ function Record(props) {
       }
       return <Field key={i} {...field} value={props.values[field.label]} />
     });
-  console.log(props.body)
   return (
     <li>
       <h4>{props.name}</h4>
