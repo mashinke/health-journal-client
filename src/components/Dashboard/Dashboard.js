@@ -11,13 +11,25 @@ function setCurrentFormModified(currentForm) {
   }
 }
 
+function checkDuplicates(currentForm, label) {
+  let dupes = 0;
+  for (let field of currentForm.fields) {
+    if (field.label === label) {
+      dupes++;
+      if (dupes > 1) {
+        return true;
+      }
+    };
+  }
+}
+
 const dashboardStateReducer = (state, action) => {
   const currentForm = { ...state.forms[state.currentForm] };
   const forms = [...state.forms];
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
-    case 'UPDATE_MIN_MAX':
+    case 'UPDATE_MIN_MAX': {
       const { index, minmax } = action.payload;
 
       const fieldLabel = currentForm.fields[index].label;
@@ -49,34 +61,46 @@ const dashboardStateReducer = (state, action) => {
         ...state,
         forms
       };
-    case 'UPDATE_FORM_NAME':
+    }
+    case 'UPDATE_FORM_NAME': {
       setCurrentFormModified(currentForm);
       currentForm.name = action.payload.name;
       return {
         ...state,
         forms
       };
-    case 'UPDATE_FIELD_NAME':
+    }
+    case 'UPDATE_FIELD_NAME': {
       setCurrentFormModified(currentForm);
 
-      const oldLabel = currentForm.fields[action.payload.index].label;
+      const { index, label } = action.payload;
+
+      const oldLabel = currentForm.fields[index].label;
       currentForm.fields = [
         ...currentForm.fields
       ];
-      currentForm.fields[action.payload.index] = {
-        ...currentForm.fields[action.payload.index],
-        label: action.payload.label,
+      currentForm.fields[index] = {
+        ...currentForm.fields[index],
+        label
       }
       currentForm.values = {
         ...currentForm.values,
-        [action.payload.label]: currentForm.values[oldLabel],
+        [label]: currentForm.values[oldLabel],
       }
+
+      currentForm.fields[index].duplicateError = checkDuplicates(
+        currentForm,
+        label
+      );
+
       delete currentForm.values[oldLabel];
+
       return {
         ...state,
         forms
       };
-    case 'ADD_CURRENT_FORM_FIELD':
+    }
+    case 'ADD_CURRENT_FORM_FIELD': {
       setCurrentFormModified(currentForm);
 
       const { type, label } = action.payload;
@@ -98,13 +122,15 @@ const dashboardStateReducer = (state, action) => {
       return {
         ...state,
         forms
-      }
-    case 'POPULATE_RECORDS_LIST':
+      };
+    }
+    case 'POPULATE_RECORDS_LIST': {
       return {
         ...state,
         records: action.payload
-      }
-    case 'UPDATE_FIELD_VALUE':
+      };
+    }
+    case 'UPDATE_FIELD_VALUE': {
       currentForm.values = {
         ...currentForm.values,
         ...action.payload
@@ -114,33 +140,39 @@ const dashboardStateReducer = (state, action) => {
         ...state,
         forms
       };
-    case 'SUBMIT_FORM':
+    }
+    case 'SUBMIT_FORM': {
       currentForm.values = {};
       const records = [action.payload, ...state.records];
       return {
         ...state,
         forms,
         records
-      }
-    case 'TOGGLE_DISPLAY_RECORD_FORM':
+      };
+    }
+    case 'TOGGLE_DISPLAY_RECORD_FORM': {
       return {
         ...state,
         displayRecordForm: !state.displayRecordForm
-      }
-    case 'POPULATE_FORMS_LIST':
+      };
+    }
+    case 'POPULATE_FORMS_LIST': {
       action.payload.forEach(form => form.values = {});
       return {
         ...state,
         forms: action.payload,
         currentForm: 0
-      }
-    case 'CHANGE_CURRENT_FORM':
+      };
+    }
+    case 'CHANGE_CURRENT_FORM': {
       return {
         ...state,
         currentForm: action.payload
       };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }
 

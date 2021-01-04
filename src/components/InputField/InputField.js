@@ -4,6 +4,9 @@ export function StringInput(props) {
   const label = props.label
   return (
     <div>
+      {
+        props.duplicateError && <p>Duplicate labels not allowed!</p>
+      }
       <label htmlFor={props.label}>
         <input
           type='text'
@@ -27,6 +30,9 @@ export function StringInput(props) {
 export function NumberInput(props) {
   return (
     <div>
+      {
+        props.duplicateError && <p>Duplicate labels not allowed!</p>
+      }
       <label htmlFor={props.label}>
         <input
           type='text'
@@ -50,6 +56,9 @@ export function NumberInput(props) {
 export function BooleanInput(props) {
   return (
     <div>
+      {
+        props.duplicateError && <p>Duplicate labels not allowed!</p>
+      }
       <label htmlFor={props.label}>
         <input
           type='text'
@@ -93,6 +102,9 @@ export function RangeInput(props) {
   }
   return (
     <fieldset>
+      {
+        props.duplicateError && <p>Duplicate labels not allowed!</p>
+      }
       <legend>
         <input
           type='text'

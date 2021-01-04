@@ -67,6 +67,7 @@ function handleFieldValueChange(dispatch) {
 async function handleSubmitForm(event, dispatch, form) {
   event.preventDefault();
   const { id: formId, values } = form;
+  
   const record = await RecordApiService.postRecord({ formId, values });
   dispatch(
     {
@@ -78,6 +79,7 @@ async function handleSubmitForm(event, dispatch, form) {
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
+  const formLabels = {};
   const formFields = currentForm.fields.map(
     (field, i) => {
       const value =
@@ -97,6 +99,7 @@ function RecordForm(props) {
           Field = StringInput;
           break;
       }
+      formLabels[field.label] = formLabels[field.label]++ || 1;
       return <Field
         key={i}
         {...field}
@@ -106,6 +109,7 @@ function RecordForm(props) {
         handleMinMaxEdit={handleMinMaxEdit(i, props.dispatch)}
       />
     });
+
   const selectOptions = props.state.forms.map((form, i) => (
     <option key={form.id} value={i}>{form.name}</option>
   ));
