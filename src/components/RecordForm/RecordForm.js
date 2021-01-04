@@ -82,11 +82,11 @@ function handleAddField(field, dispatch) {
 }
 
 function handleFieldValueChange(dispatch) {
-  return function (label, value) {
+  return function (id, value) {
     dispatch(
       {
         type: 'UPDATE_FIELD_VALUE',
-        payload: { [label]: value }
+        payload: { [id]: value }
       }
     )
   }
@@ -116,11 +116,10 @@ async function handleSubmitForm(event, dispatch, form) {
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
-  const formLabels = {};
   const formFields = currentForm.fields.map(
     (field, i) => {
       const value =
-        currentForm.values[field.label] || '';
+        currentForm.values[field.id] || '';
       let Field;
       switch (field.type) {
         case 'number':
@@ -136,7 +135,7 @@ function RecordForm(props) {
           Field = StringInput;
           break;
       }
-      formLabels[field.label] = formLabels[field.label]++ || 1;
+
       return (
         <div>
 

@@ -19,7 +19,7 @@ export function StringInput(props) {
         name={label}
         value={props.value}
         onChange={event => props.handleFieldValueChange(
-          props.label,
+          props.id,
           event.target.value
         )}
       />
@@ -45,7 +45,7 @@ export function NumberInput(props) {
         name={props.label}
         value={props.value}
         onChange={event => props.handleFieldValueChange(
-          props.label,
+          props.id,
           Number(event.target.value)
         )}
       />
@@ -71,7 +71,7 @@ export function BooleanInput(props) {
         name={props.label}
         checked={props.value}
         onChange={event => props.handleFieldValueChange(
-          props.label,
+          props.id,
           event.target.checked
         )}
       />
@@ -92,7 +92,7 @@ export function RangeInput(props) {
           value={i}
           checked={(i === props.value)}
           onChange={event => props.handleFieldValueChange(
-            props.label,
+            props.id,
             Number(event.target.value)
           )}
         />

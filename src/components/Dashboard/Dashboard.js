@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import Record from '../Record/Record';
@@ -20,6 +21,7 @@ function checkDuplicates(currentForm, label) {
       }
     };
   }
+  return false;
 }
 
 const dashboardStateReducer = (state, action) => {
@@ -67,8 +69,8 @@ const dashboardStateReducer = (state, action) => {
     case 'UPDATE_MIN_MAX': {
       const { index, minmax } = action.payload;
 
-      const fieldLabel = currentForm.fields[index].label;
-      const fieldValue = currentForm.values[fieldLabel];
+      const fieldId = currentForm.fields[index].id;
+      const fieldValue = currentForm.values[fieldId];
 
       if (
         minmax.min === currentForm.fields[index].max
@@ -85,12 +87,12 @@ const dashboardStateReducer = (state, action) => {
       if (minmax.min && fieldValue < minmax.min)
         currentForm.values = {
           ...currentForm.values,
-          [fieldLabel]: minmax.min
+          [fieldId]: minmax.min
         };
       else if (minmax.max && fieldValue > minmax.max)
         currentForm.values = {
           ...currentForm.values,
-          [fieldLabel]: minmax.max
+          [fieldId]: minmax.max
         };
       return {
         ...state,
@@ -151,7 +153,7 @@ const dashboardStateReducer = (state, action) => {
       const newField = {
         type,
         label: `New ${label} Field`,
-        editing: true
+        id: uuid()
       }
 
       if (type === 'range') {
