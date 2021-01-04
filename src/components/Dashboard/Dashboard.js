@@ -114,10 +114,13 @@ const dashboardStateReducer = (state, action) => {
         newField.min = 1;
         newField.max = 5;
       }
+
       currentForm.fields = [
         ...currentForm.fields,
         newField
       ]
+
+      newField.duplicateError = checkDuplicates(currentForm, newField.label)
 
       return {
         ...state,
