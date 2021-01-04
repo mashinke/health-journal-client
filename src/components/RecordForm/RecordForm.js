@@ -92,6 +92,16 @@ function handleFieldValueChange(dispatch) {
   }
 }
 
+function handleMoveField(index, direction, dispatch) {
+  dispatch({
+    type: 'MOVE_FORM_FIELD',
+    payload: {
+      index,
+      direction
+    }
+  })
+}
+
 async function handleSubmitForm(event, dispatch, form) {
   event.preventDefault();
   const { id: formId, values } = form;
@@ -127,14 +137,28 @@ function RecordForm(props) {
           break;
       }
       formLabels[field.label] = formLabels[field.label]++ || 1;
-      return <Field
-        key={i}
-        {...field}
-        value={value}
-        handleFieldValueChange={handleFieldValueChange(props.dispatch)}
-        handleLabelEdit={handleLabelEdit(i, props.dispatch)}
-        handleMinMaxEdit={handleMinMaxEdit(i, props.dispatch)}
-      />
+      return (
+        <div>
+
+          <button
+            type='button'
+            onClick={() => handleMoveField(i, 'UP', props.dispatch)}
+          >up</button>
+          <button
+            type='button'
+            onClick={() => handleMoveField(i, 'DOWN', props.dispatch)}
+          >down</button>
+          <Field
+            key={i}
+            {...field}
+            value={value}
+            handleFieldValueChange={handleFieldValueChange(props.dispatch)}
+            handleLabelEdit={handleLabelEdit(i, props.dispatch)}
+            handleMinMaxEdit={handleMinMaxEdit(i, props.dispatch)}
+          />
+
+        </div>
+      )
     });
 
   const selectOptions = props.state.forms.map((form, i) => (

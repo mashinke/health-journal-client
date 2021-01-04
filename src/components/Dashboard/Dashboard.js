@@ -7,7 +7,6 @@ import RecordForm from '../RecordForm/RecordForm';
 function setCurrentFormModified(currentForm) {
   if (!currentForm.modified) {
     currentForm.modified = true;
-    delete currentForm.id;
   }
 }
 
@@ -42,6 +41,26 @@ const dashboardStateReducer = (state, action) => {
       return {
         ...state,
         currentForm: forms.length - 1,
+        forms
+      }
+    }
+    case 'MOVE_FORM_FIELD': {
+      currentForm.fields = [...currentForm.fields];
+
+      const { index, direction } = action.payload;
+      const tmp = currentForm.fields[index];
+      if (direction === 'UP' && index > 0) {
+        setCurrentFormModified(currentForm);
+        currentForm.fields[index] = currentForm.fields[index - 1];
+        currentForm.fields[index - 1] = tmp;
+      }
+      else if (direction === 'DOWN' && index < currentForm.fields.length - 1) {
+        setCurrentFormModified(currentForm);
+        currentForm.fields[index] = currentForm.fields[index + 1];
+        currentForm.fields[index + 1] = tmp;
+      }
+      return {
+        ...state,
         forms
       }
     }
