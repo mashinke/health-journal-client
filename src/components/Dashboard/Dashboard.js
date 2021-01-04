@@ -86,6 +86,15 @@ const dashboardStateReducer = (state, action) => {
         forms
       };
     }
+    case 'UPDATE_FORM_DESCRIPTION': {
+      setCurrentFormModified(currentForm);
+
+      currentForm.description = action.payload.description;
+      return {
+        ...state,
+        forms
+      }
+    }
     case 'UPDATE_FIELD_NAME': {
       setCurrentFormModified(currentForm);
 

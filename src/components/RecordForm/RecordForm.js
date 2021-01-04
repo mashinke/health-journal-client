@@ -51,6 +51,15 @@ function handleFormNameEdit(name, dispatch) {
   })
 }
 
+function handleFormDescriptionEdit(description, dispatch) {
+  dispatch({
+    type: 'UPDATE_FORM_DESCRIPTION',
+    payload: {
+      description
+    }
+  })
+}
+
 function handleMinMaxEdit(index, dispatch) {
   return function (property, value) {
     dispatch({
@@ -188,7 +197,17 @@ function RecordForm(props) {
             )}
         />
       </h3>
-      {currentForm.description && <p>{currentForm.description}</p>}
+      <p>Form Description:
+        <input
+          type='text'
+          value={currentForm.description}
+          onChange={event =>
+            handleFormDescriptionEdit(
+              event.target.value,
+              props.dispatch
+            )}
+        />
+      </p>
       {
         !currentForm.fields.length && <p>Form must have at least one field</p>
       }
