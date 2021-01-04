@@ -2,6 +2,14 @@ import React from 'react';
 import RecordApiService from '../../services/record-api-service';
 import { StringInput, NumberInput, BooleanInput, RangeInput } from '../InputField/InputField';
 
+function validateForm(currentForm) {
+  for (let field of currentForm.fields) {
+    if (field.duplicateError)
+      return false;
+  }
+  return true;
+}
+
 function handleCurrentFormChange(newCurrentForm, dispatch) {
   dispatch(
     {
@@ -67,7 +75,6 @@ function handleFieldValueChange(dispatch) {
 async function handleSubmitForm(event, dispatch, form) {
   event.preventDefault();
   const { id: formId, values } = form;
-  
   const record = await RecordApiService.postRecord({ formId, values });
   dispatch(
     {
@@ -133,6 +140,8 @@ function RecordForm(props) {
       )
     });
 
+  const formIsValid = validateForm(currentForm);
+
   return (
     <form onSubmit={event =>
       handleSubmitForm(
@@ -166,7 +175,11 @@ function RecordForm(props) {
       </h3>
       {currentForm.description && <p>{currentForm.description}</p>}
       {formFields}
+      {
+        !formIsValid && <p>Please correct errors before submitting</p>
+      }
       <button
+        disabled={!formIsValid}
         type='submit'
       >Submit Record</button>
       <div>
