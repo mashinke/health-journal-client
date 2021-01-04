@@ -11,6 +11,48 @@ function handleCurrentFormChange(newCurrentForm, dispatch) {
   )
 }
 
+function handleLabelEdit(index, dispatch) {
+  return function (label) {
+    dispatch({
+      type: 'UPDATE_FIELD_NAME',
+      payload: {
+        index,
+        label
+      }
+    })
+  }
+}
+
+function handleFormNameEdit(name, dispatch) {
+  dispatch({
+    type: 'UPDATE_FORM_NAME',
+    payload: {
+      name
+    }
+  })
+}
+
+function handleMinMaxEdit(index, dispatch) {
+  return function (property, value) {
+    dispatch({
+      type: 'UPDATE_MIN_MAX',
+      payload: {
+        minmax: { [property]: value },
+        index
+      }
+    })
+  }
+}
+
+function handleAddField(field, dispatch) {
+  dispatch(
+    {
+      type: 'ADD_CURRENT_FORM_FIELD',
+      payload: field
+    }
+  )
+}
+
 function handleFieldValueChange(dispatch) {
   return function (label, value) {
     dispatch(
@@ -59,14 +101,34 @@ function RecordForm(props) {
         key={i}
         {...field}
         value={value}
-        handleFieldValueChange={
-          handleFieldValueChange(props.dispatch)
-        } />
+        handleFieldValueChange={handleFieldValueChange(props.dispatch)}
+        handleLabelEdit={handleLabelEdit(i, props.dispatch)}
+        handleMinMaxEdit={handleMinMaxEdit(i, props.dispatch)}
+      />
     });
   const selectOptions = props.state.forms.map((form, i) => (
     <option key={form.id} value={i}>{form.name}</option>
   ));
-  
+
+  const addFieldButtons =
+    Object.entries({
+      string: 'Text',
+      number: 'Number',
+      boolean: 'Yes/No',
+      range: 'Range'
+    }).map(([type, label]) => {
+      return (
+        <button
+          key={type}
+          type='button'
+          onClick={() => handleAddField({
+            type,
+            label
+          }, props.dispatch)}
+        >Add new {label} field</button>
+      )
+    });
+
   return (
     <form onSubmit={event =>
       handleSubmitForm(
@@ -76,21 +138,37 @@ function RecordForm(props) {
       )}>
       <p>
         Select record form:
-        <select onChange={event =>
-          handleCurrentFormChange(
-            event.target.value,
-            props.dispatch)
-        }>
+        <select
+          value={props.state.currentForm}
+          onChange={event =>
+            handleCurrentFormChange(
+              event.target.value,
+              props.dispatch)
+          }
+        >
           {selectOptions}
         </select>
       </p>
-      <h3>New Record: {currentForm.name}</h3>
-      { currentForm.description && <p>{currentForm.description}</p>}
-      { formFields}
+      <h3>New Record:
+        <input
+          type='text'
+          value={currentForm.name}
+          onChange={(event) =>
+            handleFormNameEdit(
+              event.target.value,
+              props.dispatch
+            )}
+        />
+      </h3>
+      {currentForm.description && <p>{currentForm.description}</p>}
+      {formFields}
       <button
         type='submit'
       >Submit Record</button>
-    </form >
+      <div>
+        {addFieldButtons}
+      </div>
+    </form>
   )
 }
 

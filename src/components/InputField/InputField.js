@@ -4,7 +4,13 @@ export function StringInput(props) {
   const label = props.label
   return (
     <div>
-      <label htmlFor={props.label}>{props.label}</label>
+      <label htmlFor={props.label}>
+        <input
+          type='text'
+          value={props.label}
+          onChange={(event) => props.handleLabelEdit(event.target.value)}
+        />
+      </label>
       <input
         type='text'
         name={label}
@@ -21,7 +27,13 @@ export function StringInput(props) {
 export function NumberInput(props) {
   return (
     <div>
-      <label htmlFor={props.label}>{props.label}</label>
+      <label htmlFor={props.label}>
+        <input
+          type='text'
+          value={props.label}
+          onChange={(event) => props.handleLabelEdit(event.target.value)}
+        />
+      </label>
       <input
         type='number'
         name={props.label}
@@ -38,7 +50,13 @@ export function NumberInput(props) {
 export function BooleanInput(props) {
   return (
     <div>
-      <label htmlFor={props.label}>{props.label}</label>
+      <label htmlFor={props.label}>
+        <input
+          type='text'
+          value={props.label}
+          onChange={(event) => props.handleLabelEdit(event.target.value)}
+        />
+      </label>
       <input
         type='checkbox'
         name={props.label}
@@ -75,7 +93,33 @@ export function RangeInput(props) {
   }
   return (
     <fieldset>
-      <legend>{props.label}: </legend>
+      <legend>
+        <input
+          type='text'
+          value={props.label}
+          onChange={(event) => props.handleLabelEdit(event.target.value)}
+        />
+        Min:
+          <input
+          type='number'
+          value={props.min}
+          onChange={event =>
+            props.handleMinMaxEdit(
+              'min',
+              Number(event.target.value)
+            )}
+        />
+        Max:
+          <input
+          type='number'
+          value={props.max}
+          onChange={event =>
+            props.handleMinMaxEdit(
+              'max',
+              Number(event.target.value)
+            )}
+        />
+      </legend>
       <span>{radios}</span>
     </fieldset>
   )
