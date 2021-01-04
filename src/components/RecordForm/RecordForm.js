@@ -3,11 +3,22 @@ import RecordApiService from '../../services/record-api-service';
 import { StringInput, NumberInput, BooleanInput, RangeInput } from '../InputField/InputField';
 
 function validateForm(currentForm) {
+  if (currentForm.fields.length === 0)
+    return false;
   for (let field of currentForm.fields) {
     if (field.duplicateError)
       return false;
   }
   return true;
+}
+
+function handleCreateNewForm(dispatch) {
+  dispatch(
+    {
+      type: 'CREATE_NEW_FORM',
+      payload: {}
+    }
+  )
 }
 
 function handleCurrentFormChange(newCurrentForm, dispatch) {
@@ -161,6 +172,10 @@ function RecordForm(props) {
         >
           {selectOptions}
         </select>
+        <button
+          type='button'
+          onClick={() => handleCreateNewForm(props.dispatch)}
+        >Create New Form</button>
       </p>
       <h3>New Record:
         <input
@@ -174,6 +189,9 @@ function RecordForm(props) {
         />
       </h3>
       {currentForm.description && <p>{currentForm.description}</p>}
+      {
+        !currentForm.fields.length && <p>Form must have at least one field</p>
+      }
       {formFields}
       {
         !formIsValid && <p>Please correct errors before submitting</p>

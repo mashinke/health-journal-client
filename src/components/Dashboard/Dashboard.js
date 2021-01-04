@@ -29,6 +29,22 @@ const dashboardStateReducer = (state, action) => {
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
+    case 'CREATE_NEW_FORM': {
+      const newForm = {
+        values: {},
+        fields: [],
+        name: 'New Form',
+        description: 'New Form Description'
+      }
+
+      forms.push(newForm);
+
+      return {
+        ...state,
+        currentForm: forms.length - 1,
+        forms
+      }
+    }
     case 'UPDATE_MIN_MAX': {
       const { index, minmax } = action.payload;
 
