@@ -26,10 +26,35 @@ function checkDuplicates(currentForm, label) {
 
 const dashboardStateReducer = (state, action) => {
   const currentForm = { ...state.forms[state.currentForm] };
-  const forms = [...state.forms];
+  let forms = [...state.forms];
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
+    case 'ADD_NEW_FORM': {
+      forms.push({
+        ...action.payload,
+        values: {}
+      });
+      return {
+        ...state,
+        forms,
+        currentForm: forms.length - 1
+      }
+    }
+    case 'UPDATE_FORM': {
+      forms = forms.filter(form =>
+        form.id !== action.payload.formId
+      );
+      forms.push({
+        ...action.payload.updatedForm,
+        values: {}
+      });
+      return {
+        ...state,
+        forms,
+        currentForm: forms.length - 1
+      }
+    }
     case 'CREATE_NEW_FORM': {
       const newForm = {
         values: {},

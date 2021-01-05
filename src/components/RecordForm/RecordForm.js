@@ -1,4 +1,5 @@
 import React from 'react';
+import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import { StringInput, NumberInput, BooleanInput, RangeInput } from '../InputField/InputField';
 
@@ -104,7 +105,34 @@ function handleMoveField(index, direction, dispatch) {
 
 async function handleSubmitForm(event, dispatch, form) {
   event.preventDefault();
-  const { id: formId, values } = form;
+  let { id: formId, values, modified, name, description, fields } = form;
+  if (!formId) {
+    const newForm = await FormApiService.postForm({
+      name, description, fields
+    })
+    formId = newForm.id;
+    dispatch(
+      {
+        type: 'ADD_NEW_FORM',
+        payload: newForm
+      }
+    )
+  }
+  if (modified) {
+    const updatedForm = await FormApiService.patchForm(formId, {
+      name, description, fields
+    })
+    dispatch(
+      {
+        type: 'UPDATE_FORM',
+        payload: {
+          formId,
+          updatedForm
+        }
+      }
+    )
+    formId = updatedForm.id;
+  }
   const record = await RecordApiService.postRecord({ formId, values });
   dispatch(
     {

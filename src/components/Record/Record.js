@@ -24,7 +24,6 @@ function Record(props) {
           Field = StringDisplay;
           break;
       }
-      console.log(field.id)
       return <Field key={i} {...field} value={props.values[field.id]} />
     });
   return (
