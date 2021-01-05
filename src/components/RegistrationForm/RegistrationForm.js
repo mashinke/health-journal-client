@@ -34,56 +34,62 @@ function RegistrationForm(props) {
   }
 
   return (
-    <form
-      className='RegistrationForm'
-      onSubmit={handleSubmit}
-    >
-      <div
-        role='alert'
-        className='alert'>
-        {error && <p>{error}</p>}
-      </div>
-      <div>
-        <label htmlFor='registration-name-input'>
-          Enter your name
+    <main>
+      <p>
+        Track, manage, and gain insights from your health information.
+    </p>
+      <h2>Sign up</h2>
+      <form
+        className='RegistrationForm'
+        onSubmit={handleSubmit}
+      >
+        <div
+          role='alert'
+          className='alert'>
+          {error && <p>{error}</p>}
+        </div>
+        <div>
+          <label htmlFor='registration-name-input'>
+            Enter your name
         </label>
-        <input
-          type='email'
-          id='registration-email-input'
-          name='email'
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor='registration-username-input'>
-          Choose a username
+          <input
+            type='email'
+            id='registration-email-input'
+            name='email'
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor='registration-username-input'>
+            Choose a username
         </label>
-        <input
-          type='text'
-          id='registration-username-input'
-          name='username'
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor='registration-password-input'>
-          Choose a password
+          <input
+            type='text'
+            id='registration-username-input'
+            name='username'
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor='registration-password-input'>
+            Choose a password
         </label>
-        <input
-          type='password'
-          id='registration-password-input'
-          name='password'
-          required
-        />
-      </div>
-      <footer>
-        <button type='submit'>
-          Sign up
+          <input
+            type='password'
+            id='registration-password-input'
+            name='password'
+            required
+          />
+        </div>
+        <footer>
+          <button type='submit'>
+            Sign up
           </button>
-        {' '}
-        <Link to='/login'>Already have an account?</Link>
-      </footer>
-    </form>
+          {' '}
+          <Link to='/login'>Already have an account?</Link>
+        </footer>
+      </form>
+    </main>
   )
 }
 

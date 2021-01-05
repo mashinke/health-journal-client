@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
-import Record from '../Record/Record';
+import RecordDisplay from '../RecordDisplay/RecordDisplay';
 import RecordForm from '../RecordForm/RecordForm';
 
 function setCurrentFormModified(currentForm) {
@@ -30,36 +30,38 @@ const dashboardStateReducer = (state, action) => {
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
-    case 'ADD_NEW_FORM': {
-      forms.push({
-        ...action.payload,
-        values: {}
-      });
+    case 'POST_NEW_FORM': {
+      forms.splice(
+        state.currentForm,
+        1,
+        {
+          ...action.payload,
+          values: {}
+        });
       return {
         ...state,
-        forms,
-        currentForm: forms.length - 1
+        forms
       }
     }
     case 'UPDATE_FORM': {
-      forms = forms.filter(form =>
-        form.id !== action.payload.formId
-      );
-      forms.push({
-        ...action.payload.updatedForm,
-        values: {}
-      });
+      forms.splice(
+        state.currentForm,
+        1,
+        {
+          ...action.payload.updatedForm,
+          values: {}
+        });
       return {
         ...state,
-        forms,
-        currentForm: forms.length - 1
+        forms
       }
     }
     case 'CREATE_NEW_FORM': {
+      const newForms = state.newForms + 1
       const newForm = {
         values: {},
         fields: [],
-        name: 'New Form',
+        name: `New Form ${newForms}`,
         description: 'New Form Description'
       }
 
@@ -68,7 +70,8 @@ const dashboardStateReducer = (state, action) => {
       return {
         ...state,
         currentForm: forms.length - 1,
-        forms
+        forms,
+        newForms
       }
     }
     case 'MOVE_FORM_FIELD': {
@@ -256,7 +259,8 @@ function Dashboard(props) {
     {
       forms: [],
       records: [],
-      currentForm: {},
+      currentForm: null,
+      newForms: 0,
       displayRecordForm: false
     }
   )
@@ -283,7 +287,7 @@ function Dashboard(props) {
   }, []);
 
   return (
-    <section>
+    <main>
       <h2>Dashboard</h2>
       <button onClick={() =>
         dashboardDispatch({
@@ -297,15 +301,10 @@ function Dashboard(props) {
           dispatch={dashboardDispatch}
         />
       }
-      <h3>Your Records</h3>
-      <ul>
-        {
-          dashboardState.records.map(record =>
-            <Record key={record.id} {...record} />
-          )
-        }
-      </ul>
-    </section >
+      <RecordDisplay
+        selectedRecords={dashboardState.records}
+      />
+    </main>
   )
 }
 

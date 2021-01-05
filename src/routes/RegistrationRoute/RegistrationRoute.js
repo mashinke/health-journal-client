@@ -8,15 +8,9 @@ function RegistrationRoute(props) {
   };
 
   return (
-    <section>
-      <p>
-        Track, manage, and gain insights from your health information.
-      </p>
-      <h2>Sign up</h2>
-      <RegistrationForm
-        onRegistrationSuccess={handleRegistrationSuccess}
-      />
-    </section>
+    <RegistrationForm
+      onRegistrationSuccess={handleRegistrationSuccess}
+    />
   );
 };
 

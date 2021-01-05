@@ -9,13 +9,10 @@ function LoginRoute(props) {
   };
 
   return (
-    <section>
-      <h2>Login</h2>
-      <LoginForm
-        onLoginSuccess={handleLoginSuccess}
-      />
-    </section>
-  );
+    <LoginForm
+      onLoginSuccess={handleLoginSuccess}
+    />
+  )
 };
 
 export default LoginRoute;

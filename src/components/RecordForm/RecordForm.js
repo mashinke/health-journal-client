@@ -113,7 +113,7 @@ async function handleSubmitForm(event, dispatch, form) {
     formId = newForm.id;
     dispatch(
       {
-        type: 'ADD_NEW_FORM',
+        type: 'POST_NEW_FORM',
         payload: newForm
       }
     )
@@ -144,6 +144,7 @@ async function handleSubmitForm(event, dispatch, form) {
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
+
   const formFields = currentForm.fields.map(
     (field, i) => {
       const value =
@@ -165,7 +166,7 @@ function RecordForm(props) {
       }
 
       return (
-        <div>
+        <div key={i}>
 
           <button
             type='button'
@@ -176,7 +177,6 @@ function RecordForm(props) {
             onClick={() => handleMoveField(i, 'DOWN', props.dispatch)}
           >down</button>
           <Field
-            key={i}
             {...field}
             value={value}
             handleFieldValueChange={handleFieldValueChange(props.dispatch)}
@@ -187,9 +187,9 @@ function RecordForm(props) {
         </div>
       )
     });
-
+  let newFormCounter = 0;
   const selectOptions = props.state.forms.map((form, i) => (
-    <option key={form.id} value={i}>{form.name}</option>
+    <option key={form.id || `new-form-${++newFormCounter}`} value={i}>{form.name}</option>
   ));
 
   const addFieldButtons =
