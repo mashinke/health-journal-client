@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
+import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
 import RecordForm from '../RecordForm/RecordForm';
 
 function setCurrentFormModified(currentForm) {
@@ -24,12 +25,41 @@ function checkDuplicates(currentForm, label) {
   return false;
 }
 
+const filterFunctions = {
+  formId: (record, filter) => {
+    if (filter.length === 0)
+      return true;
+    return filter.includes(record.formId)
+  }
+}
+
+function filterCallBack(filters) {
+  return function (record) {
+    for (const [key, filter] of Object.entries(filters)) {
+      if (!filterFunctions[key](record, filter))
+        return false;
+    }
+    return true;
+  }
+}
+
 const dashboardStateReducer = (state, action) => {
   const currentForm = { ...state.forms[state.currentForm] };
   let forms = [...state.forms];
   forms[state.currentForm] = currentForm;
 
+
   switch (action.type) {
+    case 'FILTER_RECORDS': {
+      const activeFilters = {
+        ...state.filters,
+        ...action.payload
+      };
+      return {
+        ...state,
+        activeFilters
+      }
+    }
     case 'POST_NEW_FORM': {
       forms.splice(
         state.currentForm,
@@ -204,7 +234,8 @@ const dashboardStateReducer = (state, action) => {
     case 'POPULATE_RECORDS_LIST': {
       return {
         ...state,
-        records: action.payload
+        records: action.payload,
+        currentRecords: action.payload
       };
     }
     case 'UPDATE_FIELD_VALUE': {
@@ -261,7 +292,10 @@ function Dashboard(props) {
       records: [],
       currentForm: null,
       newForms: 0,
-      displayRecordForm: false
+      displayRecordForm: false,
+      activeFilters: {
+        formId: []
+      }
     }
   )
   useEffect(() =>
@@ -301,8 +335,13 @@ function Dashboard(props) {
           dispatch={dashboardDispatch}
         />
       }
+      <RecordFilterControls
+        forms={dashboardState.forms}
+        dispatch={dashboardDispatch}
+      />
       <RecordDisplay
-        selectedRecords={dashboardState.records}
+        records={dashboardState.records}
+        filter={filterCallBack(dashboardState.activeFilters)}
       />
     </main>
   )
