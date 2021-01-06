@@ -37,6 +37,7 @@ export default function DateRangeSelect(props) {
         <label htmlFor='from-date'>From</label>
         <DatePicker
           value={fromDate}
+          maxDate={new Date()}
           onChange={value => handleDateChange('FROM', value)}
         />
       </div>
@@ -44,6 +45,7 @@ export default function DateRangeSelect(props) {
         <label htmlFor='fto-date'>To</label>
         <DatePicker
           value={toDate}
+          maxDate={new Date()}
           onChange={value => handleDateChange('TO', value)}
         />
       </div>
