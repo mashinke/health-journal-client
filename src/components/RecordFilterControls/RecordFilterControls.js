@@ -21,7 +21,7 @@ export default function RecordFilterControls(props) {
     <section>
       <h3>Filter Selection</h3>
       {
-        props.forms.length > 0 && <div>
+        props.forms.length > 0 &&
           <FormSelect
             handleSelectedItemsChange={handleFormIdFilterChange(props.dispatch)}
             forms={
@@ -33,7 +33,6 @@ export default function RecordFilterControls(props) {
               })
             }
           />
-        </div>
       }
     </section >
   )
