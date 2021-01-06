@@ -4,13 +4,26 @@ import DateRangeSelect from '../DateRangeSelect/DateRangeSelect';
 
 function handleFormIdFilterChange(dispatch) {
   return function (forms) {
-    console.log(forms)
     const formId = forms.map(form => form.id)
     dispatch(
       {
         type: 'FILTER_RECORDS',
         payload: {
           formId
+        }
+      }
+    )
+  }
+}
+
+function handleDateFilterChange(dispatch) {
+  return function (range) {
+    const created = range;
+    dispatch(
+      {
+        type: 'FILTER_RECORDS',
+        payload: {
+          created
         }
       }
     )
@@ -35,7 +48,9 @@ export default function RecordFilterControls(props) {
           }
         />
       }
-      <DateRangeSelect />
+      <DateRangeSelect
+        dispatch={handleDateFilterChange(props.dispatch)}
+      />
     </section >
   )
 }

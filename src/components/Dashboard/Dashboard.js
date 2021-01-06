@@ -12,6 +12,16 @@ const filterFunctions = {
     if (filter.length === 0)
       return true;
     return filter.includes(record.formId)
+  },
+  created: (record, filter) => {
+    const dateCreated = new Date(record.created);
+    if (filter.from === null || filter.to === null)
+      return true;
+
+    return (
+      dateCreated >= filter.from
+      && dateCreated < filter.to.setDate(filter.to.getDate() + 1)
+    )
   }
 }
 
