@@ -103,13 +103,13 @@ export default function InputField(props) {
   let field;
   switch (props.type) {
     case 'number':
-      field = NumberInput;
+      field = <NumberInput {...props} />;
       break;
     case 'boolean':
-      field = BooleanInput;
+      field = <BooleanInput {...props} />;
       break;
     case 'string':
-      field = StringInput;
+      field = <StringInput {...props} />;
       break;
     default:
       return <RangeInput {...props} />;

@@ -266,8 +266,7 @@ function RecordForm(props) {
 
   const formFields = currentForm.fields.map(
     (field, i) => {
-      const value =
-        currentForm.values[field.id] || '';
+      const value = currentForm.values[field.id];
 
 
       return (
