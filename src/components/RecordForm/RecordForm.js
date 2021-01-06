@@ -1,7 +1,9 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import { StringInput, NumberInput, BooleanInput, RangeInput } from '../InputField/InputField';
+
 
 function validateForm(currentForm) {
   if (currentForm.fields.length === 0)
@@ -13,10 +15,23 @@ function validateForm(currentForm) {
   return true;
 }
 
+function checkDuplicates(currentForm, label) {
+  // let dupes = 0;
+  for (let field of currentForm.fields) {
+    if (field.label === label) {
+      // dupes++;
+      // if (dupes > 1) {
+      return true;
+      // }
+    };
+  }
+  return false;
+}
+
 function handleCreateNewForm(dispatch) {
   dispatch(
     {
-      type: 'APPEND_FORM',
+      type: 'ADD_FORM',
       payload: {
         values: {},
         fields: [],
@@ -36,75 +51,172 @@ function handleCurrentFormChange(newCurrentForm, dispatch) {
   )
 }
 
-function handleLabelEdit(index, dispatch) {
+function handleFormNameEdit(name, form, dispatch) {
+  const payload = {
+    ...form,
+    name,
+    modified: 'true'
+  }
+  dispatch({
+    type: 'UPDATE_CURRENT_FORM',
+    payload
+  })
+}
+
+function handleFormDescriptionEdit(description, form, dispatch) {
+  const payload = {
+    ...form,
+    description,
+    modified: 'true'
+  }
+  dispatch({
+    type: 'UPDATE_CURRENT_FORM',
+    payload
+  })
+}
+
+
+function handleLabelEdit(index, form, dispatch) {
   return function (label) {
-    dispatch({
-      type: 'UPDATE_FIELD_NAME',
-      payload: {
-        index,
+    const oldLabel = form.fields[index].label;
+    const payload = {
+      ...form,
+      values: {
+        ...form.values,
+        [label]: form.values
+      },
+      fields: [
+        ...form.fields,
+      ]
+    }
+
+    payload.fields[index] = {
+      ...form.fields[index],
+      label,
+      duplicateError: checkDuplicates(
+        form,
         label
-      }
-    })
-  }
-}
+      )
+    };
 
-function handleFormNameEdit(name, dispatch) {
-  dispatch({
-    type: 'UPDATE_FORM_NAME',
-    payload: {
-      name
-    }
-  })
-}
+    delete payload.values[oldLabel];
 
-function handleFormDescriptionEdit(description, dispatch) {
-  dispatch({
-    type: 'UPDATE_FORM_DESCRIPTION',
-    payload: {
-      description
-    }
-  })
-}
-
-function handleMinMaxEdit(index, dispatch) {
-  return function (property, value) {
     dispatch({
-      type: 'UPDATE_MIN_MAX',
-      payload: {
-        minmax: { [property]: value },
-        index
-      }
+      type: 'UPDATE_CURRENT_FORM',
+      payload
     })
   }
 }
 
-function handleAddField(field, dispatch) {
+function handleMinMaxEdit(index, value, id, form, dispatch) {
+  return function (minmax) {
+    if (
+      minmax.min === form.fields[index].max
+      || minmax.max === form.fields[index].min
+    )
+      return;
+
+    if (minmax.min && value < minmax.min)
+      value = minmax.min;
+
+    else if (minmax.max && value > minmax.max)
+      value = minmax.max;
+
+    const payload = {
+      ...form,
+      modified: true,
+      fields: [
+        ...form.fields
+      ],
+      values: {
+        ...form.values,
+        [id]: value
+      }
+    }
+
+    payload.fields[index] = {
+      ...payload.fields[index],
+      ...minmax
+    }
+
+    dispatch({
+      type: 'UPDATE_CURRENT_FORM',
+      payload
+    })
+  }
+}
+
+function handleAddField(type, label, form, dispatch) {
+  const newField = {
+    type,
+    label,
+    id: uuid(),
+    duplicateError: checkDuplicates(form, label)
+  }
+
+  if (type === 'range') {
+    newField.min = 1;
+    newField.max = 5;
+  }
+
+  const payload = {
+    ...form,
+    fields: [
+      ...form.fields,
+      newField
+    ]
+  }
+
   dispatch(
     {
-      type: 'ADD_CURRENT_FORM_FIELD',
-      payload: field
+      type: 'UPDATE_CURRENT_FORM',
+      payload
     }
   )
 }
 
-function handleFieldValueChange(dispatch) {
+function handleFieldValueChange(form, dispatch) {
   return function (id, value) {
+    const payload = {
+      ...form,
+      values: {
+        ...form.values,
+        [id]: value
+      }
+    }
     dispatch(
       {
-        type: 'UPDATE_FIELD_VALUE',
-        payload: { [id]: value }
+        type: 'UPDATE_CURRENT_FORM',
+        payload
       }
     )
   }
 }
 
-function handleMoveField(index, direction, dispatch) {
+function handleMoveField(index, direction, form, dispatch) {
+
+  const payload = {
+    ...form,
+    fields: [...form.fields]
+  }
+  const tmp = payload.fields[index];
+
+  if (direction === 'UP' && index > 0) {
+    payload.fields[index] = payload.fields[index - 1];
+    payload.fields[index - 1] = tmp;
+    payload.modified = true;
+  } else if (direction === 'DOWN' && index < payload.fields.length - 1) {
+    payload.fields[index] = payload.fields[index + 1];
+    payload.fields[index + 1] = tmp;
+    payload.modified = true;
+  } else {
+    return;
+  }
+
+
   dispatch({
-    type: 'MOVE_FORM_FIELD',
-    payload: {
-      index,
-      direction
-    }
+    type: 'UPDATE_CURRENT_FORM',
+    payload
   })
 }
 
@@ -171,18 +283,28 @@ function RecordForm(props) {
 
           <button
             type='button'
-            onClick={() => handleMoveField(i, 'UP', props.dispatch)}
+            onClick={() => handleMoveField(
+              i,
+              'UP',
+              currentForm,
+              props.dispatch
+            )}
           >up</button>
           <button
             type='button'
-            onClick={() => handleMoveField(i, 'DOWN', props.dispatch)}
+            onClick={() => handleMoveField(
+              i,
+              'DOWN',
+              currentForm,
+              props.dispatch
+            )}
           >down</button>
           <Field
             {...field}
             value={value}
-            handleFieldValueChange={handleFieldValueChange(props.dispatch)}
-            handleLabelEdit={handleLabelEdit(i, props.dispatch)}
-            handleMinMaxEdit={handleMinMaxEdit(i, props.dispatch)}
+            handleFieldValueChange={handleFieldValueChange(currentForm, props.dispatch)}
+            handleLabelEdit={handleLabelEdit(i, currentForm, props.dispatch)}
+            handleMinMaxEdit={handleMinMaxEdit(i, value, field.id, currentForm, props.dispatch)}
           />
 
         </div>
@@ -204,10 +326,11 @@ function RecordForm(props) {
         <button
           key={type}
           type='button'
-          onClick={() => handleAddField({
+          onClick={() => handleAddField(
             type,
-            label
-          }, props.dispatch)}
+            `New ${label} Field`,
+            currentForm,
+            props.dispatch)}
         >Add new {label} field</button>
       )
     });
@@ -245,6 +368,7 @@ function RecordForm(props) {
           onChange={(event) =>
             handleFormNameEdit(
               event.target.value,
+              currentForm,
               props.dispatch
             )}
         />

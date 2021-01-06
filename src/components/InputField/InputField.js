@@ -117,8 +117,7 @@ export function RangeInput(props) {
           value={props.min}
           onChange={event =>
             props.handleMinMaxEdit(
-              'min',
-              Number(event.target.value)
+              { min: Number(event.target.value) }
             )}
         />
         Max:
@@ -127,8 +126,7 @@ export function RangeInput(props) {
           value={props.max}
           onChange={event =>
             props.handleMinMaxEdit(
-              'max',
-              Number(event.target.value)
+              { max: Number(event.target.value) }
             )}
         />
       </legend>

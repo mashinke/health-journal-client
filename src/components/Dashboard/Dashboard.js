@@ -42,7 +42,7 @@ function Dashboard(props) {
     RecordApiService.getRecords()
       .then(res => {
         const action = {
-          type: 'POPULATE_RECORDS_LIST',
+          type: 'POPULATE_RECORDS',
           payload: res
         };
         dashboardDispatch(action);
@@ -53,7 +53,7 @@ function Dashboard(props) {
     FormApiService.getForms()
       .then(res => {
         const action = {
-          type: 'POPULATE_FORMS_LIST',
+          type: 'POPULATE_FORMS',
           payload: res
         };
         dashboardDispatch(action);
