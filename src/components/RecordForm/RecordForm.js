@@ -2,27 +2,33 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
-import { StringInput, NumberInput, BooleanInput, RangeInput } from '../InputField/InputField';
+import InputField from '../InputField/InputField';
 
 
 function validateForm(currentForm) {
   if (currentForm.fields.length === 0)
     return false;
+  if (currentForm.name === '' || currentForm.description === '')
+    return false;
   for (let field of currentForm.fields) {
-    if (field.duplicateError)
+    if (!validateField(field))
       return false;
   }
   return true;
 }
 
+function validateField(field) {
+  if (field.duplicateError)
+    return false;
+  if (field.label === '')
+    return false;
+  return true;
+}
+
 function checkDuplicates(currentForm, label) {
-  // let dupes = 0;
   for (let field of currentForm.fields) {
     if (field.label === label) {
-      // dupes++;
-      // if (dupes > 1) {
       return true;
-      // }
     };
   }
   return false;
@@ -262,21 +268,7 @@ function RecordForm(props) {
     (field, i) => {
       const value =
         currentForm.values[field.id] || '';
-      let Field;
-      switch (field.type) {
-        case 'number':
-          Field = NumberInput;
-          break;
-        case 'boolean':
-          Field = BooleanInput;
-          break;
-        case 'range':
-          Field = RangeInput;
-          break;
-        default:
-          Field = StringInput;
-          break;
-      }
+
 
       return (
         <div key={i}>
@@ -299,7 +291,7 @@ function RecordForm(props) {
               props.dispatch
             )}
           >down</button>
-          <Field
+          <InputField
             {...field}
             value={value}
             handleFieldValueChange={handleFieldValueChange(currentForm, props.dispatch)}
@@ -380,6 +372,7 @@ function RecordForm(props) {
           onChange={event =>
             handleFormDescriptionEdit(
               event.target.value,
+              currentForm,
               props.dispatch
             )}
         />

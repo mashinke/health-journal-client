@@ -1,85 +1,49 @@
 import React from 'react';
 
-export function StringInput(props) {
+function StringInput(props) {
   const label = props.label
   return (
-    <div>
-      {
-        props.duplicateError && <p>Duplicate labels not allowed!</p>
-      }
-      <label htmlFor={props.label}>
-        <input
-          type='text'
-          value={props.label}
-          onChange={(event) => props.handleLabelEdit(event.target.value)}
-        />
-      </label>
-      <input
-        type='text'
-        name={label}
-        value={props.value}
-        onChange={event => props.handleFieldValueChange(
-          props.id,
-          event.target.value
-        )}
-      />
-    </div>
+    <input
+      type='text'
+      name={label}
+      value={props.value}
+      onChange={event => props.handleFieldValueChange(
+        props.id,
+        event.target.value
+      )}
+    />
   )
 }
 
-export function NumberInput(props) {
+function NumberInput(props) {
   return (
-    <div>
-      {
-        props.duplicateError && <p>Duplicate labels not allowed!</p>
-      }
-      <label htmlFor={props.label}>
-        <input
-          type='text'
-          value={props.label}
-          onChange={(event) => props.handleLabelEdit(event.target.value)}
-        />
-      </label>
-      <input
-        type='number'
-        name={props.label}
-        value={props.value}
-        onChange={event => props.handleFieldValueChange(
-          props.id,
-          Number(event.target.value)
-        )}
-      />
-    </div>
+    <input
+      type='number'
+      name={props.label}
+      value={props.value}
+      onChange={event => props.handleFieldValueChange(
+        props.id,
+        Number(event.target.value)
+      )}
+    />
   )
 }
 
-export function BooleanInput(props) {
+function BooleanInput(props) {
   return (
-    <div>
-      {
-        props.duplicateError && <p>Duplicate labels not allowed!</p>
-      }
-      <label htmlFor={props.label}>
-        <input
-          type='text'
-          value={props.label}
-          onChange={(event) => props.handleLabelEdit(event.target.value)}
-        />
-      </label>
-      <input
-        type='checkbox'
-        name={props.label}
-        checked={props.value}
-        onChange={event => props.handleFieldValueChange(
-          props.id,
-          event.target.checked
-        )}
-      />
-    </div>
+    <input
+      type='checkbox'
+      name={props.label}
+      checked={props.value}
+      onChange={event => props.handleFieldValueChange(
+        props.id,
+        event.target.checked
+      )}
+    />
   )
 }
 
-export function RangeInput(props) {
+function RangeInput(props) {
   const radios = [];
   for (let i = props.min; i <= props.max; i++) {
     radios.push(
@@ -132,5 +96,40 @@ export function RangeInput(props) {
       </legend>
       <span>{radios}</span>
     </fieldset>
+  )
+}
+
+export default function InputField(props) {
+  let field;
+  switch (props.type) {
+    case 'number':
+      field = NumberInput;
+      break;
+    case 'boolean':
+      field = BooleanInput;
+      break;
+    case 'string':
+      field = StringInput;
+      break;
+    default:
+      return <RangeInput {...props} />;
+  }
+  return (
+    <div>
+      {
+        props.duplicateError && <p>Duplicate labels not allowed!</p>
+      }
+      {
+        props.label === '' && <p>Field must have a label!</p>
+      }
+      <label htmlFor={props.label}>
+        <input
+          type='text'
+          value={props.label}
+          onChange={(event) => props.handleLabelEdit(event.target.value)}
+        />
+      </label>
+      {field}
+    </div>
   )
 }
