@@ -1,5 +1,6 @@
 import React from 'react';
-import FormSelect from '../FormSelect/FormSelect'
+import FormSelect from '../FormSelect/FormSelect';
+import DateRangeSelect from '../DateRangeSelect/DateRangeSelect';
 
 function handleFormIdFilterChange(dispatch) {
   return function (forms) {
@@ -22,18 +23,19 @@ export default function RecordFilterControls(props) {
       <h3>Filter Selection</h3>
       {
         props.forms.length > 0 &&
-          <FormSelect
-            handleSelectedItemsChange={handleFormIdFilterChange(props.dispatch)}
-            forms={
-              props.forms.map(({ id, name }) => {
-                return {
-                  id,
-                  name
-                }
-              })
-            }
-          />
+        <FormSelect
+          handleSelectedItemsChange={handleFormIdFilterChange(props.dispatch)}
+          forms={
+            props.forms.map(({ id, name }) => {
+              return {
+                id,
+                name
+              }
+            })
+          }
+        />
       }
+      <DateRangeSelect />
     </section >
   )
 }
