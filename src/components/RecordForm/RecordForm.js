@@ -16,8 +16,13 @@ function validateForm(currentForm) {
 function handleCreateNewForm(dispatch) {
   dispatch(
     {
-      type: 'CREATE_NEW_FORM',
-      payload: {}
+      type: 'APPEND_FORM',
+      payload: {
+        values: {},
+        fields: [],
+        name: '',
+        description: ''
+      }
     }
   )
 }
@@ -106,37 +111,33 @@ function handleMoveField(index, direction, dispatch) {
 async function handleSubmitForm(event, dispatch, form) {
   event.preventDefault();
   let { id: formId, values, modified, name, description, fields } = form;
-  if (!formId) {
-    const newForm = await FormApiService.postForm({
-      name, description, fields
-    })
-    formId = newForm.id;
-    dispatch(
-      {
-        type: 'POST_NEW_FORM',
-        payload: newForm
-      }
-    )
-  }
+
   if (modified) {
-    const updatedForm = await FormApiService.patchForm(formId, {
-      name, description, fields
+    if (!formId) {
+      form = await FormApiService.postForm({
+        name, description, fields
+      })
+
+      formId = form.id;
+    }
+    else {
+      form = await FormApiService.patchForm(formId, {
+        name, description, fields
+      });
+    }
+
+    console.log('handling submit', form)
+
+    dispatch({
+      type: 'UPDATE_CURRENT_FORM',
+      payload: form
     })
-    dispatch(
-      {
-        type: 'UPDATE_FORM',
-        payload: {
-          formId,
-          updatedForm
-        }
-      }
-    )
-    formId = updatedForm.id;
   }
+
   const record = await RecordApiService.postRecord({ formId, values });
   dispatch(
     {
-      type: 'SUBMIT_FORM',
+      type: 'ADD_RECORD',
       payload: record
     }
   )

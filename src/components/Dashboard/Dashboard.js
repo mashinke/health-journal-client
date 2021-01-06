@@ -32,7 +32,6 @@ function Dashboard(props) {
       forms: [],
       records: [],
       currentForm: null,
-      newForms: 0,
       displayRecordForm: false,
       activeFilters: {
         formId: []

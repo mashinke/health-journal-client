@@ -35,7 +35,7 @@ const dashboardStateReducer = (state, action) => {
         activeFilters
       }
     }
-    case 'POST_NEW_FORM': {
+    case 'UPDATE_CURRENT_FORM': {
       forms.splice(
         state.currentForm,
         1,
@@ -43,40 +43,19 @@ const dashboardStateReducer = (state, action) => {
           ...action.payload,
           values: {}
         });
+      console.log('updating current form', action.payload)
       return {
         ...state,
         forms
       }
     }
-    case 'UPDATE_FORM': {
-      forms.splice(
-        state.currentForm,
-        1,
-        {
-          ...action.payload.updatedForm,
-          values: {}
-        });
-      return {
-        ...state,
-        forms
-      }
-    }
-    case 'CREATE_NEW_FORM': {
-      const newForms = state.newForms + 1
-      const newForm = {
-        values: {},
-        fields: [],
-        name: `New Form ${newForms}`,
-        description: 'New Form Description'
-      }
-
-      forms.push(newForm);
+    case 'APPEND_FORM': {
+      forms.push(action.payload);
 
       return {
         ...state,
         currentForm: forms.length - 1,
-        forms,
-        newForms
+        forms
       }
     }
     case 'MOVE_FORM_FIELD': {
@@ -224,7 +203,7 @@ const dashboardStateReducer = (state, action) => {
         forms
       };
     }
-    case 'SUBMIT_FORM': {
+    case 'ADD_RECORD': {
       currentForm.values = {};
       const records = [action.payload, ...state.records];
       return {
