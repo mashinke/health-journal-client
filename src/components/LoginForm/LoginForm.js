@@ -21,6 +21,7 @@ function LoginForm(props) {
         password.value = '';
         userContext.processLogin(res.authToken);
         props.onLoginSuccess();
+        userContext.clearError();
       })
       .catch(res => {
         setError(res.error);

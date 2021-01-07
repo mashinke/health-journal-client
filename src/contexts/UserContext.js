@@ -43,8 +43,8 @@ export class UserProvider extends Component {
   }
 
   componentWillUnmount() {
-    IdleService.unRegisterIdleResets()
-    TokenService.clearCallbackBeforeExpiry()
+    IdleService.unRegisterIdleResets();
+    TokenService.clearCallbackBeforeExpiry();
   }
 
   setError = error => {

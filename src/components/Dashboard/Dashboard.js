@@ -80,6 +80,7 @@ function Dashboard(props) {
   if (apiError) {
     switch (apiError.status) {
       case 401:
+        userContext.setError(apiError.message);
         userContext.processLogout();
         break;
       default:

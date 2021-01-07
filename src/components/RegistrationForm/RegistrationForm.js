@@ -26,6 +26,7 @@ function RegistrationForm(props) {
             password.value = '';
             userContext.processLogin(res.authToken);
             props.onRegistrationSuccess();
+            userContext.clearError();
           });
       })
       .catch(res => {
