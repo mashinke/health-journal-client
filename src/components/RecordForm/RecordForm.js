@@ -292,7 +292,7 @@ function RecordForm(props) {
           >down</button>
           <InputField
             {...field}
-            value={value}
+            value={value === undefined ? '' : value}
             handleFieldValueChange={handleFieldValueChange}
             handleLabelEdit={handleLabelEdit(i)}
             handleMinMaxEdit={handleMinMaxEdit(i, value, field.id)}
