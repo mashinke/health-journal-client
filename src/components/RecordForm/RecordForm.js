@@ -4,265 +4,269 @@ import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import InputField from '../InputField/InputField';
 
+function RecordForm(props) {
+  const currentForm = props.state.forms[props.state.currentForm];
 
-function validateForm(currentForm) {
-  if (currentForm.fields.length === 0)
-    return false;
-  if (currentForm.name === '' || currentForm.description === '')
-    return false;
-  for (let field of currentForm.fields) {
-    if (!validateField(field))
+  function validateForm() {
+    if (currentForm.fields.length === 0)
       return false;
+    if (currentForm.name === '' || currentForm.description === '')
+      return false;
+    for (let field of currentForm.fields) {
+      if (!validateField(field))
+        return false;
+    }
+    return true;
   }
-  return true;
-}
 
-function validateField(field) {
-  if (field.duplicateError)
-    return false;
-  if (field.label === '')
-    return false;
-  return true;
-}
-
-function checkDuplicates(currentForm, label) {
-  for (let field of currentForm.fields) {
-    if (field.label === label) {
-      return true;
-    };
+  function validateField(field) {
+    if (field.duplicateError)
+      return false;
+    if (field.label === '')
+      return false;
+    return true;
   }
-  return false;
-}
 
-function handleCreateNewForm(dispatch) {
-  dispatch(
-    {
-      type: 'ADD_FORM',
-      payload: {
-        values: {},
-        fields: [],
-        name: '',
-        description: ''
+  function checkDuplicates(label) {
+    for (let field of currentForm.fields) {
+      if (field.label === label) {
+        return true;
+      };
+    }
+    return false;
+  }
+
+  function handleCreateNewForm() {
+    props.dispatch(
+      {
+        type: 'ADD_FORM',
+        payload: {
+          values: {},
+          fields: [],
+          name: '',
+          description: ''
+        }
       }
-    }
-  )
-}
-
-function handleCurrentFormChange(newCurrentForm, dispatch) {
-  dispatch(
-    {
-      type: 'CHANGE_CURRENT_FORM',
-      payload: newCurrentForm
-    }
-  )
-}
-
-function handleFormNameEdit(name, form, dispatch) {
-  const payload = {
-    ...form,
-    name,
-    modified: 'true'
+    )
   }
-  dispatch({
-    type: 'UPDATE_CURRENT_FORM',
-    payload
-  })
-}
 
-function handleFormDescriptionEdit(description, form, dispatch) {
-  const payload = {
-    ...form,
-    description,
-    modified: 'true'
+  function handleCurrentFormChange(newCurrentForm) {
+    props.dispatch(
+      {
+        type: 'CHANGE_CURRENT_FORM',
+        payload: newCurrentForm
+      }
+    )
   }
-  dispatch({
-    type: 'UPDATE_CURRENT_FORM',
-    payload
-  })
-}
 
-
-function handleLabelEdit(index, form, dispatch) {
-  return function (label) {
-    const oldLabel = form.fields[index].label;
+  function handleFormNameEdit(name) {
     const payload = {
-      ...form,
-      values: {
-        ...form.values,
-        [label]: form.values
-      },
+      ...currentForm,
+      name,
+      modified: 'true'
+    }
+    props.dispatch({
+      type: 'UPDATE_CURRENT_FORM',
+      payload
+    })
+  }
+
+  function handleFormDescriptionEdit(description) {
+    const payload = {
+      ...currentForm,
+      description,
+      modified: 'true'
+    }
+    props.dispatch({
+      type: 'UPDATE_CURRENT_FORM',
+      payload
+    })
+  }
+
+
+  function handleLabelEdit(index) {
+    return function (label) {
+      const oldLabel = currentForm.fields[index].label;
+      const payload = {
+        ...currentForm,
+        values: {
+          ...currentForm.values,
+          [label]: currentForm.values
+        },
+        fields: [
+          ...currentForm.fields,
+        ]
+      }
+
+      payload.fields[index] = {
+        ...currentForm.fields[index],
+        label,
+        duplicateError: checkDuplicates(
+          currentForm,
+          label
+        )
+      };
+
+      delete payload.values[oldLabel];
+
+      props.dispatch({
+        type: 'UPDATE_CURRENT_FORM',
+        payload
+      })
+    }
+  }
+
+  function handleMinMaxEdit(index, value, id) {
+    return function (minmax) {
+      if (
+        minmax.min === currentForm.fields[index].max
+        || minmax.max === currentForm.fields[index].min
+      )
+        return;
+
+      if (minmax.min && value < minmax.min)
+        value = minmax.min;
+
+      else if (minmax.max && value > minmax.max)
+        value = minmax.max;
+
+      const payload = {
+        ...currentForm,
+        modified: true,
+        fields: [
+          ...currentForm.fields
+        ],
+        values: {
+          ...currentForm.values,
+          [id]: value
+        }
+      }
+
+      payload.fields[index] = {
+        ...payload.fields[index],
+        ...minmax
+      }
+
+      props.dispatch({
+        type: 'UPDATE_CURRENT_FORM',
+        payload
+      })
+    }
+  }
+
+  function handleAddField(type, label) {
+    const newField = {
+      type,
+      label,
+      id: uuid(),
+      duplicateError: checkDuplicates(currentForm, label)
+    }
+
+    if (type === 'range') {
+      newField.min = 1;
+      newField.max = 5;
+    }
+
+    const payload = {
+      ...currentForm,
       fields: [
-        ...form.fields,
+        ...currentForm.fields,
+        newField
       ]
     }
 
-    payload.fields[index] = {
-      ...form.fields[index],
-      label,
-      duplicateError: checkDuplicates(
-        form,
-        label
-      )
-    };
-
-    delete payload.values[oldLabel];
-
-    dispatch({
-      type: 'UPDATE_CURRENT_FORM',
-      payload
-    })
-  }
-}
-
-function handleMinMaxEdit(index, value, id, form, dispatch) {
-  return function (minmax) {
-    if (
-      minmax.min === form.fields[index].max
-      || minmax.max === form.fields[index].min
-    )
-      return;
-
-    if (minmax.min && value < minmax.min)
-      value = minmax.min;
-
-    else if (minmax.max && value > minmax.max)
-      value = minmax.max;
-
-    const payload = {
-      ...form,
-      modified: true,
-      fields: [
-        ...form.fields
-      ],
-      values: {
-        ...form.values,
-        [id]: value
-      }
-    }
-
-    payload.fields[index] = {
-      ...payload.fields[index],
-      ...minmax
-    }
-
-    dispatch({
-      type: 'UPDATE_CURRENT_FORM',
-      payload
-    })
-  }
-}
-
-function handleAddField(type, label, form, dispatch) {
-  const newField = {
-    type,
-    label,
-    id: uuid(),
-    duplicateError: checkDuplicates(form, label)
-  }
-
-  if (type === 'range') {
-    newField.min = 1;
-    newField.max = 5;
-  }
-
-  const payload = {
-    ...form,
-    fields: [
-      ...form.fields,
-      newField
-    ]
-  }
-
-  dispatch(
-    {
-      type: 'UPDATE_CURRENT_FORM',
-      payload
-    }
-  )
-}
-
-function handleFieldValueChange(form, dispatch) {
-  return function (id, value) {
-    const payload = {
-      ...form,
-      values: {
-        ...form.values,
-        [id]: value
-      }
-    }
-    dispatch(
+    props.dispatch(
       {
         type: 'UPDATE_CURRENT_FORM',
         payload
       }
     )
   }
-}
 
-function handleMoveField(index, direction, form, dispatch) {
-
-  const payload = {
-    ...form,
-    fields: [...form.fields]
-  }
-  const tmp = payload.fields[index];
-
-  if (direction === 'UP' && index > 0) {
-    payload.fields[index] = payload.fields[index - 1];
-    payload.fields[index - 1] = tmp;
-    payload.modified = true;
-  } else if (direction === 'DOWN' && index < payload.fields.length - 1) {
-    payload.fields[index] = payload.fields[index + 1];
-    payload.fields[index + 1] = tmp;
-    payload.modified = true;
-  } else {
-    return;
+  function handleFieldValueChange(id, value) {
+    const payload = {
+      ...currentForm,
+      values: {
+        ...currentForm.values,
+        [id]: value
+      }
+    }
+    props.dispatch(
+      {
+        type: 'UPDATE_CURRENT_FORM',
+        payload
+      }
+    )
   }
 
+  function handleMoveField(index, direction) {
 
-  dispatch({
-    type: 'UPDATE_CURRENT_FORM',
-    payload
-  })
-}
-
-async function handleSubmitForm(event, dispatch, form) {
-  event.preventDefault();
-  let { id: formId, values, modified, name, description, fields } = form;
-
-  if (modified) {
-    if (!formId) {
-      form = await FormApiService.postForm({
-        name, description, fields
-      })
-
-      formId = form.id;
+    const payload = {
+      ...currentForm,
+      fields: [...currentForm.fields]
     }
-    else {
-      form = await FormApiService.patchForm(formId, {
-        name, description, fields
-      });
+    const tmp = payload.fields[index];
+
+    if (direction === 'UP' && index > 0) {
+      payload.fields[index] = payload.fields[index - 1];
+      payload.fields[index - 1] = tmp;
+      payload.modified = true;
+    } else if (direction === 'DOWN' && index < payload.fields.length - 1) {
+      payload.fields[index] = payload.fields[index + 1];
+      payload.fields[index + 1] = tmp;
+      payload.modified = true;
+    } else {
+      return;
     }
 
-    console.log('handling submit', form)
 
-    dispatch({
+    props.dispatch({
       type: 'UPDATE_CURRENT_FORM',
-      payload: form
+      payload
     })
   }
 
-  const record = await RecordApiService.postRecord({ formId, values });
-  dispatch(
-    {
-      type: 'ADD_RECORD',
-      payload: record
-    }
-  )
-}
+  async function handleSubmitForm(event) {
+    event.preventDefault();
+    let { id: formId, values, modified, name, description, fields } = currentForm;
 
-function RecordForm(props) {
-  const currentForm = props.state.forms[props.state.currentForm];
+    let newCurrentForm;
+
+    console.log('modified', modified)
+
+    if (modified) {
+      if (!formId) {
+        newCurrentForm = await FormApiService.postForm({
+          name, description, fields
+        })
+
+        formId = newCurrentForm.id;
+      }
+      else {
+        newCurrentForm = await FormApiService.patchForm(formId, {
+          name, description, fields
+        });
+      }
+
+      props.dispatch({
+        type: 'UPDATE_CURRENT_FORM',
+        payload: {
+          ...newCurrentForm,
+          values: {}
+        }
+      })
+    }
+
+    const record = await RecordApiService.postRecord({ formId, values });
+    props.dispatch(
+      {
+        type: 'ADD_RECORD',
+        payload: record
+      }
+    )
+  }
+
+  console.log(currentForm);
 
   const formFields = currentForm.fields.map(
     (field, i) => {
@@ -276,26 +280,22 @@ function RecordForm(props) {
             type='button'
             onClick={() => handleMoveField(
               i,
-              'UP',
-              currentForm,
-              props.dispatch
+              'UP'
             )}
           >up</button>
           <button
             type='button'
             onClick={() => handleMoveField(
               i,
-              'DOWN',
-              currentForm,
-              props.dispatch
+              'DOWN'
             )}
           >down</button>
           <InputField
             {...field}
             value={value}
-            handleFieldValueChange={handleFieldValueChange(currentForm, props.dispatch)}
-            handleLabelEdit={handleLabelEdit(i, currentForm, props.dispatch)}
-            handleMinMaxEdit={handleMinMaxEdit(i, value, field.id, currentForm, props.dispatch)}
+            handleFieldValueChange={handleFieldValueChange}
+            handleLabelEdit={handleLabelEdit(i)}
+            handleMinMaxEdit={handleMinMaxEdit(i, value, field.id)}
           />
 
         </div>
@@ -319,9 +319,7 @@ function RecordForm(props) {
           type='button'
           onClick={() => handleAddField(
             type,
-            `New ${label} Field`,
-            currentForm,
-            props.dispatch)}
+            `New ${label} Field`)}
         >Add new {label} field</button>
       )
     });
@@ -330,19 +328,13 @@ function RecordForm(props) {
 
   return (
     <form onSubmit={event =>
-      handleSubmitForm(
-        event,
-        props.dispatch,
-        currentForm
-      )}>
+      handleSubmitForm(event)}>
       <p>
         Select record form:
         <select
           value={props.state.currentForm}
           onChange={event =>
-            handleCurrentFormChange(
-              event.target.value,
-              props.dispatch)
+            handleCurrentFormChange(event.target.value)
           }
         >
           {selectOptions}
@@ -358,9 +350,7 @@ function RecordForm(props) {
           value={currentForm.name}
           onChange={(event) =>
             handleFormNameEdit(
-              event.target.value,
-              currentForm,
-              props.dispatch
+              event.target.value
             )}
         />
       </h3>
@@ -369,11 +359,7 @@ function RecordForm(props) {
           type='text'
           value={currentForm.description}
           onChange={event =>
-            handleFormDescriptionEdit(
-              event.target.value,
-              currentForm,
-              props.dispatch
-            )}
+            handleFormDescriptionEdit(event.target.value)}
         />
       </p>
       {
