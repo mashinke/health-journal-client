@@ -83,31 +83,61 @@ function RecordForm(props) {
     })
   }
 
+  function handleToggleDeleteField(index) {
+    console.log('toggleDeleteField')
+    const payload = {
+      ...currentForm,
+      fields: [
+        ...currentForm.fields
+      ]
+    }
+
+    payload.fields[index].deleted = !payload.fields[index].deleted;
+
+    props.dispatch(
+      {
+        type: 'UPDATE_CURRENT_FORM',
+        payload
+      }
+    )
+  }
+
+  function handleResetForm(event) {
+    event.preventDefault();
+
+    const payload = props.state.modifiedForms.find(form =>
+      form.id === currentForm.id)
+
+    console.log('old', props.state.modifiedForms)
+    console.log('curr', currentForm)
+    props.dispatch(
+      {
+        type: 'UPDATE_CURRENT_FORM',
+        payload
+      }
+    )
+  }
 
   function handleLabelEdit(index) {
     return function (label) {
-      const oldLabel = currentForm.fields[index].label;
+
       const payload = {
         ...currentForm,
-        values: {
-          ...currentForm.values,
-          [label]: currentForm.values
-        },
-        fields: [
-          ...currentForm.fields,
-        ]
+        modified: true,
+        fields: currentForm.fields.map(field => (
+          { ...field }
+        ))
       }
 
+
       payload.fields[index] = {
-        ...currentForm.fields[index],
+        ...payload.fields[index],
         label,
         duplicateError: checkDuplicates(
           currentForm,
           label
         )
       };
-
-      delete payload.values[oldLabel];
 
       props.dispatch({
         type: 'UPDATE_CURRENT_FORM',
@@ -234,9 +264,19 @@ function RecordForm(props) {
 
     if (modified) {
       try {
+        fields = fields
+          .filter(field => !field.deleted)
+          .map(field => {
+            const { oldLabel, ...rest } = field;
+            console.log(rest)
+            return { ...rest };
+          })
+        console.log(values)
         if (!formId) {
           newCurrentForm = await FormApiService.postForm({
-            name, description, fields
+            name,
+            description,
+            fields
           })
 
           formId = newCurrentForm.id;
@@ -269,39 +309,57 @@ function RecordForm(props) {
     )
   }
 
-  const formFields = currentForm.fields.map(
-    (field, i) => {
-      const value = currentForm.values[field.id];
+  console.log(currentForm)
 
+  const formFields = currentForm.fields
+    .map(
+      (field, i) => {
+        if (field.deleted)
+          return (
+            <div key={i}>
+              Field deleted
+              <button
+                type='button'
+                onClick={() => handleToggleDeleteField(i)}
+              >
+                undo
+              </button>
+            </div>
+          )
 
-      return (
-        <div key={i}>
+        const value = currentForm.values[field.id];
 
-          <button
-            type='button'
-            onClick={() => handleMoveField(
-              i,
-              'UP'
-            )}
-          >up</button>
-          <button
-            type='button'
-            onClick={() => handleMoveField(
-              i,
-              'DOWN'
-            )}
-          >down</button>
-          <InputField
-            {...field}
-            value={value === undefined ? '' : value}
-            handleFieldValueChange={handleFieldValueChange}
-            handleLabelEdit={handleLabelEdit(i)}
-            handleMinMaxEdit={handleMinMaxEdit(i, value, field.id)}
-          />
+        return (
+          <div key={i}>
 
-        </div>
-      )
-    });
+            <button
+              type='button'
+              onClick={() => handleMoveField(
+                i,
+                'UP'
+              )}
+            >up</button>
+            <button
+              type='button'
+              onClick={() => handleMoveField(
+                i,
+                'DOWN'
+              )}
+            >down</button>
+            <InputField
+              {...field}
+              value={value === undefined ? '' : value}
+              handleFieldValueChange={handleFieldValueChange}
+              handleLabelEdit={handleLabelEdit(i)}
+              handleMinMaxEdit={handleMinMaxEdit(i, value, field.id)}
+            />
+            <button
+              type='button'
+              onClick={() => handleToggleDeleteField(i)}
+            >delete</button>
+          </div>
+        )
+      });
   let newFormCounter = 0;
   const selectOptions = props.state.forms.map((form, i) => (
     <option key={form.id || `new-form-${++newFormCounter}`} value={i}>{form.name}</option>
@@ -328,8 +386,12 @@ function RecordForm(props) {
   const formIsValid = validateForm(currentForm);
 
   return (
-    <form onSubmit={event =>
-      handleSubmitForm(event)}>
+    <form
+      onSubmit={event =>
+        handleSubmitForm(event)}
+      onReset={event =>
+        handleResetForm(event)}
+    >
       <p>
         Select record form:
         <select
@@ -374,6 +436,8 @@ function RecordForm(props) {
         disabled={!formIsValid}
         type='submit'
       >Submit Record</button>
+      <button
+        type='reset'>Reset</button>
       <div>
         {addFieldButtons}
       </div>

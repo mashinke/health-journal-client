@@ -34,11 +34,11 @@ export default function RecordFilterControls(props) {
   return (
     <section>
       <h3>Filter Selection</h3>
-      <h4>Filter by form</h4>
       {
         props.forms.length > 0 &&
         <SelectMultiple
           buttonLabel='Select forms'
+          label='Filter by form'
           handleSelectedItemsChange={handleFormIdFilterChange(props.dispatch)}
           items={
             props.forms.map(({ id, name }) => {
@@ -50,8 +50,9 @@ export default function RecordFilterControls(props) {
           }
         />
       }
-      <h4>Filter by Date</h4>
       <DateRangeSelect
+        id='form-date-range-picker'
+        label='Filter by date'
         fromDate={props.filters.created.from}
         toDate={props.filters.created.to}
         dispatch={

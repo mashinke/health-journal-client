@@ -14,15 +14,28 @@ const dashboardStateReducer = (state, action) => {
       }
     }
     case 'UPDATE_CURRENT_FORM': {
+      const { modified } = currentForm;
+      const modifiedForms = [...state.modifiedForms];
+      const oldForm = {};
+      if (!modified) {
+        Object.assign(oldForm, currentForm);
+        oldForm.fields = currentForm.fields.map(field => {
+          return { ...field }
+        });
+        modifiedForms.push(oldForm);
+      }
+
       forms.splice(
         state.currentForm,
         1,
         {
           ...action.payload
         });
+
       return {
         ...state,
-        forms
+        forms,
+        modifiedForms
       }
     }
     case 'ADD_FORM': {

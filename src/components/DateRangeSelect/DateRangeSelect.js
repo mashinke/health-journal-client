@@ -28,9 +28,9 @@ export default function DateRangeSelect(props) {
   }
 
   return (
-    <div>
+    <div id={props.id}>
+      <h4><label htmlFor={props.id}>{props.label}</label></h4>
       <div>
-        <label htmlFor='from-date'>From</label>
         <DatePicker
           value={fromDate}
           maxDate={new Date()}
@@ -38,7 +38,7 @@ export default function DateRangeSelect(props) {
         />
       </div>
       <div>
-        <label htmlFor='fto-date'>To</label>
+        <label htmlFor='to-date'>To</label>
         <DatePicker
           value={toDate}
           maxDate={new Date()}

@@ -44,6 +44,7 @@ function Dashboard(props) {
     dashboardStateReducer,
     {
       forms: [],
+      modifiedForms: [],
       records: [],
       currentForm: null,
       displayRecordForm: false,

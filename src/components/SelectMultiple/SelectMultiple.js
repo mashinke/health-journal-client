@@ -53,6 +53,9 @@ export default function SelectMultiple(props) {
 
   return (
     <div>
+      <h4>
+        <label {...getLabelProps()}>{props.label}</label>
+      </h4>
       {
         selectedItems.map((selectedItem, index) => (
           <span
