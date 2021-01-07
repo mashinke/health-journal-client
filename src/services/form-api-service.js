@@ -21,7 +21,12 @@ const FormApiService = {
     })
       .then(res =>
         (!res.ok)
-          ? res.json().then(e => Promise.reject(e))
+          ? res.json().then(err => Promise.reject(
+            {
+              status: res.status,
+              message: err
+            }
+          ))
           : res.json()
       )
   },
@@ -44,7 +49,12 @@ const FormApiService = {
       body: JSON.stringify(newForm)
     }).then(res =>
       (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
+        ? res.json().then(err => Promise.reject(
+          {
+            status: res.status,
+            message: err
+          }
+        ))
         : res.json()
     )
   },
@@ -67,7 +77,12 @@ const FormApiService = {
       body: JSON.stringify(update)
     }).then(res =>
       (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
+        ? res.json().then(err => Promise.reject(
+          {
+            status: res.status,
+            message: err
+          }
+        ))
         : res.json()
     )
   }

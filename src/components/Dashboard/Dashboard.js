@@ -1,9 +1,10 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
 import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
 import RecordForm from '../RecordForm/RecordForm';
+import UserContext from '../../contexts/UserContext';
 
 import dashboardStateReducer from './dashboardStateReducer';
 
@@ -36,6 +37,7 @@ function filterCallBack(filters) {
 }
 
 function Dashboard(props) {
+  const userContext = useContext(UserContext);
   const [dashboardState, dashboardDispatch] = useReducer(
     dashboardStateReducer,
     {
@@ -56,8 +58,16 @@ function Dashboard(props) {
           payload: res
         };
         dashboardDispatch(action);
+      }).catch(error => {
+        switch (error.status) {
+          case 401:
+            userContext.processLogout();
+            break;
+          default:
+            console.log(error.message);
+        }
       })
-    , []);
+    , [userContext]);
 
   useEffect(() => {
     FormApiService.getForms()
@@ -67,8 +77,16 @@ function Dashboard(props) {
           payload: res
         };
         dashboardDispatch(action);
-      });
-  }, []);
+      }).catch(error => {
+        switch (error.status) {
+          case 401:
+            userContext.processLogout();
+            break;
+          default:
+            console.log(error.message);
+        }
+      })
+  }, [userContext]);
 
   return (
     <main>

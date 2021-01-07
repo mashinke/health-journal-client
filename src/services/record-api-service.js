@@ -11,7 +11,12 @@ const RecordApiService = {
     })
       .then(res =>
         (!res.ok)
-          ? res.json().then(e => Promise.reject(e))
+          ? res.json().then(err => Promise.reject(
+            {
+              status: res.status,
+              message: err
+            }
+          ))
           : res.json()
       )
   },
@@ -25,7 +30,12 @@ const RecordApiService = {
       body: JSON.stringify(record)
     }).then(res =>
       (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
+        ? res.json().then(err => Promise.reject(
+          {
+            status: res.status,
+            message: err
+          }
+        ))
         : res.json()
     )
   }
