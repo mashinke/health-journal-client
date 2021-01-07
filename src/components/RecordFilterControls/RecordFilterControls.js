@@ -1,5 +1,5 @@
 import React from 'react';
-import FormSelect from '../FormSelect/FormSelect';
+import SelectMultiple from '../SelectMultiple/SelectMultiple';
 import DateRangeSelect from '../DateRangeSelect/DateRangeSelect';
 
 function handleFormIdFilterChange(dispatch) {
@@ -34,11 +34,13 @@ export default function RecordFilterControls(props) {
   return (
     <section>
       <h3>Filter Selection</h3>
+      <h4>Filter by form</h4>
       {
         props.forms.length > 0 &&
-        <FormSelect
+        <SelectMultiple
+          buttonLabel='Select forms'
           handleSelectedItemsChange={handleFormIdFilterChange(props.dispatch)}
-          forms={
+          items={
             props.forms.map(({ id, name }) => {
               return {
                 id,
@@ -48,8 +50,13 @@ export default function RecordFilterControls(props) {
           }
         />
       }
+      <h4>Filter by Date</h4>
       <DateRangeSelect
-        dispatch={handleDateFilterChange(props.dispatch)}
+        fromDate={props.filters.created.from}
+        toDate={props.filters.created.to}
+        dispatch={
+          handleDateFilterChange(props.dispatch)
+        }
       />
     </section >
   )

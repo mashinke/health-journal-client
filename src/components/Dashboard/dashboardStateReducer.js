@@ -5,13 +5,12 @@ const dashboardStateReducer = (state, action) => {
 
   switch (action.type) {
     case 'FILTER_RECORDS': {
-      const activeFilters = {
-        ...state.filters,
-        ...action.payload
-      };
       return {
         ...state,
-        activeFilters
+        activeFilters: {
+          ...state.activeFilters,
+          ...action.payload
+        }
       }
     }
     case 'UPDATE_CURRENT_FORM': {
@@ -21,7 +20,6 @@ const dashboardStateReducer = (state, action) => {
         {
           ...action.payload
         });
-      console.log('updating current form', action.payload)
       return {
         ...state,
         forms

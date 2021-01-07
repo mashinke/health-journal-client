@@ -232,8 +232,6 @@ function RecordForm(props) {
 
     let newCurrentForm;
 
-    console.log('modified', modified)
-
     if (modified) {
       try {
         if (!formId) {
@@ -270,8 +268,6 @@ function RecordForm(props) {
       }
     )
   }
-
-  console.log(currentForm);
 
   const formFields = currentForm.fields.map(
     (field, i) => {

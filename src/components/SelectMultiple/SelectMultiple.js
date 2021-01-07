@@ -6,9 +6,9 @@ const DropDownListItem = styled.li`
   font-weight: ${props => props.isHighlighted ? 'bold' : ''}
 `;
 
-export default function FormSelect(props) {
+export default function SelectMultiple(props) {
   const {
-    forms,
+    items,
     handleSelectedItemsChange
   } = props;
   const {
@@ -32,7 +32,7 @@ export default function FormSelect(props) {
     selectItem
   } = useSelect(
     {
-      items: forms,
+      items,
       onStateChange: ({ type, selectedItem }) => {
         switch (type) {
           case useSelect.stateChangeTypes.MenuKeyDownEnter:
@@ -53,9 +53,6 @@ export default function FormSelect(props) {
 
   return (
     <div>
-      <h4>
-        <label {...getLabelProps()}>Filter by form</label>
-      </h4>
       {
         selectedItems.map((selectedItem, index) => (
           <span
@@ -74,18 +71,18 @@ export default function FormSelect(props) {
       <button
         {...getToggleButtonProps(getDropdownProps({ preventKeyAction: isOpen }))}
       >
-        {(selectedItem && selectedItem.name) || 'Filter by form'}
+        {(selectedItem && selectedItem.name) || props.buttonLabel}
       </button>
       <ul {...getMenuProps()}>
         {
           isOpen &&
-          forms.map((form, index) => (
+          items.map((item, index) => (
             <DropDownListItem
               isHighlighted={highlightedIndex === index}
-              key={`${form.id}${index}`}
-              {...getItemProps({ form, index })}
+              key={`${item.id}${index}`}
+              {...getItemProps({ item, index })}
             >
-              {form.name}
+              {item.name}
             </DropDownListItem>
           ))
         }

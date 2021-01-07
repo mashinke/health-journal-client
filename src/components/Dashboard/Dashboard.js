@@ -16,12 +16,14 @@ const filterFunctions = {
   },
   created: (record, filter) => {
     const dateCreated = new Date(record.created);
+    const fromDate = new Date(filter.from);
+    const toDate = new Date(filter.to)
     if (filter.from === null || filter.to === null)
       return true;
 
     return (
-      dateCreated >= filter.from
-      && dateCreated < filter.to.setDate(filter.to.getDate() + 1)
+      dateCreated >= fromDate
+      && dateCreated < toDate.setDate(filter.to.getDate() + 1)
     )
   }
 }
@@ -47,7 +49,10 @@ function Dashboard(props) {
       displayRecordForm: false,
       activeFilters: {
         formId: [],
-        created: {}
+        created: {
+          from: null,
+          to: null
+        }
       },
       apiError: false
     }
@@ -107,6 +112,7 @@ function Dashboard(props) {
       <RecordFilterControls
         forms={dashboardState.forms}
         dispatch={dashboardDispatch}
+        filters={dashboardState.activeFilters}
       />
       <RecordDisplay
         records={dashboardState.records}

@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-date-picker';
 
 export default function DateRangeSelect(props) {
-  const [toDate, setToDate] = useState(null)
-  const [fromDate, setFromDate] = useState(null)
+  const { fromDate, toDate, dispatch } = props
 
   function handleDateChange(type, value) {
     switch (type) {
       case 'FROM':
         if (toDate === null || value <= toDate) {
-          setFromDate(value);
-          props.dispatch({
+          dispatch({
             to: toDate,
             from: value
           });
@@ -18,8 +16,7 @@ export default function DateRangeSelect(props) {
         break;
       case 'TO':
         if (fromDate === null || value >= fromDate) {
-          setToDate(value);
-          props.dispatch({
+          dispatch({
             to: value,
             from: fromDate
           })
@@ -32,7 +29,6 @@ export default function DateRangeSelect(props) {
 
   return (
     <div>
-      <h4>Pick a date range</h4>
       <div>
         <label htmlFor='from-date'>From</label>
         <DatePicker
