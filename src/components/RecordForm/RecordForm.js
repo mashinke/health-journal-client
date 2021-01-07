@@ -235,18 +235,20 @@ function RecordForm(props) {
     console.log('modified', modified)
 
     if (modified) {
-      if (!formId) {
-        newCurrentForm = await FormApiService.postForm({
-          name, description, fields
-        })
+      try {
+        if (!formId) {
+          newCurrentForm = await FormApiService.postForm({
+            name, description, fields
+          })
 
-        formId = newCurrentForm.id;
-      }
-      else {
-        newCurrentForm = await FormApiService.patchForm(formId, {
-          name, description, fields
-        });
-      }
+          formId = newCurrentForm.id;
+        }
+        else {
+          newCurrentForm = await FormApiService.patchForm(formId, {
+            name, description, fields
+          });
+        }
+      } catch (error) { props.setApiError(error) }
 
       props.dispatch({
         type: 'UPDATE_CURRENT_FORM',
@@ -257,7 +259,10 @@ function RecordForm(props) {
       })
     }
 
-    const record = await RecordApiService.postRecord({ formId, values });
+    let record;
+    try {
+      record = await RecordApiService.postRecord({ formId, values });
+    } catch (error) { props.setApiError(error) }
     props.dispatch(
       {
         type: 'ADD_RECORD',

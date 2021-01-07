@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
+import UserContext from '../../contexts/UserContext';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
 import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
 import RecordForm from '../RecordForm/RecordForm';
-import UserContext from '../../contexts/UserContext';
 
 import dashboardStateReducer from './dashboardStateReducer';
 
@@ -46,10 +46,15 @@ function Dashboard(props) {
       currentForm: null,
       displayRecordForm: false,
       activeFilters: {
-        formId: []
-      }
+        formId: [],
+        created: {}
+      },
+      apiError: false
     }
   )
+
+  const [apiError, setApiError] = useState(null)
+
   useEffect(() =>
     RecordApiService.getRecords()
       .then(res => {
@@ -58,16 +63,8 @@ function Dashboard(props) {
           payload: res
         };
         dashboardDispatch(action);
-      }).catch(error => {
-        switch (error.status) {
-          case 401:
-            userContext.processLogout();
-            break;
-          default:
-            console.log(error.message);
-        }
-      })
-    , [userContext]);
+      }).catch(setApiError)
+    , []);
 
   useEffect(() => {
     FormApiService.getForms()
@@ -77,16 +74,18 @@ function Dashboard(props) {
           payload: res
         };
         dashboardDispatch(action);
-      }).catch(error => {
-        switch (error.status) {
-          case 401:
-            userContext.processLogout();
-            break;
-          default:
-            console.log(error.message);
-        }
-      })
-  }, [userContext]);
+      }).catch(setApiError)
+  }, []);
+
+  if (apiError) {
+    switch (apiError.status) {
+      case 401:
+        userContext.processLogout();
+        break;
+      default:
+        console.log(apiError.message)
+    }
+  }
 
   return (
     <main>
@@ -101,6 +100,7 @@ function Dashboard(props) {
         && <RecordForm
           state={dashboardState}
           dispatch={dashboardDispatch}
+          setApiError={setApiError}
         />
       }
       <RecordFilterControls
