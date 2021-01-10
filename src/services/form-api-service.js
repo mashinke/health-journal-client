@@ -5,9 +5,11 @@ function prepareFormFields(fields) {
   return fields.map(({
     id,
     type,
-    label
+    label,
+    min,
+    max
   }) => {
-    return { id, type, label }
+    return { id, type, label, min, max }
   });
 };
 

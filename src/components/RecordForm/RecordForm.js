@@ -84,7 +84,6 @@ function RecordForm(props) {
   }
 
   function handleToggleDeleteField(index) {
-    console.log('toggleDeleteField')
     const payload = {
       ...currentForm,
       fields: [
@@ -107,9 +106,6 @@ function RecordForm(props) {
 
     const payload = props.state.modifiedForms.find(form =>
       form.id === currentForm.id)
-
-    console.log('old', props.state.modifiedForms)
-    console.log('curr', currentForm)
     props.dispatch(
       {
         type: 'UPDATE_CURRENT_FORM',
@@ -262,54 +258,53 @@ function RecordForm(props) {
 
     let newCurrentForm;
 
-    if (modified) {
-      try {
+    try {
+      if (modified) {
         fields = fields
           .filter(field => !field.deleted)
           .map(field => {
             const { oldLabel, ...rest } = field;
-            console.log(rest)
             return { ...rest };
           })
-        console.log(values)
         if (!formId) {
           newCurrentForm = await FormApiService.postForm({
             name,
             description,
             fields
-          })
+          });
 
           formId = newCurrentForm.id;
         }
         else {
-          newCurrentForm = await FormApiService.patchForm(formId, {
-            name, description, fields
-          });
+          newCurrentForm = await FormApiService.patchForm(
+            formId,
+            {
+              name,
+              description,
+              fields
+            });
         }
-      } catch (error) { props.setApiError(error) }
 
-      props.dispatch({
-        type: 'UPDATE_CURRENT_FORM',
-        payload: {
-          ...newCurrentForm,
-          values: {}
-        }
-      })
-    }
-
-    let record;
-    try {
-      record = await RecordApiService.postRecord({ formId, values });
-    } catch (error) { props.setApiError(error) }
-    props.dispatch(
-      {
-        type: 'ADD_RECORD',
-        payload: record
+        props.dispatch({
+          type: 'UPDATE_CURRENT_FORM',
+          payload: {
+            ...newCurrentForm,
+            values: {}
+          }
+        });
       }
-    )
-  }
 
-  console.log(currentForm)
+      let record;
+      record = await RecordApiService.postRecord({ formId, values });
+
+      props.dispatch(
+        {
+          type: 'ADD_RECORD',
+          payload: record
+        }
+      );
+    } catch (error) { props.setApiError(error) }
+  }
 
   const formFields = currentForm.fields
     .map(
