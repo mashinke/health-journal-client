@@ -198,7 +198,8 @@ function RecordForm(props) {
       fields: [
         ...currentForm.fields,
         newField
-      ]
+      ],
+      modified: true
     }
 
     props.dispatch(
@@ -365,7 +366,8 @@ function RecordForm(props) {
       string: 'Text',
       number: 'Number',
       boolean: 'Yes/No',
-      range: 'Range'
+      range: 'Range',
+      time: 'Time'
     }).map(([type, label]) => {
       return (
         <button

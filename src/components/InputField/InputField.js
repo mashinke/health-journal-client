@@ -1,4 +1,5 @@
 import React from 'react';
+import TimePicker from 'react-time-picker';
 
 function StringInput(props) {
   const label = props.label
@@ -99,6 +100,18 @@ function RangeInput(props) {
   )
 }
 
+function TimeInput(props) {
+  return (
+    <TimePicker
+      onChange={value => props.handleFieldValueChange(
+        props.id,
+        value
+      )}
+      value={props.value}
+    />
+  )
+}
+
 export default function InputField(props) {
   let field;
   switch (props.type) {
@@ -111,8 +124,13 @@ export default function InputField(props) {
     case 'string':
       field = <StringInput {...props} />;
       break;
-    default:
-      return <RangeInput {...props} />;
+    case 'range':
+      field = <RangeInput {...props} />;
+      break;
+    case 'time':
+      field = <TimeInput {...props} />;
+      break;
+    default: break;
   }
   return (
     <div>
