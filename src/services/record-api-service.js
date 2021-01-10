@@ -38,6 +38,23 @@ const RecordApiService = {
         ))
         : res.json()
     )
+  },
+  deleteRecord(recordId) {
+    return fetch(`${config.API_ENDPOINT}/record/${recordId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${TokenService.getAuthToken()}`,
+      }
+    }).then(res =>
+      (!res.ok)
+        ? res.json().then(err => Promise.reject(
+          {
+            status: res.status,
+            message: err
+          }
+        ))
+        : true
+    )
   }
 }
 

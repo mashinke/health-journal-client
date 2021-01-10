@@ -7,7 +7,6 @@ const dashboardStateReducer = (state, action) => {
     case 'DELETE_RECORD': {
       const records = state.records.filter(record =>
         record.id !== action.payload.recordId)
-      console.log('dispatch delete record');
       return {
         ...state,
         records

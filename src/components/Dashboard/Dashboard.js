@@ -119,6 +119,7 @@ function Dashboard(props) {
         records={dashboardState.records}
         dispatch={dashboardDispatch}
         filter={filterCallBack(dashboardState.activeFilters)}
+        setApiError={setApiError}
       />
     </main>
   )
