@@ -33,6 +33,10 @@ function Record(props) {
       <ul>
         {bodyFields}
       </ul>
+      <button
+        type='button'
+        onClick={() => props.handleDeleteRecord(props.id)}
+      >Delete Record</button>
     </li>
   )
 }

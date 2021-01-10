@@ -4,6 +4,15 @@ const dashboardStateReducer = (state, action) => {
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
+    case 'DELETE_RECORD': {
+      const records = state.records.filter(record =>
+        record.id !== action.payload.recordId)
+      console.log('dispatch delete record');
+      return {
+        ...state,
+        records
+      }
+    }
     case 'FILTER_RECORDS': {
       return {
         ...state,

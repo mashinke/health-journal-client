@@ -117,6 +117,7 @@ function Dashboard(props) {
       />
       <RecordDisplay
         records={dashboardState.records}
+        dispatch={dashboardDispatch}
         filter={filterCallBack(dashboardState.activeFilters)}
       />
     </main>
