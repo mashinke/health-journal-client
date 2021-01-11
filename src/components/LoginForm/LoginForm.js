@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import AuthApiService from '../../services/auth-api-service';
 import UserContext from '../../contexts/UserContext';
+import { FormInput, HaveAccountLink, Input, Label, SubmitButton, FormHeader, FormContainer, FormMain, StyledForm, FormTitle } from '../Form/Form';
 
 function LoginForm(props) {
   const userContext = useContext(UserContext);
@@ -28,46 +28,44 @@ function LoginForm(props) {
       })
   }
   return (
-    <main>
-      <h2>Login</h2>
-      <form
-        className='LoginForm'
-        onSubmit={handleSubmit}
-      >
-        <div role='alert'>
-          {error && <p>{error}</p>}
-        </div>
-        <div>
-          <label htmlFor='login-email-input'>
-            Email
-          </label>
-          <input
-            type='text'
-            id='login-email-input'
-            name='email'
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='login-password-input'>
-            Password
-          </label>
-          <input
-            id='login-password-input'
-            name='password'
-            type='password'
-            required
-          />
-        </div>
-        <button type='submit'>
-          Login
-      </button>
-        {' '}
-        <Link to='/register'>Don't have an account?</Link>
+    <FormContainer>
+      <FormHeader>Health Journal</FormHeader>
+      <FormMain>
+        <FormTitle>Login</FormTitle>
+        <StyledForm
+          className='LoginForm'
+          onSubmit={handleSubmit}
+        >
+          <div role='alert'>
+            {error && <p>{error}</p>}
+          </div>
+          <FormInput>
+            <Label htmlFor='login-email-input'>
+              Email</Label>
+            <Input
+              type='text'
+              id='login-email-input'
+              name='email'
+              required
+            />
+          </FormInput>
+          <FormInput>
+            <Label htmlFor='login-password-input'>
+              Password</Label>
+            <Input
+              id='login-password-input'
+              name='password'
+              type='password'
+              required
+            />
+          </FormInput>
+          <SubmitButton>Login</SubmitButton>
+          {' '}
+          <HaveAccountLink to='/register'>Don't have an account?</HaveAccountLink>
 
-      </form>
-    </main>
-
+        </StyledForm>
+      </FormMain>
+    </FormContainer>
   )
 }
 

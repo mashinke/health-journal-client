@@ -1,7 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 import AuthApiService from '../../services/auth-api-service';
+import {
+  FormInput,
+  HaveAccountLink,
+  Input,
+  Label,
+  SubmitButton,
+  FormHeader,
+  FormContainer,
+  FormMain,
+  FormDescription,
+  StyledForm,
+  FormTitle
+} from '../Form/Form';
 
 function RegistrationForm(props) {
   const userContext = useContext(UserContext);
@@ -35,62 +47,60 @@ function RegistrationForm(props) {
   }
 
   return (
-    <main>
-      <p>
-        Track, manage, and gain insights from your health information.
-    </p>
-      <h2>Sign up</h2>
-      <form
-        className='RegistrationForm'
-        onSubmit={handleSubmit}
-      >
-        <div
-          role='alert'
-          className='alert'>
-          {error && <p>{error}</p>}
-        </div>
-        <div>
-          <label htmlFor='registration-name-input'>
-            Enter your name
-        </label>
-          <input
-            type='email'
-            id='registration-email-input'
-            name='email'
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='registration-username-input'>
-            Choose a username
-        </label>
-          <input
-            type='text'
-            id='registration-username-input'
-            name='username'
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='registration-password-input'>
-            Choose a password
-        </label>
-          <input
-            type='password'
-            id='registration-password-input'
-            name='password'
-            required
-          />
-        </div>
-        <footer>
-          <button type='submit'>
-            Sign up
-          </button>
-          {' '}
-          <Link to='/login'>Already have an account?</Link>
-        </footer>
-      </form>
-    </main>
+    <FormContainer>
+      <FormHeader>Health Journal</FormHeader>
+      <FormMain>
+        <FormDescription>
+          Track, manage, and gain insights from your health information.
+    </FormDescription>
+        <FormTitle>Sign up</FormTitle>
+        <StyledForm
+          className='RegistrationForm'
+          onSubmit={handleSubmit}
+        >
+          <div
+            role='alert'
+            className='alert'>
+            {error && <p>{error}</p>}
+          </div>
+          <FormInput>
+            <Label htmlFor='registration-name-input'>
+              email</Label>
+            <Input
+              type='email'
+              id='registration-email-input'
+              name='email'
+              required
+            />
+          </FormInput>
+          <FormInput>
+            <Label htmlFor='registration-username-input'>
+              username</Label>
+            <Input
+              type='text'
+              id='registration-username-input'
+              name='username'
+              required
+            />
+          </FormInput>
+          <FormInput>
+            <Label htmlFor='registration-password-input'>
+              password</Label>
+            <Input
+              type='password'
+              id='registration-password-input'
+              name='password'
+              required
+            />
+          </FormInput>
+          <footer>
+            <SubmitButton>Sign up</SubmitButton>
+            {' '}
+            <HaveAccountLink to='/login'>Already have an account?</HaveAccountLink>
+          </footer>
+        </StyledForm>
+      </FormMain>
+    </FormContainer>
   )
 }
 
