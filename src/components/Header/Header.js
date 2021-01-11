@@ -5,10 +5,10 @@ import UserContext from '../../contexts/UserContext';
 import RoundButton from '../LogoutButton/LogoutButton';
 
 const AppHeader = styled.header`
-  background-color: lightgray;
+  background-color: ${props => props.theme.primary.medium};
+  line-height: 4rem;
   display: flex;
   flex-direction: row;
-  height: 2.75rem;
 `;
 const AppName = styled.h1`
   font-size: 2rem;

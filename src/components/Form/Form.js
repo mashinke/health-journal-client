@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const FormContainer = styled.div`
   width: 85vw;
   max-width: 30rem;
-  border: 1px solid ${props => props.theme.primary.medium};;
+  border: 1px solid ${props => props.theme.primary.dark};;
   margin: 7.5vw auto;
   color: ${props => props.theme.primary.text};
 `;
@@ -14,6 +14,7 @@ export const FormHeader = styled.h1`
   line-height: 4rem;
   text-align: center;
   background-color: ${props => props.theme.primary.medium};
+  border-bottom: 1px solid ${props => props.theme.primary.dark};
 `;
 
 export const FormMain = styled.main`
@@ -27,7 +28,7 @@ export const FormDescription = styled.p`
   border-right: 0px;
   border-radius: .5rem 0 0 .5rem;
   padding: 1rem 1rem 1rem .5rem;
-  background-color: ${props => props.theme.secondary.light};
+  background-color: ${props => props.theme.secondary.medium};
   text-align: right;
   color: ${props => props.theme.secondary.text};
 `;
@@ -41,17 +42,16 @@ export const StyledForm = styled.form`
 `;
 
 export const HaveAccountLink = styled(Link)`
-  display: block;
   line-height: 2rem;
   border: 1px solid transparent;
   padding: 0 1rem;
   color: ${props => props.theme.primary.text};
   transition: 200ms all;
     :hover {
-     color: ${props => props.theme.primary.dark};
+     color: ${props => props.theme.primary.verydark};
     }
   :active {
-    border: 1px dotted ${props => props.theme.primary.medium};
+    border: 1px dotted ${props => props.theme.primary.dark};
     transition: 100ms all;
   }
 `;
@@ -95,11 +95,11 @@ export const SubmitButton = styled.button
     background-color: ${props => props.theme.primary.text};
     transition: 200ms all;
     :hover {
-      background-color: ${props => props.theme.primary.dark};
+      background-color: ${props => props.theme.primary.verydark};
     }
     :active {
       color: ${props => props.theme.primary.text};
-      background-color: ${props => props.theme.primary.medium};
+      background-color: ${props => props.theme.primary.dark};
       transition: 200ms all;
     }
   `;

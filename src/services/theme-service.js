@@ -4,14 +4,16 @@ const ThemeService = {
     return {
       primary: {
         'light': '#fef3f5',
-        'medium': '#f7b6c2',
-        'dark': '#da6278',
+        'medium': '#fbdae0',
+        'dark': '#f7b6c2',
+        'verydark': '#da6278',
         'text': '#614051'
       },
       secondary: {
         'light': '#eefaf6',
-        'medium': '#9cd3c2',
-        'dark': '#459a80',
+        'medium': '#c3eefd',
+        'dark': '#9cd3c2',
+        'verydark': '#459a80',
         'text': '#064b37'
       }
     }
