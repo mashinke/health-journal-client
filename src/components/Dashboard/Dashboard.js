@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useReducer, useState } from 'react';
 import UserContext from '../../contexts/UserContext';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
+import Header from '../Header/Header';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
 import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
 import RecordForm from '../RecordForm/RecordForm';
@@ -95,33 +96,37 @@ function Dashboard(props) {
   }
 
   return (
-    <main>
-      <h2>Dashboard</h2>
-      <button onClick={() =>
-        dashboardDispatch({
-          type: 'TOGGLE_DISPLAY_RECORD_FORM'
-        })
-      }>New record</button>
-      {
-        dashboardState.displayRecordForm
-        && <RecordForm
-          state={dashboardState}
+    <>
+      <Header />
+
+      <main>
+        <h2>Dashboard</h2>
+        <button onClick={() =>
+          dashboardDispatch({
+            type: 'TOGGLE_DISPLAY_RECORD_FORM'
+          })
+        }>New record</button>
+        {
+          dashboardState.displayRecordForm
+          && <RecordForm
+            state={dashboardState}
+            dispatch={dashboardDispatch}
+            setApiError={setApiError}
+          />
+        }
+        <RecordFilterControls
+          forms={dashboardState.forms}
           dispatch={dashboardDispatch}
+          filters={dashboardState.activeFilters}
+        />
+        <RecordDisplay
+          records={dashboardState.records}
+          dispatch={dashboardDispatch}
+          filter={filterCallBack(dashboardState.activeFilters)}
           setApiError={setApiError}
         />
-      }
-      <RecordFilterControls
-        forms={dashboardState.forms}
-        dispatch={dashboardDispatch}
-        filters={dashboardState.activeFilters}
-      />
-      <RecordDisplay
-        records={dashboardState.records}
-        dispatch={dashboardDispatch}
-        filter={filterCallBack(dashboardState.activeFilters)}
-        setApiError={setApiError}
-      />
-    </main>
+      </main>
+    </>
   )
 }
 
