@@ -107,6 +107,7 @@ function TimeInput(props) {
         props.id,
         value
       )}
+      disableClock={true}
       value={props.value}
     />
   )
@@ -141,11 +142,11 @@ export default function InputField(props) {
         props.label === '' && <p>Field must have a label!</p>
       }
       <label htmlFor={props.label}>
-        <input
+        {props.type !== 'range' && <input
           type='text'
           value={props.label}
           onChange={(event) => props.handleLabelEdit(event.target.value)}
-        />
+        />}
       </label>
       {field}
     </div>
