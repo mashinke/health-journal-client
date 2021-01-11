@@ -46,11 +46,13 @@ export const HaveAccountLink = styled(Link)`
   border: 1px solid transparent;
   padding: 0 1rem;
   color: ${props => props.theme.primary.text};
-  :hover {
+  transition: 200ms all;
+    :hover {
      color: ${props => props.theme.primary.dark};
-  }
+    }
   :active {
-    border: 1px dotted ${props => props.theme.primary.medium}
+    border: 1px dotted ${props => props.theme.primary.medium};
+    transition: 100ms all;
   }
 `;
 
@@ -68,7 +70,11 @@ export const Input = styled.input`
   width: 100%;
   font-size: 1.25rem;
   line-height: 2rem;
-  :hover {
+  transition: 200ms all;
+    :hover {
+    background-color: ${props => props.theme.secondary.light};
+  }
+  :focus {
     background-color: ${props => props.theme.secondary.light};
   }
 `;
@@ -87,7 +93,13 @@ export const SubmitButton = styled.button
     border-radius: .375rem;
     color: ${props => props.theme.primary.light};
     background-color: ${props => props.theme.primary.text};
+    transition: 200ms all;
     :hover {
-      background-color: ${props => props.theme.primary.dark}
+      background-color: ${props => props.theme.primary.dark};
+    }
+    :active {
+      color: ${props => props.theme.primary.text};
+      background-color: ${props => props.theme.primary.medium};
+      transition: 200ms all;
     }
   `;
