@@ -71,6 +71,12 @@ const dashboardStateReducer = (state, action) => {
         records
       };
     }
+    case 'TOGGLE_DISPLAY_RECORD_LIST': {
+      return {
+        ...state,
+        displayRecordForm: !state.displayRecordList
+      };
+    }
     case 'TOGGLE_DISPLAY_RECORD_FORM': {
       return {
         ...state,

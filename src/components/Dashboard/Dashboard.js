@@ -49,6 +49,7 @@ function Dashboard(props) {
       records: [],
       currentForm: null,
       displayRecordForm: false,
+      displayRecordList: false,
       activeFilters: {
         formId: [],
         created: {
@@ -95,17 +96,28 @@ function Dashboard(props) {
     }
   }
 
+
+  function handleNewRecordClick() {
+    dashboardDispatch({
+      type: 'TOGGLE_DISPLAY_RECORD_FORM'
+    })
+  };
+
+  function handleDisplayRecordListClick() {
+    dashboardDispatch({
+      type: 'TOGGLE_DISPLAY_RECORD_LIST'
+    })
+  };
+
   return (
     <>
-      <Header />
+      <Header
+        newRecord={handleNewRecordClick}
+        listRecords={handleDisplayRecordListClick}
+      />
 
       <main>
         <h2>Dashboard</h2>
-        <button onClick={() =>
-          dashboardDispatch({
-            type: 'TOGGLE_DISPLAY_RECORD_FORM'
-          })
-        }>New record</button>
         {
           dashboardState.displayRecordForm
           && <RecordForm

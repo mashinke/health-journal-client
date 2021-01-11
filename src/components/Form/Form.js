@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { IconContext } from 'react-icons';
+import { ThemeContext } from 'styled-components';
 
 export const FormContainer = styled.div`
   width: 85vw;
