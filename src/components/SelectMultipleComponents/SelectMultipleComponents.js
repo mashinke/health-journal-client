@@ -61,7 +61,7 @@ cursor: pointer;
 
 export const DropDownContainer = styled.div`
   display: flex;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 `;
 
 export const DropDownList = styled.ul`
