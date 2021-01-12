@@ -4,12 +4,14 @@ import {
   RiAddLine,
   RiFileList3Line,
   RiCalendar2Line,
-  RiFilterLine
+  RiCloseLine
 } from 'react-icons/ri';
 import styled, { ThemeContext } from 'styled-components';
 import { IconContext } from 'react-icons';
 
 const Button = styled.button`
+display: inline-block;
+padding: 0;
 text-align: center;
 border: 1px solid transparent;
 text-decoration: none;
@@ -27,8 +29,9 @@ const SquareButton = styled(Button)`
 
 const BigRoundButton = styled(RoundButton)`
   height: 2.5rem;
+  width: 2.5rem;
   line-height: 2.125rem;
-  width: 2.5rem;`;
+  `;
 const SmallRoundButton = styled(RoundButton)`
   height: 2rem;
   line-height: 1.625rem;
@@ -71,6 +74,15 @@ const BigSquareSecondaryColorButton = styled(BigSquareButton)`
     border-color: ${props => props.theme.secondary.text};
   }
 `
+
+const TinyRoundPrimaryColorButton = styled(RoundButton)`
+  height: 1.25rem;
+  width: 1.25rem;
+  :hover {
+    background-color: ${props => props.theme.primary.medium};
+    border: 1px solid ${props => props.theme.primary.dark};
+  }
+`;
 
 export function LogoutButton(props) {
   const theme = useContext(ThemeContext);
@@ -158,6 +170,27 @@ export function FilterByDate(props) {
       >
         <RiCalendar2Line />
       </SmallRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}
+
+export function RemoveSelectedItemButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1rem'
+          }
+        }
+      }
+    >
+      <TinyRoundPrimaryColorButton {...props}>
+        <RiCloseLine />
+      </TinyRoundPrimaryColorButton>
     </IconContext.Provider>
   )
 }

@@ -4,12 +4,13 @@ import {
   ButtonsContainer,
   DropDownContainer,
   ItemsList,
-  ListItem,
+  DropdownListItem,
+  SelectedListItem,
   SelectButton,
   SelectButtonLabel,
-  SelectMultipleContainer
+  SelectMultipleContainer,
 } from '../SelectMultipleComponents/SelectMultipleComponents';
-
+import { RemoveSelectedItemButton } from '../Button/Button';
 export default function SelectMultiple(props) {
   const {
     items,
@@ -80,20 +81,20 @@ export default function SelectMultiple(props) {
       <ItemsList>
         {
           selectedItems.map((selectedItem, index) => (
-            <ListItem
+            <SelectedListItem
               key={`selected-item-${index} `}
               {...getSelectedItemProps({ selectedItem, index })}
             >
               {selectedItem.name}
-              <span
+              <RemoveSelectedItemButton
                 onClick={(event) => {
                   event.stopPropagation();
                   removeSelectedItem(selectedItem);
                 }}
               >
                 &#10005;
-            </span>
-            </ListItem>
+            </RemoveSelectedItemButton>
+            </SelectedListItem>
           ))
         }
       </ItemsList>
@@ -118,13 +119,13 @@ export default function SelectMultiple(props) {
           <ItemsList {...getMenuProps()}>
             {
               items.map((item, index) => (
-                <ListItem
+                <DropdownListItem
                   isHighlighted={highlightedIndex === index}
                   key={`${item.id} ${index} `}
                   {...getItemProps({ item, index })}
                 >
                   {item.name}
-                </ListItem>
+                </DropdownListItem>
               ))
             }
           </ItemsList>
