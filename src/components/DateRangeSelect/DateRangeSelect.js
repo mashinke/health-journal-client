@@ -1,5 +1,7 @@
 import React from 'react';
-import DatePicker from 'react-date-picker';
+import DatePicker from 'react-date-picker/dist/entry.nostyle';
+import { DateRangeSelectContainer, DateRangeSelectInputContainer, DateRangeSelectInputLabel, DateRangeSelectLabel } from '../DateSelectComponents/DateSelectComponents';
+import './DateRangeSelect.css';
 
 export default function DateRangeSelect(props) {
   const { fromDate, toDate, dispatch } = props
@@ -28,23 +30,28 @@ export default function DateRangeSelect(props) {
   }
 
   return (
-    <div id={props.id}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <div>
+    <DateRangeSelectContainer id={props.id}>
+      <DateRangeSelectLabel htmlFor={props.id}>
+        {props.label}
+      </DateRangeSelectLabel>
+      <DateRangeSelectInputContainer>
+        <DateRangeSelectInputLabel htmlFor='from-date'>
+          From:
+        </DateRangeSelectInputLabel>
         <DatePicker
           value={fromDate}
           maxDate={new Date()}
           onChange={value => handleDateChange('FROM', value)}
         />
-      </div>
-      <div>
-        <label htmlFor='to-date'>To</label>
+        <DateRangeSelectInputLabel htmlFor='to-date'>
+          To:
+        </DateRangeSelectInputLabel>
         <DatePicker
           value={toDate}
           maxDate={new Date()}
           onChange={value => handleDateChange('TO', value)}
         />
-      </div>
-    </div>
+      </DateRangeSelectInputContainer>
+    </DateRangeSelectContainer>
   )
 }
