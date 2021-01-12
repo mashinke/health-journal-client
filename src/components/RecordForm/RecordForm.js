@@ -294,6 +294,9 @@ function RecordForm(props) {
             values: {}
           }
         });
+        props.dispatch({
+          type: 'TOGGLE_DISPLAY_RECORD_FORM'
+        })
       }
 
       let record;
