@@ -29,7 +29,7 @@ export default function DateRangeSelect(props) {
 
   return (
     <div id={props.id}>
-      <h4><label htmlFor={props.id}>{props.label}</label></h4>
+      <label htmlFor={props.id}>{props.label}</label>
       <div>
         <DatePicker
           value={fromDate}

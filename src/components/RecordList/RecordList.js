@@ -15,7 +15,7 @@ export default function RecordList(props) {
     } catch (error) { props.setApiError(error) }
   }
 
-  const showRecords = props.records.filter(props.filter).map(record => (
+  const showRecords = props.records.map(record => (
     <Record
       key={record.id}
       handleDeleteRecord={handleDeleteRecord}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelect, useMultipleSelection } from 'downshift';
 
@@ -52,10 +52,12 @@ export default function SelectMultiple(props) {
   );
 
   return (
-    <div>
-      <h4>
-        <label {...getLabelProps()}>{props.label}</label>
-      </h4>
+    <div {...getDropdownProps({ preventKeyAction: isOpen })}>
+      <button
+        {...getToggleButtonProps(getDropdownProps({ preventKeyAction: isOpen }))}
+      >
+        <label {...getLabelProps()}>{(selectedItem && selectedItem.name) || props.buttonLabel}</label>
+      </button>
       {
         selectedItems.map((selectedItem, index) => (
           <span
@@ -71,11 +73,6 @@ export default function SelectMultiple(props) {
           </span>
         ))
       }
-      <button
-        {...getToggleButtonProps(getDropdownProps({ preventKeyAction: isOpen }))}
-      >
-        {(selectedItem && selectedItem.name) || props.buttonLabel}
-      </button>
       <ul {...getMenuProps()}>
         {
           isOpen &&

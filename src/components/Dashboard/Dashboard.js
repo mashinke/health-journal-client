@@ -10,6 +10,37 @@ import DashboardMain from '../DashboardMain/DashboardMain';
 
 import dashboardStateReducer from './dashboardStateReducer';
 
+
+const filterFunctions = {
+  formId: (record, filter) => {
+    if (filter.length === 0)
+      return true;
+    return filter.includes(record.formId)
+  },
+  created: (record, filter) => {
+    const dateCreated = new Date(record.created);
+    const fromDate = new Date(filter.from);
+    const toDate = new Date(filter.to)
+    if (filter.from === null || filter.to === null)
+      return true;
+
+    return (
+      dateCreated >= fromDate
+      && dateCreated < toDate.setDate(filter.to.getDate() + 1)
+    )
+  }
+}
+
+function filterCallBack(filters) {
+  return function (record) {
+    for (const [key, filter] of Object.entries(filters)) {
+      if (!filterFunctions[key](record, filter))
+        return false;
+    }
+    return true;
+  }
+}
+
 function Dashboard(props) {
   const userContext = useContext(UserContext);
   const [dashboardState, dashboardDispatch] = useReducer(
@@ -67,7 +98,6 @@ function Dashboard(props) {
     }
   }
 
-
   function handleNewRecordClick() {
     dashboardDispatch({
       type: 'TOGGLE_DISPLAY_RECORD_FORM'
@@ -79,6 +109,9 @@ function Dashboard(props) {
       type: 'TOGGLE_DISPLAY_RECORD_LIST'
     })
   };
+
+  const filteredRecords = dashboardState.records
+    .filter(filterCallBack(dashboardState.activeFilters));
 
   return (
     <>
@@ -99,7 +132,7 @@ function Dashboard(props) {
               dispatch={dashboardDispatch}
               forms={dashboardState.forms}
               filters={dashboardState.activeFilters}
-              records={dashboardState.records}
+              records={filteredRecords}
               setApiError={setApiError}
               displayRecordList={dashboardState.displayRecordList}
             />
