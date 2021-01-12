@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const FilterSelectBar = styled.div`
   display: flex;
   justify-content: space-evenly;
-  margin: 0 0 0 1rem;
+  margin: 0 1rem;
   border: 1px solid ${props => props.theme.secondary.dark};
-  border-right: 0px;
-  border-radius: .5rem 0 0 0;
+  // border-right: 0px;
+  border-radius: .5rem .5rem 0 0;
   padding: .5rem 1rem .5rem .25rem;
   background-color: ${props => props.theme.secondary.medium};
   text-align: right;
@@ -29,11 +29,11 @@ export const FilterSelectLabel = styled.div`
 export const FilterControlBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 0 1rem;
+  margin: 0 1rem;
   border: 1px solid ${props => props.theme.secondary.dark};
-  border-right: 0px;
+  // border-right: 0px;
   border-top: 0px;
-  border-radius: 0 0 0 .5rem;
+  border-radius: 0 0 .5rem .5rem;
   // padding: .5rem 1rem .5rem .25rem;
   background-color: ${props => props.theme.secondary.light};
   transition: 200ms height;
