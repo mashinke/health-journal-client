@@ -3,41 +3,13 @@ import UserContext from '../../contexts/UserContext';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import Header from '../Header/Header';
+import Summary from '../Summary/Summary';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
 import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
 import RecordForm from '../RecordForm/RecordForm';
 
 import dashboardStateReducer from './dashboardStateReducer';
 
-const filterFunctions = {
-  formId: (record, filter) => {
-    if (filter.length === 0)
-      return true;
-    return filter.includes(record.formId)
-  },
-  created: (record, filter) => {
-    const dateCreated = new Date(record.created);
-    const fromDate = new Date(filter.from);
-    const toDate = new Date(filter.to)
-    if (filter.from === null || filter.to === null)
-      return true;
-
-    return (
-      dateCreated >= fromDate
-      && dateCreated < toDate.setDate(filter.to.getDate() + 1)
-    )
-  }
-}
-
-function filterCallBack(filters) {
-  return function (record) {
-    for (const [key, filter] of Object.entries(filters)) {
-      if (!filterFunctions[key](record, filter))
-        return false;
-    }
-    return true;
-  }
-}
 
 function Dashboard(props) {
   const userContext = useContext(UserContext);
@@ -119,6 +91,14 @@ function Dashboard(props) {
       <main>
         <h2>Dashboard</h2>
         {
+          !(
+            dashboardState.displayRecordForm
+            || dashboardState.displayRecordList
+          )
+          && <Summary />
+
+        }
+        {
           dashboardState.displayRecordForm
           && <RecordForm
             state={dashboardState}
@@ -126,17 +106,16 @@ function Dashboard(props) {
             setApiError={setApiError}
           />
         }
-        <RecordFilterControls
-          forms={dashboardState.forms}
-          dispatch={dashboardDispatch}
-          filters={dashboardState.activeFilters}
-        />
-        <RecordDisplay
-          records={dashboardState.records}
-          dispatch={dashboardDispatch}
-          filter={filterCallBack(dashboardState.activeFilters)}
-          setApiError={setApiError}
-        />
+        {
+          dashboardState.displayRecordList
+          && <RecordDisplay
+            dispatch={dashboardDispatch}
+            forms={dashboardState.forms}
+            filters={dashboardState.activeFilters}
+            records={dashboardState.records}
+            setApiError={setApiError}
+          />
+        }
       </main>
     </>
   )

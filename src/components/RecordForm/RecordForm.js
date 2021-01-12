@@ -383,29 +383,9 @@ function RecordForm(props) {
   const formIsValid = validateForm(currentForm);
 
   return (
-    <form
-      onSubmit={event =>
-        handleSubmitForm(event)}
-      onReset={event =>
-        handleResetForm(event)}
-    >
-      <p>
-        Select record form:
-        <select
-          value={props.state.currentForm}
-          onChange={event =>
-            handleCurrentFormChange(event.target.value)
-          }
-        >
-          {selectOptions}
-        </select>
-        <button
-          type='button'
-          onClick={() => handleCreateNewForm(props.dispatch)}
-        >Create New Form</button>
-      </p>
+    <section>
       <h3>New Record:
-        <input
+      <input
           type='text'
           value={currentForm.name}
           onChange={(event) =>
@@ -414,32 +394,53 @@ function RecordForm(props) {
             )}
         />
       </h3>
-      <p>Form Description:
+      <form
+        onSubmit={event =>
+          handleSubmitForm(event)}
+        onReset={event =>
+          handleResetForm(event)}
+      >
+        <p>
+          Select record form:
+        <select
+            value={props.state.currentForm}
+            onChange={event =>
+              handleCurrentFormChange(event.target.value)
+            }
+          >
+            {selectOptions}
+          </select>
+          <button
+            type='button'
+            onClick={() => handleCreateNewForm(props.dispatch)}
+          >Create New Form</button>
+        </p>
+        <p>Form Description:
         <input
-          type='text'
-          value={currentForm.description}
-          onChange={event =>
-            handleFormDescriptionEdit(event.target.value)}
-        />
-      </p>
-      {
-        !currentForm.fields.length && <p>Form must have at least one field</p>
-      }
-      {formFields}
-      {
-        !formIsValid && <p>Please correct errors before submitting</p>
-      }
-      <button
-        disabled={!formIsValid}
-        type='submit'
-      >Submit Record</button>
-      <button
-        type='reset'>Reset</button>
-      <div>
-        {addFieldButtons}
-      </div>
-    </form>
-  )
+            type='text'
+            value={currentForm.description}
+            onChange={event =>
+              handleFormDescriptionEdit(event.target.value)}
+          />
+        </p>
+        {
+          !currentForm.fields.length && <p>Form must have at least one field</p>
+        }
+        {formFields}
+        {
+          !formIsValid && <p>Please correct errors before submitting</p>
+        }
+        <button
+          disabled={!formIsValid}
+          type='submit'
+        >Submit Record</button>
+        <button
+          type='reset'>Reset</button>
+        <div>
+          {addFieldButtons}
+        </div>
+      </form>
+    </section>)
 }
 
 export default RecordForm;

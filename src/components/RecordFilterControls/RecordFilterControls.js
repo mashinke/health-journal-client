@@ -32,8 +32,7 @@ function handleDateFilterChange(dispatch) {
 
 export default function RecordFilterControls(props) {
   return (
-    <section>
-      <h3>Filter Selection</h3>
+    <div>
       {
         props.forms.length > 0 &&
         <SelectMultiple
@@ -59,6 +58,6 @@ export default function RecordFilterControls(props) {
           handleDateFilterChange(props.dispatch)
         }
       />
-    </section >
+    </div >
   )
 }
