@@ -4,6 +4,7 @@ import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import DashboardViewTitle from '../DashboardViewTitle/DashboardViewTitle';
 import InputField from '../InputField/InputField';
+import { FormDescriptionInput, FormNameInput } from './RecordFormComponents/RecordFormComponents';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -388,17 +389,6 @@ function RecordForm(props) {
 
   return (
     <section>
-      <DashboardViewTitle>
-        New Record:
-        <input
-          type='text'
-          value={currentForm.name}
-          onChange={(event) =>
-            handleFormNameEdit(
-              event.target.value
-            )}
-        />
-      </DashboardViewTitle>
 
       <form
         onSubmit={event =>
@@ -406,6 +396,17 @@ function RecordForm(props) {
         onReset={event =>
           handleResetForm(event)}
       >
+        <DashboardViewTitle>
+          New Record:
+        <FormNameInput
+            type='text'
+            value={currentForm.name}
+            onChange={(event) =>
+              handleFormNameEdit(
+                event.target.value
+              )}
+          />
+        </DashboardViewTitle>
         <p>
           Select record form:
         <select
@@ -422,7 +423,7 @@ function RecordForm(props) {
           >Create New Form</button>
         </p>
         <p>Form Description:
-        <input
+        <FormDescriptionInput
             type='text'
             value={currentForm.description}
             onChange={event =>
