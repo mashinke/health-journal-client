@@ -8,14 +8,13 @@ import { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import FilterControlBox from '../FilterControlBox/FilterControlBox';
 
-function handleFormIdFilterChange(dispatch) {
+function handleFormsFilterChange(dispatch) {
   return function (forms) {
-    const formId = forms.map(form => form.id)
     dispatch(
       {
         type: 'FILTER_RECORDS',
         payload: {
-          formId
+          forms
         }
       }
     )
@@ -41,6 +40,19 @@ export default function RecordFilterControls(props) {
 
   const [showMultiSelect, setShowMultiSelect] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false)
+
+  const formFilterItems = props.forms.filter(item => {
+    for (let form of props.filters.forms) {
+      if (form.id === item.id) return false;
+    }
+    return true;
+  })
+    .map(({ id, name }) => {
+      return {
+        id,
+        name
+      }
+    })
 
   function handleToggleShowMultiSelect() {
     setShowMultiSelect(!showMultiSelect);
@@ -87,20 +99,14 @@ export default function RecordFilterControls(props) {
             props.forms.length > 0
             && showMultiSelect
             && <SelectMultiple
+              selectedItems={props.filters.forms}
               show={showMultiSelect}
               showOn={handleShowMultiSelect}
               toggleShow={handleToggleShowMultiSelect}
               buttonLabel='Select forms'
               label='Filter by form'
-              handleSelectedItemsChange={handleFormIdFilterChange(props.dispatch)}
-              items={
-                props.forms.map(({ id, name }) => {
-                  return {
-                    id,
-                    name
-                  }
-                })
-              }
+              handleSelectedItemsChange={handleFormsFilterChange(props.dispatch)}
+              items={formFilterItems}
             />
           }
           {

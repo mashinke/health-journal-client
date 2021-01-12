@@ -12,10 +12,10 @@ import dashboardStateReducer from './dashboardStateReducer';
 
 
 const filterFunctions = {
-  formId: (record, filter) => {
+  forms: (record, filter) => {
     if (filter.length === 0)
       return true;
-    return filter.includes(record.formId)
+    return filter.map(item => item.id).includes(record.formId)
   },
   created: (record, filter) => {
     const dateCreated = new Date(record.created);
@@ -34,6 +34,7 @@ const filterFunctions = {
 function filterCallBack(filters) {
   return function (record) {
     for (const [key, filter] of Object.entries(filters)) {
+      console.log(key)
       if (!filterFunctions[key](record, filter))
         return false;
     }
@@ -53,7 +54,7 @@ function Dashboard(props) {
       displayRecordForm: false,
       displayRecordList: false,
       activeFilters: {
-        formId: [],
+        forms: [],
         created: {
           from: null,
           to: null

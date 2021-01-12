@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const FilterControlBox = styled.div`
   display: flex;
+  flex-direction: column;
   margin: 0 0 0 1rem;
   border: 1px solid ${props => props.theme.primary.medium};
   border-right: 0px;

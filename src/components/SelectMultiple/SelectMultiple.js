@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { useSelect, useMultipleSelection } from 'downshift';
-
-const DropDownListItem = styled.li`
-  font-weight: ${props => props.isHighlighted ? 'bold' : ''}
-`;
+import {
+  DropDownList,
+  DropDownListItem
+} from '../SelectMultipleComponents/SelectMultipleComponents';
 
 export default function SelectMultiple(props) {
   const {
     items,
+    selectedItems,
     handleSelectedItemsChange
+
   } = props;
+
   const {
     getSelectedItemProps,
     getDropdownProps,
     addSelectedItem,
     removeSelectedItem,
-    selectedItems } = useMultipleSelection({
+  } = useMultipleSelection(
+    {
       onSelectedItemsChange: ({ selectedItems }) =>
         handleSelectedItemsChange(selectedItems)
+    }
+  );
 
-    })
   const {
     isOpen,
     selectedItem,
@@ -28,20 +32,34 @@ export default function SelectMultiple(props) {
     getLabelProps,
     getMenuProps,
     highlightedIndex,
-    getItemProps,
-    selectItem
+    getItemProps
   } = useSelect(
     {
-      items,
+      selectedItem: null,
+      defaultHighlightedIndex: 0,
+      items: items,
+      stateReducer: (state, actionAndChanges) => {
+        const { changes, type } = actionAndChanges;
+        switch (type) {
+          case useSelect.stateChangeTypes.MenuKeyDownEnter:
+          case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
+          case useSelect.stateChangeTypes.ItemClick:
+            return {
+              ...changes,
+              isOpen: true, // keep the menu open after selection.
+            }
+          default:
+            break;
+        }
+        return changes;
+      },
       onStateChange: ({ type, selectedItem }) => {
         switch (type) {
           case useSelect.stateChangeTypes.MenuKeyDownEnter:
           case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
           case useSelect.stateChangeTypes.ItemClick:
-          case useSelect.stateChangeTypes.MenuBlur:
             if (selectedItem) {
               addSelectedItem(selectedItem)
-              selectItem(null)
             }
             break;
           default:
@@ -52,41 +70,55 @@ export default function SelectMultiple(props) {
   );
 
   return (
-    <div {...getDropdownProps({ preventKeyAction: isOpen })}>
-      <button
-        {...getToggleButtonProps(getDropdownProps({ preventKeyAction: isOpen }))}
-      >
-        <label {...getLabelProps()}>{(selectedItem && selectedItem.name) || props.buttonLabel}</label>
-      </button>
+    <>
       {
         selectedItems.map((selectedItem, index) => (
           <span
-            key={`selected-item-${index}`}
+            key={`selected-item-${index} `}
             {...getSelectedItemProps({ selectedItem, index })}
           >
             {selectedItem.name}
             <span
-              onClick={() => removeSelectedItem(selectedItem)}
+              onClick={(event) => {
+                event.stopPropagation();
+                removeSelectedItem(selectedItem);
+              }}
             >
               &#10005;
             </span>
           </span>
         ))
       }
-      <ul {...getMenuProps()}>
+      < button
+        hidden={true}
         {
-          isOpen &&
-          items.map((item, index) => (
-            <DropDownListItem
-              isHighlighted={highlightedIndex === index}
-              key={`${item.id}${index}`}
-              {...getItemProps({ item, index })}
-            >
-              {item.name}
-            </DropDownListItem>
-          ))
+        ...getToggleButtonProps(
+          getDropdownProps({ preventKeyAction: isOpen }))
         }
-      </ul>
-    </div>
+      ></button >
+
+      {
+        (items.length !== 0)
+        && <>
+          <label
+            hidden={items.length === 0}
+            {...getLabelProps()}
+          >{(selectedItem && selectedItem.name) || props.buttonLabel}</label>
+          <DropDownList {...getMenuProps()}>
+            {
+              items.map((item, index) => (
+                <DropDownListItem
+                  isHighlighted={highlightedIndex === index}
+                  key={`${item.id} ${index} `}
+                  {...getItemProps({ item, index })}
+                >
+                  {item.name}
+                </DropDownListItem>
+              ))
+            }
+          </DropDownList>
+        </>
+      }
+    </>
   )
 }
