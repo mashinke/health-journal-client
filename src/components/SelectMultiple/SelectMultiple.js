@@ -1,8 +1,13 @@
 import React from 'react';
 import { useSelect, useMultipleSelection } from 'downshift';
 import {
-  DropDownList,
-  DropDownListItem
+  ButtonsContainer,
+  DropDownContainer,
+  ItemsList,
+  ListItem,
+  SelectButton,
+  SelectButtonLabel,
+  SelectMultipleContainer
 } from '../SelectMultipleComponents/SelectMultipleComponents';
 
 export default function SelectMultiple(props) {
@@ -18,6 +23,7 @@ export default function SelectMultiple(props) {
     getDropdownProps,
     addSelectedItem,
     removeSelectedItem,
+    reset
   } = useMultipleSelection(
     {
       onSelectedItemsChange: ({ selectedItems }) =>
@@ -70,55 +76,60 @@ export default function SelectMultiple(props) {
   );
 
   return (
-    <>
-      {
-        selectedItems.map((selectedItem, index) => (
-          <span
-            key={`selected-item-${index} `}
-            {...getSelectedItemProps({ selectedItem, index })}
-          >
-            {selectedItem.name}
-            <span
-              onClick={(event) => {
-                event.stopPropagation();
-                removeSelectedItem(selectedItem);
-              }}
-            >
-              &#10005;
-            </span>
-          </span>
-        ))
-      }
-      < button
-        hidden={true}
+    <SelectMultipleContainer>
+      <ItemsList>
         {
-        ...getToggleButtonProps(
-          getDropdownProps({ preventKeyAction: isOpen }))
+          selectedItems.map((selectedItem, index) => (
+            <ListItem
+              key={`selected-item-${index} `}
+              {...getSelectedItemProps({ selectedItem, index })}
+            >
+              {selectedItem.name}
+              <span
+                onClick={(event) => {
+                  event.stopPropagation();
+                  removeSelectedItem(selectedItem);
+                }}
+              >
+                &#10005;
+            </span>
+            </ListItem>
+          ))
         }
-      ></button >
-
+      </ItemsList>
       {
-        (items.length !== 0)
-        && <>
-          <label
-            hidden={items.length === 0}
-            {...getLabelProps()}
-          >{(selectedItem && selectedItem.name) || props.buttonLabel}</label>
-          <DropDownList {...getMenuProps()}>
+        props.show
+        && <DropDownContainer>
+          <ButtonsContainer>
+            <SelectButton
+              {
+              ...getToggleButtonProps(
+                getDropdownProps({ preventKeyAction: isOpen }))
+              }
+            >
+              <SelectButtonLabel {...getLabelProps()}>
+                {(selectedItem && selectedItem.name) || props.buttonLabel}
+              </SelectButtonLabel>
+            </SelectButton >
+            <SelectButton onClick={() => reset()}>
+              Reset
+          </SelectButton>
+          </ButtonsContainer>
+          <ItemsList {...getMenuProps()}>
             {
               items.map((item, index) => (
-                <DropDownListItem
+                <ListItem
                   isHighlighted={highlightedIndex === index}
                   key={`${item.id} ${index} `}
                   {...getItemProps({ item, index })}
                 >
                   {item.name}
-                </DropDownListItem>
+                </ListItem>
               ))
             }
-          </DropDownList>
-        </>
+          </ItemsList>
+        </DropDownContainer>
       }
-    </>
+    </SelectMultipleContainer >
   )
 }

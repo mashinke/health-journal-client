@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import SelectMultiple from '../SelectMultiple/SelectMultiple';
 import DateRangeSelect from '../DateRangeSelect/DateRangeSelect';
 import { FilterByForm, FilterByDate } from '../Button/Button';
-import FilterSelectBar from '../FilterSelectBar/FilterSelectBar';
-import { IconContext } from 'react-icons';
-import { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
-import FilterControlBox from '../FilterControlBox/FilterControlBox';
+import {
+  FilterSelectBar,
+  FilterControlBox,
+  FilterSelectLabel
+} from '../FilterControlElements/FilterControlElements';
 
 function handleFormsFilterChange(dispatch) {
   return function (forms) {
@@ -36,7 +36,6 @@ function handleDateFilterChange(dispatch) {
 }
 
 export default function RecordFilterControls(props) {
-  const theme = useContext(ThemeContext);
 
   const [showMultiSelect, setShowMultiSelect] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -71,33 +70,21 @@ export default function RecordFilterControls(props) {
 
   return (
     <div>
-      <IconContext.Provider
-        value={
-          {
-            color: theme.primary.text,
-            style: {
-              verticalAlign: 'middle',
-              fontSize: '1.25rem'
-            }
-          }
-        }
-      >
-        <FilterSelectBar>
-          <div>Filter Selection</div>
-          <FilterByDate
-            onClick={() => handleToggleShowDatePicker()}
-          />
-          <FilterByForm
-            onClick={() => handleToggleShowMultiSelect()}
-          />
-        </FilterSelectBar>
-      </IconContext.Provider>
+      <FilterSelectBar>
+        <FilterSelectLabel>Filter Selection:</FilterSelectLabel>
+        <FilterByDate
+          onClick={() => handleToggleShowDatePicker()}
+        />
+        <FilterByForm
+          onClick={() => handleToggleShowMultiSelect()}
+        />
+      </FilterSelectBar>
       {
         (showMultiSelect || showDatePicker)
         && <FilterControlBox>
           {
-            props.forms.length > 0
-            && showMultiSelect
+            (props.filters.forms.length > 0
+              || showMultiSelect)
             && <SelectMultiple
               selectedItems={props.filters.forms}
               show={showMultiSelect}

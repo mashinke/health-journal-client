@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
-import { IconContext } from 'react-icons';
 import { LogoutButton, NewRecordButton } from '../Button/Button';
 
 const AppHeader = styled.header`
@@ -21,25 +20,13 @@ const AppName = styled.h1`
 
 function Header(props) {
   const userContext = useContext(UserContext);
-  const theme = useContext(ThemeContext);
 
   return (
     <AppHeader>
       <AppName>Health Journal</AppName>
-      <IconContext.Provider
-        value={
-          {
-            color: theme.secondary.text,
-            style: {
-              verticalAlign: 'middle',
-              fontSize: '1.5rem'
-            }
-          }
-        }
-      >
-        <NewRecordButton onClick={() => props.newRecord()} />
-        <LogoutButton onClick={() => userContext.processLogout()} />
-      </IconContext.Provider>
+
+      <NewRecordButton onClick={() => props.newRecord()} />
+      <LogoutButton onClick={() => userContext.processLogout()} />
     </AppHeader>
   )
 }
