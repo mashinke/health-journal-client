@@ -4,17 +4,19 @@ import SummaryItem from '../SummaryItem/SummaryItem';
 
 const SummaryContainer = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 function Summary(props) {
   return (
     <section>
-      <h3>Summary</h3>
       <SummaryContainer>
-        <SummaryItem />
-        <SummaryItem />
-        <SummaryItem />
-        <SummaryItem />
+        <SummaryItem>
+          total records
+        </SummaryItem>
+        <SummaryItem>
+          
+        </SummaryItem>
       </SummaryContainer>
     </section>
   )

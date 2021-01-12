@@ -2,6 +2,7 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
+import DashboardViewTitle from '../DashboardViewTitle/DashboardViewTitle';
 import InputField from '../InputField/InputField';
 
 function RecordForm(props) {
@@ -384,8 +385,9 @@ function RecordForm(props) {
 
   return (
     <section>
-      <h3>New Record:
-      <input
+      <DashboardViewTitle>
+        New Record:
+        <input
           type='text'
           value={currentForm.name}
           onChange={(event) =>
@@ -393,7 +395,8 @@ function RecordForm(props) {
               event.target.value
             )}
         />
-      </h3>
+      </DashboardViewTitle>
+
       <form
         onSubmit={event =>
           handleSubmitForm(event)}

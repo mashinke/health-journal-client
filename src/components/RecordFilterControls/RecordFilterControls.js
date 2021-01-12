@@ -31,6 +31,7 @@ function handleDateFilterChange(dispatch) {
 }
 
 export default function RecordFilterControls(props) {
+  console.log(props)
   return (
     <div>
       {

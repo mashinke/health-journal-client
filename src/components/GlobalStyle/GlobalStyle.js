@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
 body {
   font-size: 16px;
   background-color: ${props => props.theme.secondary.light};
+  color: ${props => props.theme.primary.text};
 }
 `;
 

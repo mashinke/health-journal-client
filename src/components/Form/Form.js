@@ -1,14 +1,11 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconContext } from 'react-icons';
-import { ThemeContext } from 'styled-components';
 
 export const FormContainer = styled.div`
   width: 85vw;
   max-width: 30rem;
   border: 1px solid ${props => props.theme.primary.dark};;
   margin: 7.5vw auto;
-  color: ${props => props.theme.primary.text};
 `;
 
 export const FormHeader = styled.h1`

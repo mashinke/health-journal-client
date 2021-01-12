@@ -11,7 +11,7 @@ const AppHeader = styled.header`
   flex-direction: row;
 `;
 const AppName = styled.h1`
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   font-weight: bold;
   margin: auto 0;
   flex: 1;
@@ -35,7 +35,6 @@ function Header(props) {
         }
       }>
         <NewRecordButton onClick={() => props.newRecord()} />
-        <ReviewRecordsButton onClick={() => props.listRecords()} />
         <LogoutButton onClick={() => userContext.processLogout()} />
       </IconContext.Provider>
     </AppHeader>

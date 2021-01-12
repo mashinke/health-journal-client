@@ -1,7 +1,8 @@
 import React from 'react';
 import RecordList from '../RecordList/RecordList';
 import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
-
+import DashboardViewTitle from '../DashboardViewTitle/DashboardViewTitle';
+import Summary from '../Summary/Summary';
 
 const filterFunctions = {
   formId: (record, filter) => {
@@ -36,18 +37,22 @@ function filterCallBack(filters) {
 function RecordDisplay(props) {
   return (
     <section>
-      <h3>Your Records</h3>
       <RecordFilterControls
         forms={props.forms}
         dispatch={props.dispatch}
         filters={props.filters}
       />
-      <RecordList
-        records={props.records}
-        dispatch={props.dispatch}
-        filter={filterCallBack(props.filters)}
-        setApiError={props.setApiError}
-      />
+      {
+        props.displayRecordList
+
+          ? <RecordList
+            records={props.records}
+            dispatch={props.dispatch}
+            filter={filterCallBack(props.filters)}
+            setApiError={props.setApiError}
+          />
+          : <Summary />
+      }
     </section>
   )
 }

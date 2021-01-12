@@ -5,11 +5,10 @@ import RecordApiService from '../../services/record-api-service';
 import Header from '../Header/Header';
 import Summary from '../Summary/Summary';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
-import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
 import RecordForm from '../RecordForm/RecordForm';
+import DashboardMain from '../DashboardMain/DashboardMain';
 
 import dashboardStateReducer from './dashboardStateReducer';
-
 
 function Dashboard(props) {
   const userContext = useContext(UserContext);
@@ -88,35 +87,24 @@ function Dashboard(props) {
         listRecords={handleDisplayRecordListClick}
       />
 
-      <main>
-        <h2>Dashboard</h2>
-        {
-          !(
-            dashboardState.displayRecordForm
-            || dashboardState.displayRecordList
-          )
-          && <Summary />
-
-        }
+      <DashboardMain>
         {
           dashboardState.displayRecordForm
-          && <RecordForm
-            state={dashboardState}
-            dispatch={dashboardDispatch}
-            setApiError={setApiError}
-          />
+            ? <RecordForm
+              state={dashboardState}
+              dispatch={dashboardDispatch}
+              setApiError={setApiError}
+            />
+            : <RecordDisplay
+              dispatch={dashboardDispatch}
+              forms={dashboardState.forms}
+              filters={dashboardState.activeFilters}
+              records={dashboardState.records}
+              setApiError={setApiError}
+              displayRecordList={dashboardState.displayRecordList}
+            />
         }
-        {
-          dashboardState.displayRecordList
-          && <RecordDisplay
-            dispatch={dashboardDispatch}
-            forms={dashboardState.forms}
-            filters={dashboardState.activeFilters}
-            records={dashboardState.records}
-            setApiError={setApiError}
-          />
-        }
-      </main>
+      </DashboardMain>
     </>
   )
 }
