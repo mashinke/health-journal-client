@@ -23,7 +23,7 @@ export const SelectFormInteractiveContainer = styled.div`
 `;
 
 export const FormMetaContainer = styled.div`
-  margin: .5rem 0;
+  margin: .5rem 0 .5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -88,7 +88,13 @@ export const RecordFormContainer = styled.form`
 `;
 
 export const FormFieldsContainer = styled.div`
+    margin: .5rem 0 .5rem 0;
+    border: 1px solid ${props => props.theme.secondary.verydark};
+    border-radius: .5rem .5rem;
+    padding: 0 .25rem;
+    background-color: ${props => props.theme.secondary.dark};
     display: flex;
+    margin: 0;
     flex-direction: column;
     @media (min-width: 30rem) {
       flex-direction: row;
@@ -99,7 +105,7 @@ export const FormFieldsContainer = styled.div`
 `;
 
 export const FormFieldContainer = styled.div`
-  margin: .5rem 0;
+  margin: .25rem 0;
   padding: .5rem .5rem .5rem .25rem;
   border: 1px solid ${props => props.theme.secondary.dark};
   border-radius: .5rem;
@@ -153,54 +159,61 @@ const FormFieldInput = styled.input`
 
 export const FormFieldTextInput = styled(FormFieldInput)
   .attrs({ type: 'text', size: '12' })`
-  // color: ${props => props.theme.primary.text} !important;
   flex-grow: 2;
   `;
 
 export const FormFieldNumberInput = styled(FormFieldInput)
   .attrs({ type: 'number' })`
-  flex-grow: 1;
-  max-width: 2.5rem;
+  max-width: 3rem;
+  margin 0 0 0 auto;
   `;
 
-export const FormFieldBooleanInput = styled.input
-  .attrs({ type: 'checkbox' })`
-  width: 1rem;
-  margin: 0 .25rem;
+export const FormFieldBooleanInput = styled.div`
+  margin: 0 auto;
 `;
 
 export const FormFieldRangeInput = styled.fieldset`
-  
-`;
-
-export const FormFieldRangeLegend = styled.legend`
-
-`;
-
-export const FormFieldRangeName = styled.input
-  .attrs({ type: 'text' })`
-  
+  border: 1px solid ${props => props.theme.secondary.dark};
+  border-radius: .25rem;
   `;
 
-export const FormFieldMinMaxLabel = styled.label`
+export const FormFieldRangeLegend = styled.legend`
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid ${props => props.theme.secondary.dark};
+  border-radius: .25rem;
+  padding: .25rem;
+  `;
 
-`;
+export const FormFieldRangeName = styled(FormFieldNameInput)`
+  border: 0;
+  padding: 0;
+  `;
 
-export const FormFieldMinMaxInput = styled.input
+export const FormFieldMinMaxContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  `;
+
+export const FormFieldMinMaxInput = styled(FormFieldNumberInput)
   .attrs({ type: 'number' })`
-  
+  max-width: 2.5rem;
+  margin: .25rem 0;
+
   `;
 
 export const RadioInputContainer = styled.span`
+  padding: .125rem;
 
+  `;
+
+export const RangeRadioContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
-
-export const FormFieldRangeRadioLabel = styled.label``;
-
-export const FormFieldRangeRadioInput = styled.input
-  .attrs({ type: 'radio' })``;
-
-export const RangeRadioContainer = styled.div``;
 
 export const FieldUpDownButtonsContainer = styled.div`
   display: flex;
@@ -208,11 +221,33 @@ export const FieldUpDownButtonsContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const AddFieldButtonsContainer = styled.div``;
+export const AddFieldButtonsContainer = styled.div`
+margin: .5rem 0;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-evenly;
+border: 1px solid ${props => props.theme.primary.dark};
+border-radius: .5rem .5rem;
+padding: .25rem 1rem .25rem .25rem;
+background-color: ${props => props.theme.primary.medium};
+text-align: right;
+color: ${props => props.theme.primary.text};
+`;
 
-export const FormSubmitResetContainer = styled.div``;
+export const FormSubmitResetContainer = styled.div`
+  margin: 0 0 .5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border: 1px solid ${props => props.theme.secondary.dark};
+  border-radius: .5rem .5rem;
+  padding: .25rem 1rem .25rem .25rem;
+  background-color: ${props => props.theme.secondary.medium};
+  text-align: right;
+  color: ${props => props.theme.secondary.text};
+`;
 
 export const FieldDeletedMessage = styled.div`
-  flex-grow: 1;
-  margin: auto .25rem;
+flex - grow: 1;
+margin: auto .25rem;
 `;

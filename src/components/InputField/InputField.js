@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import TimePicker from 'react-time-picker';
+import { RiArrowLeftSLine } from 'react-icons/ri';
+import { IconContext } from 'react-icons';
+import { YesButton, NoButton } from '../Button/Button';
 import FormFieldRangeRadio from '../FormFieldRangeRadio/FormFieldRangeRadio';
 import {
   FormFieldLabel,
@@ -11,10 +15,9 @@ import {
   FormFieldRangeLegend,
   FormFieldRangeName,
   FormFieldMinMaxInput,
-  FormFieldMinMaxLabel,
+  FormFieldMinMaxContainer,
   RangeRadioContainer,
-  FormFieldInputContainer,
-  FormFieldLabelSpan
+  FormFieldInputContainer
 } from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
@@ -46,18 +49,27 @@ function NumberInput(props) {
 
 function BooleanInput(props) {
   return (
-    <FormFieldBooleanInput
-      name={props.label}
-      checked={props.value}
-      onChange={event => props.handleFieldValueChange(
-        props.id,
-        event.target.checked
-      )}
-    />
+    <FormFieldBooleanInput>
+      <YesButton
+        checked={props.value}
+        onClick={event => props.handleFieldValueChange(
+          props.id,
+          !!!props.value
+        )}
+      />
+      <NoButton
+        checked={props.value}
+        onClick={event => props.handleFieldValueChange(
+          props.id,
+          !!!props.value
+        )}
+      />
+    </FormFieldBooleanInput>
   )
 }
 
 function RangeInput(props) {
+  const theme = useContext(ThemeContext);
   const radios = [];
   for (let i = props.min; i <= props.max; i++) {
     radios.push(
@@ -83,24 +95,38 @@ function RangeInput(props) {
           value={props.label}
           onChange={(event) => props.handleLabelEdit(event.target.value)}
         />
-        <FormFieldMinMaxLabel>Min:</FormFieldMinMaxLabel>
-        <FormFieldMinMaxInput
-          type='number'
-          value={props.min}
-          onChange={event =>
-            props.handleMinMaxEdit(
-              { min: Number(event.target.value) }
-            )}
-        />
-        <FormFieldMinMaxLabel>Max:</FormFieldMinMaxLabel>
-        <FormFieldMinMaxInput
-          type='number'
-          value={props.max}
-          onChange={event =>
-            props.handleMinMaxEdit(
-              { max: Number(event.target.value) }
-            )}
-        />
+        <FormFieldMinMaxContainer>
+          <FormFieldMinMaxInput
+            type='number'
+            value={props.min}
+            onChange={event =>
+              props.handleMinMaxEdit(
+                { min: Number(event.target.value) }
+              )}
+          />
+          <IconContext.Provider
+            value={
+              {
+                color: theme.primary.text,
+                style: {
+                  verticalAlign: 'middle',
+                  fontSize: '1.25rem',
+                  margin: 'auto 0'
+                }
+              }
+            }
+          >
+            <RiArrowLeftSLine />
+          </IconContext.Provider>
+          <FormFieldMinMaxInput
+            type='number'
+            value={props.max}
+            onChange={event =>
+              props.handleMinMaxEdit(
+                { max: Number(event.target.value) }
+              )}
+          />
+        </FormFieldMinMaxContainer>
       </FormFieldRangeLegend>
       <RangeRadioContainer>{radios}</RangeRadioContainer>
     </FormFieldRangeInput>

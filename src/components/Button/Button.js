@@ -5,15 +5,20 @@ import {
   RiFileList3Line,
   RiCalendar2Line,
   RiCloseLine,
+  RiCheckLine,
   RiArrowUpSLine,
   RiArrowDownSLine,
   RiArrowGoBackFill
+
 } from 'react-icons/ri';
 import styled, { ThemeContext } from 'styled-components';
 import { IconContext } from 'react-icons';
 
 const Button = styled.button
-  .attrs({ type: 'button' })`
+  .attrs(props => ({
+    type: props.type || 'button'
+  })
+  )`
   display: inline-block;
   padding: 0;
   text-align: center;
@@ -298,3 +303,135 @@ export function UndoDeleteButton(props) {
     </IconContext.Provider>
   )
 }
+
+export function YesButton(props) {
+  const theme = useContext(ThemeContext);
+  console.log('yesbutton')
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1.25rem'
+          }
+        }
+      }
+    >
+      <SmallRoundPrimaryColorButton
+        {...props}
+        aria-label='check box'
+        style={{
+          backgroundColor: `${props.checked
+            ? theme.primary.dark
+            : theme.primary.light
+            }`,
+          border: `${props.checked
+            ? `2px solid ${theme.primary.verydark}`
+            : `2px solid ${theme.primary.dark}`
+            }`
+        }}
+
+      >
+        <RiCheckLine />
+      </SmallRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}
+
+export function NoButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1.25rem'
+          }
+        }
+      }
+    >
+      <SmallRoundPrimaryColorButton
+        {...props}
+        aria-label={`${props.value ? 'uncheck' : 'check'} box`}
+        style={{
+          backgroundColor: `${!props.checked
+            ? theme.primary.dark
+            : theme.primary.light
+            }`,
+          border: `${(!props.checked)
+            ? `2px solid ${theme.primary.verydark}`
+            : `2px solid ${theme.primary.dark}`
+            }`
+        }}
+      >
+        <RiCloseLine />
+      </SmallRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}
+
+
+export function RangeNumberButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <SmallRoundPrimaryColorButton
+      aria-label={`select ${props.value}`}
+      {...props}
+      style={props.checked
+        ? {
+          backgroundColor: theme.primary.text,
+          color: theme.primary.light
+        }
+        : {}
+      }
+    >
+      {props.value}
+    </SmallRoundPrimaryColorButton>
+  )
+}
+
+export function SubmitButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.secondary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1.5rem'
+          }
+        }
+      }
+    >
+      <BigRoundSecondaryColorButton {...props} type='submit'>
+        <RiCheckLine />
+      </BigRoundSecondaryColorButton>
+    </IconContext.Provider>
+  )
+};
+
+export function ResetButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.secondary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1.5rem'
+          }
+        }
+      }
+    >
+      <BigRoundSecondaryColorButton {...props} type='reset'>
+        <RiArrowGoBackFill />
+      </BigRoundSecondaryColorButton>
+    </IconContext.Provider>
+  )
+};

@@ -1,7 +1,6 @@
 import React from 'react';
 import RecordList from '../RecordList/RecordList';
 import RecordFilterControls from '../RecordFilterControls/RecordFilterControls';
-import DashboardViewTitle from '../DashboardViewTitle/DashboardViewTitle';
 import Summary from '../Summary/Summary';
 
 function RecordDisplay(props) {
@@ -13,16 +12,16 @@ function RecordDisplay(props) {
         filters={props.filters}
       />
       {
-        props.displayRecordList
+        // props.displayRecordList
 
-          ? <RecordList
-            records={props.records}
-            dispatch={props.dispatch}
-            setApiError={props.setApiError}
-          />
-          : <Summary
-            records={props.records}
-          />
+          /* ? */ <RecordList
+          records={props.records}
+          dispatch={props.dispatch}
+          setApiError={props.setApiError}
+        />
+        // : <Summary
+        //   records={props.records}
+        // />
       }
     </section>
   )

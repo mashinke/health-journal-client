@@ -1,20 +1,18 @@
 import React from 'react';
-import { RadioInputContainer, FormFieldRangeRadioInput, FormFieldRangeRadioLabel } from '../RecordFormComponents/RecordFormComponents'
+import { RadioInputContainer } from '../RecordFormComponents/RecordFormComponents'
+import { RangeNumberButton } from '../Button/Button';
 
 function FormFieldRangeRadio(props) {
   return (
     <RadioInputContainer>
-      <FormFieldRangeRadioLabel>
-        {props.label}
-      </FormFieldRangeRadioLabel>
-      <FormFieldRangeRadioInput
-        name={props.parentLabel}
+      <RangeNumberButton
+        name={props.parentId}
         id={props.id}
         value={props.value}
         checked={props.checked}
-        onChange={event => props.handleValueChange(
+        onClick={() => props.handleValueChange(
           props.parentId,
-          Number(event.target.value)
+          props.value
         )}
       />
     </RadioInputContainer>

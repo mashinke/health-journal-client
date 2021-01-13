@@ -20,7 +20,14 @@ import {
   FormFieldsContainer,
   FieldDeletedMessage
 } from '../RecordFormComponents/RecordFormComponents';
-import { DeleteButton, DownButton, UndoDeleteButton, UpButton } from '../Button/Button';
+import {
+  DeleteButton,
+  DownButton,
+  UndoDeleteButton,
+  UpButton,
+  SubmitButton,
+  ResetButton
+} from '../Button/Button';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -376,71 +383,65 @@ function RecordForm(props) {
   const formIsValid = validateForm(currentForm);
 
   return (
-    <section>
-
-      <RecordFormContainer
-        onSubmit={event =>
-          handleSubmitForm(event)}
-        onReset={event =>
-          handleResetForm(event)}
-      >
-        <SelectForm
-          value={props.state.currentForm}
-          dispatch={props.dispatch}
-          forms={props.state.forms}
-        />
-        <FormMetaContainer>
-          <FormNameContainer>
-            <FormNameLabel htmlFor='form-name'>
-              New Record:
+    <RecordFormContainer
+      onSubmit={event =>
+        handleSubmitForm(event)}
+      onReset={event =>
+        handleResetForm(event)}
+    >
+      <SelectForm
+        value={props.state.currentForm}
+        dispatch={props.dispatch}
+        forms={props.state.forms}
+      />
+      <FormMetaContainer>
+        <FormNameContainer>
+          <FormNameLabel htmlFor='form-name'>
+            New Record:
           </FormNameLabel>
-            <FormNameInput
-              id='form-name'
-              type='text'
-              value={currentForm.name}
-              onChange={(event) =>
-                handleFormNameEdit(
-                  event.target.value
-                )}
-            />
-          </FormNameContainer>
-          <FormDescriptionContainer>
-            <FormDescriptionLabel
-              htmlFor='form-description'
-            >
-              Description:
+          <FormNameInput
+            id='form-name'
+            type='text'
+            value={currentForm.name}
+            onChange={(event) =>
+              handleFormNameEdit(
+                event.target.value
+              )}
+          />
+        </FormNameContainer>
+        <FormDescriptionContainer>
+          <FormDescriptionLabel
+            htmlFor='form-description'
+          >
+            Description:
           </FormDescriptionLabel>
-            <FormDescriptionInput
-              id='form-description'
-              type='text'
-              value={currentForm.description}
-              onChange={event =>
-                handleFormDescriptionEdit(event.target.value)}
-            />
-          </FormDescriptionContainer>
-        </FormMetaContainer>
-        {
-          !currentForm.fields.length && <p>Form must have at least one field</p>
-        }
-        <FormFieldsContainer>
-          {formFields}
-        </FormFieldsContainer>
-        {
-          !formIsValid && <p>Please correct errors before submitting</p>
-        }
-        <FormSubmitResetContainer>
-          <button
-            disabled={!formIsValid}
-            type='submit'
-          >Submit Record</button>
-          <button
-            type='reset'>Reset</button>
-        </FormSubmitResetContainer>
-        <AddFieldButtonsContainer>
-          {addFieldButtons}
-        </AddFieldButtonsContainer>
-      </RecordFormContainer>
-    </section>)
+          <FormDescriptionInput
+            id='form-description'
+            type='text'
+            value={currentForm.description}
+            onChange={event =>
+              handleFormDescriptionEdit(event.target.value)}
+          />
+        </FormDescriptionContainer>
+      </FormMetaContainer>
+      {
+        !currentForm.fields.length && <p>Form must have at least one field</p>
+      }
+      <FormFieldsContainer>
+        {formFields}
+      </FormFieldsContainer>
+      {
+        !formIsValid && <p>Please correct errors before submitting</p>
+      }
+      <AddFieldButtonsContainer>
+        {addFieldButtons}
+      </AddFieldButtonsContainer>
+      <FormSubmitResetContainer>
+        <SubmitButton />
+        <ResetButton />
+      </FormSubmitResetContainer>
+    </RecordFormContainer>
+  )
 }
 
 export default RecordForm;
