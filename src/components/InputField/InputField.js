@@ -1,11 +1,24 @@
 import React from 'react';
 import TimePicker from 'react-time-picker';
+import FormFieldRangeRadio from '../FormFieldRangeRadio/FormFieldRangeRadio';
+import {
+  FormFieldContainer,
+  FormFieldLabel,
+  FormFieldTextInput,
+  FormFieldNumberInput,
+  FormFieldBooleanInput,
+  FormFieldRangeInput,
+  FormFieldRangeLegend,
+  FormFieldRangeName,
+  FormFieldMinMaxInput,
+  FormFieldMinMaxLabel,
+  RangeRadioContainer
+} from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
   const label = props.label
   return (
-    <input
-      type='text'
+    <FormFieldTextInput
       name={label}
       value={props.value}
       onChange={event => props.handleFieldValueChange(
@@ -18,8 +31,7 @@ function StringInput(props) {
 
 function NumberInput(props) {
   return (
-    <input
-      type='number'
+    <FormFieldNumberInput
       name={props.label}
       value={props.value}
       onChange={event => props.handleFieldValueChange(
@@ -32,8 +44,7 @@ function NumberInput(props) {
 
 function BooleanInput(props) {
   return (
-    <input
-      type='checkbox'
+    <FormFieldBooleanInput
       name={props.label}
       checked={props.value}
       onChange={event => props.handleFieldValueChange(
@@ -48,36 +59,30 @@ function RangeInput(props) {
   const radios = [];
   for (let i = props.min; i <= props.max; i++) {
     radios.push(
-      <span key={i}>
-        <label htmlFor={`${props.label}-${i}`}>{i}</label>
-        <input
-          type='radio'
-          name={props.label}
-          id={`${props.label}-${i}`}
-          value={i}
-          checked={(i === props.value)}
-          onChange={event => props.handleFieldValueChange(
-            props.id,
-            Number(event.target.value)
-          )}
-        />
-      </span>
-
+      <FormFieldRangeRadio
+        key={i}
+        label={i}
+        parentId={props.id}
+        id={`${props.id}-${i}`}
+        value={i}
+        checked={(i === props.value)}
+        handleValueChange={props.handleFieldValueChange}
+      />
     )
   }
   return (
-    <fieldset>
+    <FormFieldRangeInput>
       {
         props.duplicateError && <p>Duplicate labels not allowed!</p>
       }
-      <legend>
-        <input
+      <FormFieldRangeLegend>
+        <FormFieldRangeName
           type='text'
           value={props.label}
           onChange={(event) => props.handleLabelEdit(event.target.value)}
         />
-        Min:
-          <input
+        <FormFieldMinMaxLabel>Min:</FormFieldMinMaxLabel>
+        <FormFieldMinMaxInput
           type='number'
           value={props.min}
           onChange={event =>
@@ -85,8 +90,8 @@ function RangeInput(props) {
               { min: Number(event.target.value) }
             )}
         />
-        Max:
-          <input
+        <FormFieldMinMaxLabel>Max:</FormFieldMinMaxLabel>
+        <FormFieldMinMaxInput
           type='number'
           value={props.max}
           onChange={event =>
@@ -94,9 +99,9 @@ function RangeInput(props) {
               { max: Number(event.target.value) }
             )}
         />
-      </legend>
-      <span>{radios}</span>
-    </fieldset>
+      </FormFieldRangeLegend>
+      <RangeRadioContainer>{radios}</RangeRadioContainer>
+    </FormFieldRangeInput>
   )
 }
 
@@ -134,21 +139,21 @@ export default function InputField(props) {
     default: break;
   }
   return (
-    <div>
+    <FormFieldContainer>
       {
         props.duplicateError && <p>Duplicate labels not allowed!</p>
       }
       {
         props.label === '' && <p>Field must have a label!</p>
       }
-      <label htmlFor={props.label}>
+      <FormFieldLabel htmlFor={props.label}>
         {props.type !== 'range' && <input
           type='text'
           value={props.label}
           onChange={(event) => props.handleLabelEdit(event.target.value)}
         />}
-      </label>
+      </FormFieldLabel>
       {field}
-    </div>
+    </FormFieldContainer>
   )
 }

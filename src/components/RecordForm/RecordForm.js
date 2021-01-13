@@ -2,10 +2,17 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
-import DashboardViewTitle from '../DashboardViewTitle/DashboardViewTitle';
 import InputField from '../InputField/InputField';
 import SelectForm from '../SelectForm/SelectForm';
-import { FormDescriptionInput, FormNameInput } from './RecordFormComponents/RecordFormComponents';
+import {
+  FormDescriptionInput,
+  FormNameInput,
+  FormNameContainer,
+  RecordFormContainer,
+  FormNameLabel,
+  FormDescriptionLabel,
+  FormFieldContainer
+} from '../RecordFormComponents/RecordFormComponents';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -295,7 +302,7 @@ function RecordForm(props) {
       (field, i) => {
         if (field.deleted)
           return (
-            <div key={i}>
+            <FormFieldContainer key={i}>
               Field deleted
               <button
                 type='button'
@@ -303,7 +310,7 @@ function RecordForm(props) {
               >
                 undo
               </button>
-            </div>
+            </FormFieldContainer>
           )
 
         const value = currentForm.values[field.id];
@@ -365,7 +372,7 @@ function RecordForm(props) {
   return (
     <section>
 
-      <form
+      <RecordFormContainer
         onSubmit={event =>
           handleSubmitForm(event)}
         onReset={event =>
@@ -376,9 +383,12 @@ function RecordForm(props) {
           dispatch={props.dispatch}
           forms={props.state.forms}
         />
-        <DashboardViewTitle>
-          New Record:
-        <FormNameInput
+        <FormNameContainer>
+          <FormNameLabel htmlFor='form-name'>
+            New Record:
+          </FormNameLabel>
+          <FormNameInput
+            id='form-name'
             type='text'
             value={currentForm.name}
             onChange={(event) =>
@@ -386,9 +396,15 @@ function RecordForm(props) {
                 event.target.value
               )}
           />
-        </DashboardViewTitle>
-        <p>Form Description:
-        <FormDescriptionInput
+        </FormNameContainer>
+        <p>
+          <FormDescriptionLabel
+            htmlFor='form-description'
+          >
+            Description:
+          </FormDescriptionLabel>
+          <FormDescriptionInput
+            id='form-description'
             type='text'
             value={currentForm.description}
             onChange={event =>
@@ -411,7 +427,7 @@ function RecordForm(props) {
         <div>
           {addFieldButtons}
         </div>
-      </form>
+      </RecordFormContainer>
     </section>)
 }
 

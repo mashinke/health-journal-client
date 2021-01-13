@@ -1,22 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { NewFormButton } from '../Button/Button';
-
-const SelectFormLabel = styled.label`
-  
-`;
-
-const SelectFormContainer = styled.div`
-display: flex;
-justify-content: space-evenly;
-margin: 0 1rem;
-border: 1px solid ${props => props.theme.secondary.dark};
-border-radius: .5rem .5rem 0 0;
-padding: .5rem 1rem .5rem .25rem;
-background-color: ${props => props.theme.secondary.medium};
-text-align: right;
-color: ${props => props.theme.secondary.text};
-`;
+import {
+  SelectFormLabel,
+  SelectFormContainer,
+  SelectFormInteractiveContainer
+} from '../RecordFormComponents/RecordFormComponents';
 
 function SelectForm(props) {
   function handleCurrentFormChange(newCurrentForm) {
@@ -53,16 +41,18 @@ function SelectForm(props) {
       <SelectFormLabel>
         What are you recording?
       </SelectFormLabel>
-      <select
-        value={props.value}
-        onChange={event =>
-          handleCurrentFormChange(event.target.value)}
-      >
-        {selectOptions}
-      </select>
-      <NewFormButton onClick={() =>
-        handleCreateNewForm()}
-      />
+      <SelectFormInteractiveContainer>
+        <select
+          value={props.value}
+          onChange={event =>
+            handleCurrentFormChange(event.target.value)}
+        >
+          {selectOptions}
+        </select>
+        <NewFormButton onClick={() =>
+          handleCreateNewForm()}
+        />
+      </SelectFormInteractiveContainer>
     </SelectFormContainer>
   )
 };
