@@ -6,7 +6,7 @@ import {
   FilterSelectBar,
   FilterControlBox,
   FilterSelectLabel
-} from '../FilterControlElements/FilterControlElements';
+} from '../FilterControlComponents/FilterControlComponents';
 
 function handleFormsFilterChange(dispatch) {
   return function (forms) {

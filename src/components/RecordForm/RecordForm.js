@@ -4,6 +4,7 @@ import FormApiService from '../../services/form-api-service';
 import RecordApiService from '../../services/record-api-service';
 import DashboardViewTitle from '../DashboardViewTitle/DashboardViewTitle';
 import InputField from '../InputField/InputField';
+import SelectForm from '../SelectForm/SelectForm';
 import { FormDescriptionInput, FormNameInput } from './RecordFormComponents/RecordFormComponents';
 
 function RecordForm(props) {
@@ -36,29 +37,6 @@ function RecordForm(props) {
       };
     }
     return false;
-  }
-
-  function handleCreateNewForm() {
-    props.dispatch(
-      {
-        type: 'ADD_FORM',
-        payload: {
-          values: {},
-          fields: [],
-          name: '',
-          description: ''
-        }
-      }
-    )
-  }
-
-  function handleCurrentFormChange(newCurrentForm) {
-    props.dispatch(
-      {
-        type: 'CHANGE_CURRENT_FORM',
-        payload: newCurrentForm
-      }
-    )
   }
 
   function handleFormNameEdit(name) {
@@ -361,10 +339,7 @@ function RecordForm(props) {
           </div>
         )
       });
-  let newFormCounter = 0;
-  const selectOptions = props.state.forms.map((form, i) => (
-    <option key={form.id || `new-form-${++newFormCounter}`} value={i}>{form.name}</option>
-  ));
+
 
   const addFieldButtons =
     Object.entries({
@@ -396,6 +371,11 @@ function RecordForm(props) {
         onReset={event =>
           handleResetForm(event)}
       >
+        <SelectForm
+          value={props.state.currentForm}
+          dispatch={props.dispatch}
+          forms={props.state.forms}
+        />
         <DashboardViewTitle>
           New Record:
         <FormNameInput
@@ -407,21 +387,6 @@ function RecordForm(props) {
               )}
           />
         </DashboardViewTitle>
-        <p>
-          Select record form:
-        <select
-            value={props.state.currentForm}
-            onChange={event =>
-              handleCurrentFormChange(event.target.value)
-            }
-          >
-            {selectOptions}
-          </select>
-          <button
-            type='button'
-            onClick={() => handleCreateNewForm(props.dispatch)}
-          >Create New Form</button>
-        </p>
         <p>Form Description:
         <FormDescriptionInput
             type='text'

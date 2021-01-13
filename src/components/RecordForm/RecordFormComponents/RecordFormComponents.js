@@ -25,3 +25,7 @@ export const FormDescriptionInput = styled.textarea`
     background-color: ${props => props.theme.primary.medium};
   }
 `;
+
+export const RecordTypeSelect = styled.p`
+
+`;

@@ -37,6 +37,11 @@ const SmallRoundButton = styled(RoundButton)`
   line-height: 1.625rem;
   width: 2rem;`;
 
+const TinyRoundButton = styled(RoundButton)`
+  height: 1.25rem;
+  width: 1.25rem;
+`;
+
 const BigSquareButton = styled(SquareButton)`
   height: 2.5rem;
   line-height: 2.125rem;
@@ -75,12 +80,11 @@ const BigSquareSecondaryColorButton = styled(BigSquareButton)`
   }
 `
 
-const TinyRoundPrimaryColorButton = styled(RoundButton)`
-  height: 1.25rem;
-  width: 1.25rem;
+const TinyRoundPrimaryColorButton = styled(TinyRoundButton)`
+  background-color: ${props => props.theme.primary.light};
   :hover {
     background-color: ${props => props.theme.primary.medium};
-    border: 1px solid ${props => props.theme.primary.dark};
+    border-color: ${props => props.theme.primary.dark};
   }
 `;
 
@@ -125,6 +129,27 @@ export function NewRecordButton(props) {
     </IconContext.Provider>
   )
 };
+
+export function NewFormButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1rem'
+          }
+        }
+      }
+    >
+      <TinyRoundPrimaryColorButton {...props}>
+        <RiAddLine />
+      </TinyRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}
 
 export function FilterByForm(props) {
   const theme = useContext(ThemeContext);
