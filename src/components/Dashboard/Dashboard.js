@@ -34,7 +34,6 @@ const filterFunctions = {
 function filterCallBack(filters) {
   return function (record) {
     for (const [key, filter] of Object.entries(filters)) {
-      console.log(key)
       if (!filterFunctions[key](record, filter))
         return false;
     }

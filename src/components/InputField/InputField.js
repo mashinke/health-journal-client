@@ -12,7 +12,8 @@ import {
   FormFieldRangeName,
   FormFieldMinMaxInput,
   FormFieldMinMaxLabel,
-  RangeRadioContainer
+  RangeRadioContainer,
+  FormFieldInputContainer
 } from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
@@ -139,7 +140,7 @@ export default function InputField(props) {
     default: break;
   }
   return (
-    <FormFieldContainer>
+    <FormFieldInputContainer>
       {
         props.duplicateError && <p>Duplicate labels not allowed!</p>
       }
@@ -154,6 +155,6 @@ export default function InputField(props) {
         />}
       </FormFieldLabel>
       {field}
-    </FormFieldContainer>
+    </FormFieldInputContainer>
   )
 }
