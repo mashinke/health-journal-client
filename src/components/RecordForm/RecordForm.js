@@ -17,9 +17,10 @@ import {
   FormSubmitResetContainer,
   FormDescriptionContainer,
   FormMetaContainer,
-  FormFieldsContainer
+  FormFieldsContainer,
+  FieldDeletedMessage
 } from '../RecordFormComponents/RecordFormComponents';
-import { DownButton, UpButton } from '../Button/Button';
+import { DeleteButton, DownButton, UndoDeleteButton, UpButton } from '../Button/Button';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -311,20 +312,17 @@ function RecordForm(props) {
         if (field.deleted)
           return (
             <FormFieldContainer key={i}>
-              Field deleted
-              <button
-                type='button'
+              <FieldDeletedMessage>Field deleted</FieldDeletedMessage>
+              <UndoDeleteButton
                 onClick={() => handleToggleDeleteField(i)}
-              >
-                undo
-              </button>
+              />
             </FormFieldContainer>
           )
 
         const value = currentForm.values[field.id];
 
         return (
-          <FormFieldContainer key={i}>
+          <FormFieldContainer key={field.id}>
             <FieldUpDownButtonsContainer>
               <UpButton
                 onClick={() => handleMoveField(
@@ -346,10 +344,11 @@ function RecordForm(props) {
               handleLabelEdit={handleLabelEdit(i)}
               handleMinMaxEdit={handleMinMaxEdit(i, value, field.id)}
             />
-            <button
-              type='button'
-              onClick={() => handleToggleDeleteField(i)}
-            >delete</button>
+            <div>
+              <DeleteButton
+                onClick={() => handleToggleDeleteField(i)}
+              />
+            </div>
           </FormFieldContainer>
         )
       });

@@ -100,7 +100,7 @@ export const FormFieldsContainer = styled.div`
 
 export const FormFieldContainer = styled.div`
   margin: .5rem 0;
-  padding: .5rem;
+  padding: .5rem .5rem .5rem .25rem;
   border: 1px solid ${props => props.theme.secondary.dark};
   border-radius: .5rem;
   background-color: ${props => props.theme.secondary.medium};
@@ -110,25 +110,63 @@ export const FormFieldContainer = styled.div`
 }
 `;
 
-export const FormFieldInputContainer = styled.div``;
-
-export const FormFieldLabel = styled.label`
-
+export const FormFieldInputContainer = styled.div`
+  margin: 0 .25rem;
+  flex-grow: 1;
+  max-width: calc(100% - 3rem);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
 `;
 
-export const FormFieldTextInput = styled.input
-  .attrs({ type: 'text' })`
-  
+export const FormFieldLabel = styled.label`
+  width: 100%;
+  margin: 0 0 .5rem 0;
+`;
+
+export const FormFieldNameInput = styled.input
+  .attrs({ type: 'text', maxLength: '25' })`
+  width: 100%;
+  border: 1px solid ${props => props.theme.secondary.dark};
+  border-radius: .25rem;
+  padding: .25rem;
+  background-color: ${props => props.theme.secondary.medium};
+  font-size: 1rem;
+  color: ${props => props.theme.secondary.text};
+  :hover, :focus {
+    background-color: ${props => props.theme.secondary.light};
+  }
+`
+
+const FormFieldInput = styled.input`
+  padding: .25rem;
+  background-color: ${props => props.theme.primary.light};
+  border: 1px solid ${props => props.theme.primary.dark};
+  color: ${props => props.theme.primary.text};
+  border-radius: .25rem;
+  :hover, :focus {
+  background-color: ${props => props.theme.primary.light};
+  }
+`;
+
+export const FormFieldTextInput = styled(FormFieldInput)
+  .attrs({ type: 'text', size: '12' })`
+  // color: ${props => props.theme.primary.text} !important;
+  flex-grow: 2;
   `;
 
-export const FormFieldNumberInput = styled.input
+export const FormFieldNumberInput = styled(FormFieldInput)
   .attrs({ type: 'number' })`
-  
+  flex-grow: 1;
+  max-width: 2.5rem;
   `;
 
 export const FormFieldBooleanInput = styled.input
   .attrs({ type: 'checkbox' })`
-
+  width: 1rem;
+  margin: 0 .25rem;
 `;
 
 export const FormFieldRangeInput = styled.fieldset`
@@ -164,8 +202,17 @@ export const FormFieldRangeRadioInput = styled.input
 
 export const RangeRadioContainer = styled.div``;
 
-export const FieldUpDownButtonsContainer = styled.div``;
+export const FieldUpDownButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 export const AddFieldButtonsContainer = styled.div``;
 
 export const FormSubmitResetContainer = styled.div``;
+
+export const FieldDeletedMessage = styled.div`
+  flex-grow: 1;
+  margin: auto .25rem;
+`;

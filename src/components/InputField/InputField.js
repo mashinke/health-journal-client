@@ -2,8 +2,8 @@ import React from 'react';
 import TimePicker from 'react-time-picker';
 import FormFieldRangeRadio from '../FormFieldRangeRadio/FormFieldRangeRadio';
 import {
-  FormFieldContainer,
   FormFieldLabel,
+  FormFieldNameInput,
   FormFieldTextInput,
   FormFieldNumberInput,
   FormFieldBooleanInput,
@@ -13,7 +13,8 @@ import {
   FormFieldMinMaxInput,
   FormFieldMinMaxLabel,
   RangeRadioContainer,
-  FormFieldInputContainer
+  FormFieldInputContainer,
+  FormFieldLabelSpan
 } from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
@@ -147,13 +148,19 @@ export default function InputField(props) {
       {
         props.label === '' && <p>Field must have a label!</p>
       }
-      <FormFieldLabel htmlFor={props.label}>
-        {props.type !== 'range' && <input
-          type='text'
-          value={props.label}
-          onChange={(event) => props.handleLabelEdit(event.target.value)}
-        />}
-      </FormFieldLabel>
+      {
+        props.type !== 'range'
+        &&
+        <FormFieldLabel
+          htmlFor={props.label}
+        >
+          <FormFieldNameInput
+            type='text'
+            value={props.label}
+            onChange={(event) => props.handleLabelEdit(event.target.value)}
+          />
+        </FormFieldLabel>
+      }
       {field}
     </FormFieldInputContainer>
   )

@@ -6,7 +6,8 @@ import {
   RiCalendar2Line,
   RiCloseLine,
   RiArrowUpSLine,
-  RiArrowDownSLine
+  RiArrowDownSLine,
+  RiArrowGoBackFill
 } from 'react-icons/ri';
 import styled, { ThemeContext } from 'styled-components';
 import { IconContext } from 'react-icons';
@@ -202,7 +203,7 @@ export function FilterByDate(props) {
   )
 }
 
-export function RemoveSelectedItemButton(props) {
+export function DeleteButton(props) {
   const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
@@ -237,11 +238,13 @@ export function UpButton(props) {
         }
       }
     >
-      <TinyRoundPrimaryColorButton
-        aria-label='move field up'
-        {...props}>
-        <RiArrowUpSLine />
-      </TinyRoundPrimaryColorButton>
+      <div>
+        <TinyRoundPrimaryColorButton
+          aria-label='move field up'
+          {...props}>
+          <RiArrowUpSLine />
+        </TinyRoundPrimaryColorButton>
+      </div>
     </IconContext.Provider>
   )
 }
@@ -260,11 +263,38 @@ export function DownButton(props) {
         }
       }
     >
-      <TinyRoundPrimaryColorButton
-        aria-label='move field down'
-        {...props}>
-        <RiArrowDownSLine />
-      </TinyRoundPrimaryColorButton>
+      <div>
+        <TinyRoundPrimaryColorButton
+          aria-label='move field down'
+          {...props}>
+          <RiArrowDownSLine />
+        </TinyRoundPrimaryColorButton>
+      </div>
+    </IconContext.Provider>
+  )
+}
+
+
+export function UndoDeleteButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1.25rem'
+          }
+        }
+      }
+    >
+      <SmallRoundPrimaryColorButton
+        {...props}
+        aria-label='undo field deletion'
+      >
+        <RiArrowGoBackFill />
+      </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
   )
 }

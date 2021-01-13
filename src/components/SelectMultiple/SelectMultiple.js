@@ -10,7 +10,7 @@ import {
   SelectButtonLabel,
   SelectMultipleContainer,
 } from '../SelectMultipleComponents/SelectMultipleComponents';
-import { RemoveSelectedItemButton } from '../Button/Button';
+import { DeleteButton } from '../Button/Button';
 export default function SelectMultiple(props) {
   const {
     items,
@@ -86,14 +86,14 @@ export default function SelectMultiple(props) {
               {...getSelectedItemProps({ selectedItem, index })}
             >
               {selectedItem.name}
-              <RemoveSelectedItemButton
+              <DeleteButton
                 onClick={(event) => {
                   event.stopPropagation();
                   removeSelectedItem(selectedItem);
                 }}
               >
                 &#10005;
-            </RemoveSelectedItemButton>
+            </DeleteButton>
             </SelectedListItem>
           ))
         }
