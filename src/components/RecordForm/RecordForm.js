@@ -19,6 +19,7 @@ import {
   FormMetaContainer,
   FormFieldsContainer
 } from '../RecordFormComponents/RecordFormComponents';
+import { DownButton, UpButton } from '../Button/Button';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -248,6 +249,7 @@ function RecordForm(props) {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
+    console.log('handle submit')
     let { id: formId, values, modified, name, description, fields } = currentForm;
 
     let newCurrentForm;
@@ -324,20 +326,18 @@ function RecordForm(props) {
         return (
           <FormFieldContainer key={i}>
             <FieldUpDownButtonsContainer>
-              <button
-                type='button'
+              <UpButton
                 onClick={() => handleMoveField(
                   i,
                   'UP'
                 )}
-              >up</button>
-              <button
-                type='button'
+              />
+              <DownButton
                 onClick={() => handleMoveField(
                   i,
                   'DOWN'
                 )}
-              >down</button>
+              />
             </FieldUpDownButtonsContainer>
             <InputField
               {...field}

@@ -4,21 +4,24 @@ import {
   RiAddLine,
   RiFileList3Line,
   RiCalendar2Line,
-  RiCloseLine
+  RiCloseLine,
+  RiArrowUpSLine,
+  RiArrowDownSLine
 } from 'react-icons/ri';
 import styled, { ThemeContext } from 'styled-components';
 import { IconContext } from 'react-icons';
 
-const Button = styled.button`
-display: inline-block;
-padding: 0;
-text-align: center;
-border: 1px solid transparent;
-text-decoration: none;
-margin: auto .25rem;
-cursor: pointer;
-transition: 200ms all;
-`
+const Button = styled.button
+  .attrs({ type: 'button' })`
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+  margin: auto .25rem;
+  cursor: pointer;
+  transition: 200ms all;
+  `;
 const RoundButton = styled(Button)`
   border-radius: 50%;
 `;
@@ -215,6 +218,52 @@ export function RemoveSelectedItemButton(props) {
     >
       <TinyRoundPrimaryColorButton {...props}>
         <RiCloseLine />
+      </TinyRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}
+
+export function UpButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1rem'
+          }
+        }
+      }
+    >
+      <TinyRoundPrimaryColorButton
+        aria-label='move field up'
+        {...props}>
+        <RiArrowUpSLine />
+      </TinyRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}
+
+export function DownButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1rem'
+          }
+        }
+      }
+    >
+      <TinyRoundPrimaryColorButton
+        aria-label='move field down'
+        {...props}>
+        <RiArrowDownSLine />
       </TinyRoundPrimaryColorButton>
     </IconContext.Provider>
   )
