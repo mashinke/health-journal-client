@@ -3,6 +3,15 @@ import { useContext } from 'react';
 import { IconContext } from 'react-icons';
 import { RiAddLine } from 'react-icons/ri';
 
+export const FormTitle = styled.h2`
+  margin: 0 0 .5rem 0;
+  border: 1px solid ${props => props.theme.secondary.dark};
+  border-radius: .5rem .5rem;
+  padding: .25rem 1rem .25rem .25rem;
+  background-color: ${props => props.theme.secondary.medium};
+  text-align: center;
+  color: ${props => props.theme.secondary.text};
+`;
 
 export const SelectFormLabel = styled.label`
   padding: .25rem 0;
@@ -11,9 +20,9 @@ export const SelectFormLabel = styled.label`
 `;
 
 export const SelectFormContainer = styled.div`
-  margin: 0 0 .5rem 0;
   display: flex;
   flex-direction: column;
+  flex: 1;
   justify-content: space-evenly;
   border: 1px solid ${props => props.theme.secondary.dark};
   border-radius: .5rem .5rem;
@@ -21,16 +30,15 @@ export const SelectFormContainer = styled.div`
   background-color: ${props => props.theme.secondary.medium};
   text-align: right;
   color: ${props => props.theme.secondary.text};
-`;
-
-export const SelectFormInteractiveContainer = styled.div`
-  padding: .25rem 0;
+  @media (min-width: 30rem){
+    margin-left: .25rem;
+  }
 `;
 
 export const FormMetaContainer = styled.div`
-  margin: .5rem 0 .5rem 0;
   display: flex;
   flex-direction: column;
+  flex: 2;
   justify-content: flex-start;
   border: 1px solid ${props => props.theme.primary.dark};
   border-radius: .5rem .5rem;
@@ -38,6 +46,19 @@ export const FormMetaContainer = styled.div`
   background-color: ${props => props.theme.primary.medium};
   text-align: right;
   color: ${props => props.theme.primary.text};
+  @media (min-width: 30rem){
+    margin-right: .25rem;
+  }
+`;
+
+export const FormHeader = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    margin: 0 0 .5rem 0;
+    @media (min-width: 30rem){
+      flex-direction: row-reverse;
+  }
 `;
 
 export const FormNameContainer = styled.h2`

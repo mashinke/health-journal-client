@@ -20,7 +20,9 @@ import {
   FieldDeletedMessage,
   AddFieldContainer,
   AddFieldLabel,
-  AddFieldLabelIcon
+  AddFieldLabelIcon,
+  FormHeader,
+  FormTitle
 } from '../RecordFormComponents/RecordFormComponents';
 import {
   DeleteButton,
@@ -31,7 +33,6 @@ import {
   ResetButton,
 } from '../Button/Button';
 import SelectSingle from '../SelectSingle/SelectSingle';
-import { RiAddLine } from 'react-icons/ri';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -389,41 +390,44 @@ function RecordForm(props) {
       onReset={event =>
         handleResetForm(event)}
     >
-      <SelectForm
-        buttonLabel={currentForm.name}
-        dispatch={props.dispatch}
-        forms={props.state.forms}
-      />
-      <FormMetaContainer>
-        <FormNameContainer>
-          <FormNameLabel htmlFor='form-name'>
-            New Record:
+      <FormTitle>Create an Entry</FormTitle>
+      <FormHeader>
+        <SelectForm
+          buttonLabel={currentForm.name}
+          dispatch={props.dispatch}
+          forms={props.state.forms}
+        />
+        <FormMetaContainer>
+          <FormNameContainer>
+            <FormNameLabel htmlFor='form-name'>
+              New Record:
           </FormNameLabel>
-          <FormNameInput
-            id='form-name'
-            type='text'
-            value={currentForm.name}
-            onChange={(event) =>
-              handleFormNameEdit(
-                event.target.value
-              )}
-          />
-        </FormNameContainer>
-        <FormDescriptionContainer>
-          <FormDescriptionLabel
-            htmlFor='form-description'
-          >
-            Description:
+            <FormNameInput
+              id='form-name'
+              type='text'
+              value={currentForm.name}
+              onChange={(event) =>
+                handleFormNameEdit(
+                  event.target.value
+                )}
+            />
+          </FormNameContainer>
+          <FormDescriptionContainer>
+            <FormDescriptionLabel
+              htmlFor='form-description'
+            >
+              Description:
           </FormDescriptionLabel>
-          <FormDescriptionInput
-            id='form-description'
-            type='text'
-            value={currentForm.description}
-            onChange={event =>
-              handleFormDescriptionEdit(event.target.value)}
-          />
-        </FormDescriptionContainer>
-      </FormMetaContainer>
+            <FormDescriptionInput
+              id='form-description'
+              type='text'
+              value={currentForm.description}
+              onChange={event =>
+                handleFormDescriptionEdit(event.target.value)}
+            />
+          </FormDescriptionContainer>
+        </FormMetaContainer>
+      </FormHeader>
       {
         !currentForm.fields.length && <p>Form must have at least one field</p>
       }
