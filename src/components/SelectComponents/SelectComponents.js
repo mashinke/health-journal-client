@@ -7,6 +7,19 @@ export const SelectMultipleContainer = styled.div`
   padding: 0;
 `;
 
+export const SelectSingleContainer = styled.div`
+display: flex;
+margin: .5rem 0;
+flex-wrap: wrap;
+justify-content: space-evenly;
+border: 1px solid ${props => props.theme.primary.dark};
+border-radius: .5rem .5rem;
+padding: .25rem 1rem .25rem .25rem;
+background-color: ${props => props.theme.primary.medium};
+text-align: right;
+color: ${props => props.theme.primary.text};
+`;
+
 export const ItemsList = styled.ul`
   padding: .125rem;
   margin: 0;

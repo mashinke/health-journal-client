@@ -18,7 +18,8 @@ import {
   FormDescriptionContainer,
   FormMetaContainer,
   FormFieldsContainer,
-  FieldDeletedMessage
+  FieldDeletedMessage,
+  AddFieldButtonsSection
 } from '../RecordFormComponents/RecordFormComponents';
 import {
   DeleteButton,
@@ -26,8 +27,10 @@ import {
   UndoDeleteButton,
   UpButton,
   SubmitButton,
-  ResetButton
+  ResetButton,
+  AddFieldButton
 } from '../Button/Button';
+import SelectSingle from '../SelectSingle/SelectSingle';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -182,13 +185,14 @@ function RecordForm(props) {
     }
   }
 
-  function handleAddField(type, label) {
+  function handleAddField({ value: type, label }) {
     const newField = {
       type,
-      label,
+      label: `New ${label} Field`,
       id: uuid(),
       duplicateError: checkDuplicates(currentForm, label)
     }
+    console.log(newField)
 
     if (type === 'range') {
       newField.min = 1;
@@ -361,23 +365,18 @@ function RecordForm(props) {
       });
 
 
-  const addFieldButtons =
+  const addFieldItems =
     Object.entries({
       string: 'Text',
       number: 'Number',
       boolean: 'Yes/No',
       range: 'Range',
       time: 'Time'
-    }).map(([type, label]) => {
-      return (
-        <button
-          key={type}
-          type='button'
-          onClick={() => handleAddField(
-            type,
-            `New ${label} Field`)}
-        >Add new {label} field</button>
-      )
+    }).map(([value, label]) => {
+      return {
+        label,
+        value
+      }
     });
 
   const formIsValid = validateForm(currentForm);
@@ -429,18 +428,22 @@ function RecordForm(props) {
       }
       <FormFieldsContainer>
         {formFields}
+
+        <AddFieldButtonsSection>
+          <SelectSingle
+            items={addFieldItems}
+            handleSelectItem={handleAddField}
+          />
+        </AddFieldButtonsSection>
       </FormFieldsContainer>
       {
         !formIsValid && <p>Please correct errors before submitting</p>
       }
-      <AddFieldButtonsContainer>
-        {addFieldButtons}
-      </AddFieldButtonsContainer>
       <FormSubmitResetContainer>
         <SubmitButton />
         <ResetButton />
       </FormSubmitResetContainer>
-    </RecordFormContainer>
+    </RecordFormContainer >
   )
 }
 

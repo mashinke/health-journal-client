@@ -435,3 +435,28 @@ export function ResetButton(props) {
     </IconContext.Provider>
   )
 };
+
+
+export function AddFieldButton(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1rem'
+          }
+        }
+      }
+    >
+      <TinyRoundPrimaryColorButton
+        aria-label={`add a new field`}
+        {...props}
+      >
+        <RiAddLine />
+      </TinyRoundPrimaryColorButton>
+    </IconContext.Provider>
+  )
+}

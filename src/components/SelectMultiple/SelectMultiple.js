@@ -9,7 +9,7 @@ import {
   SelectButton,
   SelectButtonLabel,
   SelectMultipleContainer,
-} from '../SelectMultipleComponents/SelectMultipleComponents';
+} from '../SelectComponents/SelectComponents';
 import { DeleteButton } from '../Button/Button';
 export default function SelectMultiple(props) {
   const {

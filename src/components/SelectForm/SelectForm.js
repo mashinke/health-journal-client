@@ -17,7 +17,6 @@ function SelectForm(props) {
   }
 
   function handleCreateNewForm() {
-    console.log('ckk')
     props.dispatch(
       {
         type: 'ADD_FORM',
