@@ -50,6 +50,7 @@ export const DropdownListItem = styled.li`
   line-height: 1.25rem;
   margin: .125rem;
   padding: .25rem;
+  text-align: center;
   background-color: ${props =>
     props.isHighlighted
       ? props.theme.primary.medium

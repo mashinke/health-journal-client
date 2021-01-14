@@ -6,12 +6,14 @@ import { RiAddLine } from 'react-icons/ri';
 
 export const SelectFormLabel = styled.label`
   padding: .25rem 0;
+  width: 100%;
+  text-align: center;
 `;
 
 export const SelectFormContainer = styled.div`
   margin: 0 0 .5rem 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-evenly;
   border: 1px solid ${props => props.theme.secondary.dark};
   border-radius: .5rem .5rem;

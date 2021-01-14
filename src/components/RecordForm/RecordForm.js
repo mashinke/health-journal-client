@@ -390,7 +390,7 @@ function RecordForm(props) {
         handleResetForm(event)}
     >
       <SelectForm
-        value={props.state.currentForm}
+        buttonLabel={currentForm.name}
         dispatch={props.dispatch}
         forms={props.state.forms}
       />

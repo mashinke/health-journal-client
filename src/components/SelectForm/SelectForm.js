@@ -5,54 +5,55 @@ import {
   SelectFormContainer,
   SelectFormInteractiveContainer
 } from '../RecordFormComponents/RecordFormComponents';
+import SelectSingle from '../SelectSingle/SelectSingle';
 
 function SelectForm(props) {
-  function handleCurrentFormChange(newCurrentForm) {
-    props.dispatch(
-      {
-        type: 'CHANGE_CURRENT_FORM',
-        payload: newCurrentForm
-      }
-    )
-  }
-
-  function handleCreateNewForm() {
-    props.dispatch(
-      {
-        type: 'ADD_FORM',
-        payload: {
-          values: {},
-          fields: [],
-          name: '',
-          description: ''
+  function handleCurrentFormChange({ value }) {
+    console.log('val', value)
+    if (value === 'NEW_FORM') {
+      props.dispatch(
+        {
+          type: 'ADD_FORM',
+          payload: {
+            values: {},
+            fields: [],
+            name: '',
+            description: ''
+          }
         }
-      }
-    )
+      )
+    } else {
+      props.dispatch(
+        {
+          type: 'CHANGE_CURRENT_FORM',
+          payload: value
+        }
+      )
+    }
   }
 
-  let newFormCounter = 0;
-  const selectOptions = props.forms.map((form, i) => (
-    <option key={form.id || `new-form-${++newFormCounter}`} value={i}>{form.name}</option>
+  const selectItems = props.forms.map((form, i) => (
+    {
+      value: i,
+      label: form.name
+    }
   ));
+
+  selectItems.push({
+    value: 'NEW_FORM',
+    label: '<new form>'
+  })
 
   return (
     <SelectFormContainer>
-      <SelectFormLabel>
-        What are you recording?
-      </SelectFormLabel>
-      <SelectFormInteractiveContainer>
-        <select
-          value={props.value}
-          onChange={event =>
-            handleCurrentFormChange(event.target.value)}
-        >
-          {selectOptions}
-        </select>
-        <NewFormButton onClick={() =>
-          handleCreateNewForm()}
-        />
-      </SelectFormInteractiveContainer>
-    </SelectFormContainer>
+      <SelectSingle
+        items={selectItems}
+        handleSelectItem={handleCurrentFormChange}
+        label='What are you recording?'
+        StyledLabel={SelectFormLabel}
+        buttonLabel={props.buttonLabel || 'New Form'}
+      />
+    </SelectFormContainer >
   )
 };
 
