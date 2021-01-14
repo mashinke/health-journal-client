@@ -1,16 +1,20 @@
 import React from 'react';
 import { useSelect } from 'downshift';
 import {
-  DropDownContainer,
   ItemsList,
   DropdownListItem,
-  SelectSingleContainer
-} from '../SelectComponents/SelectComponents';
+  SelectSingleContainer,
+  SelectSingleButton,
+  SelectSingleButtonContainer
+} from '../SelectSingleComponents/SelectSingleComponents';
 
 function SelectSingle(props) {
   const {
     items,
-    handleSelectItem
+    handleSelectItem,
+    label,
+    StyledLabel,
+    buttonLabel
   } = props;
 
   const {
@@ -26,16 +30,31 @@ function SelectSingle(props) {
     onSelectedItemChange: ({ selectedItem }) =>
       handleSelectItem(selectedItem)
   })
+
   return (
-    <SelectSingleContainer>
-      <label {...getLabelProps()}>Choose an element:</label>
-      <button type="button" {...getToggleButtonProps()}>
-        {'Add New Field'}
-      </button>
-      <DropDownContainer>
-        <ItemsList {...getMenuProps()} >
-          {
-            items.map((item, index) => (
+    <>
+      {
+        StyledLabel
+          ? <StyledLabel {...getLabelProps()}>{label}</StyledLabel>
+
+          : <label {...getLabelProps()} >{label}</label>
+      }
+      <SelectSingleContainer>
+        <SelectSingleButtonContainer
+          isOpen={isOpen}
+        >
+          <SelectSingleButton
+            type="button"
+            {...getToggleButtonProps()}>
+            {buttonLabel}
+          </SelectSingleButton>
+        </SelectSingleButtonContainer>
+        <ItemsList
+          {...getMenuProps()}
+          isOpen={isOpen}
+        >
+          {isOpen
+            && items.map((item, index) => (
               <DropdownListItem
                 style={
                   highlightedIndex === index
@@ -49,8 +68,9 @@ function SelectSingle(props) {
               </DropdownListItem>
             ))}
         </ItemsList>
-      </DropDownContainer>
-    </SelectSingleContainer>
+
+      </SelectSingleContainer>
+    </>
   )
 }
 

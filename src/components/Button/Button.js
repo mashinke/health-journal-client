@@ -446,17 +446,17 @@ export function AddFieldButton(props) {
           color: theme.primary.text,
           style: {
             verticalAlign: 'middle',
-            fontSize: '1rem'
+            fontSize: '1.25rem'
           }
         }
       }
     >
-      <TinyRoundPrimaryColorButton
+      <SmallRoundPrimaryColorButton
         aria-label={`add a new field`}
         {...props}
       >
         <RiAddLine />
-      </TinyRoundPrimaryColorButton>
+      </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
   )
 }

@@ -1,4 +1,7 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
+import { useContext } from 'react';
+import { IconContext } from 'react-icons';
+import { RiAddLine } from 'react-icons/ri';
 
 
 export const SelectFormLabel = styled.label`
@@ -222,10 +225,51 @@ export const FieldUpDownButtonsContainer = styled.div`
 `;
 
 
-export const AddFieldButtonsSection = styled(FormFieldContainer)`
-  flex-direction: column;
-  align-items: flex-end;
+export const AddFieldContainer = styled(FormFieldContainer)`
+    display: flex;
+    flex-direction: row-reverse;
+    // align-items: flex-start;
   `;
+
+export const AddFieldLabel = styled.label`
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+  margin: .25rem;
+  cursor: pointer;
+  transition: 200ms all;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  min-width: 2rem;
+  line-height: 1.625rem;
+  background-color: ${props => props.theme.primary.light};
+  :hover {
+    background-color: ${props => props.theme.primary.medium};
+    border-color: ${props => props.theme.primary.text};
+  }
+`;
+
+export function AddFieldLabelIcon(props) {
+  const theme = useContext(ThemeContext);
+  return (
+    <IconContext.Provider
+      value={
+        {
+          color: theme.primary.text,
+          style: {
+            verticalAlign: 'middle',
+            fontSize: '1.25rem'
+          }
+        }
+      }
+    >
+      <RiAddLine />
+    </IconContext.Provider>
+  )
+}
 
 export const FormSubmitResetContainer = styled.div`
   margin: 0 0 .5rem 0;

@@ -13,13 +13,14 @@ import {
   FormDescriptionLabel,
   FormFieldContainer,
   FieldUpDownButtonsContainer,
-  AddFieldButtonsContainer,
   FormSubmitResetContainer,
   FormDescriptionContainer,
   FormMetaContainer,
   FormFieldsContainer,
   FieldDeletedMessage,
-  AddFieldButtonsSection
+  AddFieldContainer,
+  AddFieldLabel,
+  AddFieldLabelIcon
 } from '../RecordFormComponents/RecordFormComponents';
 import {
   DeleteButton,
@@ -28,9 +29,9 @@ import {
   UpButton,
   SubmitButton,
   ResetButton,
-  AddFieldButton
 } from '../Button/Button';
 import SelectSingle from '../SelectSingle/SelectSingle';
+import { RiAddLine } from 'react-icons/ri';
 
 function RecordForm(props) {
   const currentForm = props.state.forms[props.state.currentForm];
@@ -429,12 +430,15 @@ function RecordForm(props) {
       <FormFieldsContainer>
         {formFields}
 
-        <AddFieldButtonsSection>
+        <AddFieldContainer>
           <SelectSingle
             items={addFieldItems}
             handleSelectItem={handleAddField}
+            label={<AddFieldLabelIcon />}
+            StyledLabel={AddFieldLabel}
+            buttonLabel='Select a field to add'
           />
-        </AddFieldButtonsSection>
+        </AddFieldContainer>
       </FormFieldsContainer>
       {
         !formIsValid && <p>Please correct errors before submitting</p>
