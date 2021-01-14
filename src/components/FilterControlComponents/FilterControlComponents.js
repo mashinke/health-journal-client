@@ -13,7 +13,7 @@ export const FilterSelectBar = styled.div`
   transition: 200ms border-radius;
   :last-child{
     margin-bottom: 1rem;
-    border-radius: .5rem 0 0 .5rem;
+    border-radius: .5rem;
   }
 `;
 
