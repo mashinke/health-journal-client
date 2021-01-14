@@ -301,16 +301,16 @@ export function AddFieldLabelIcon(props) {
 }
 
 export const FormSubmitResetContainer = styled.div`
-  margin: 0 0 .5rem 0;
+  margin: .5rem 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${props => props.theme.primary.dark};
   border-radius: .5rem .5rem;
   padding: .25rem 1rem .25rem .25rem;
-  background-color: ${props => props.theme.secondary.medium};
+  background-color: ${props => props.theme.primary.medium};
   text-align: right;
-  color: ${props => props.theme.secondary.text};
+  color: ${props => props.theme.primary.text};
 `;
 
 export const FieldDeletedMessage = styled.div`
