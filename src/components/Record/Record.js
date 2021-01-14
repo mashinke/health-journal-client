@@ -5,6 +5,7 @@ import {
   BooleanDisplay,
   RangeDisplay
 } from '../DisplayField/DisplayField';
+import { RecordFieldList, RecordListItem, RecordListItemDeleteButtonContainer, RecordListItemName, RecordListItemTime } from '../RecordListComponents/RecordListComponents';
 
 function Record(props) {
   const bodyFields = props.fields.map(
@@ -27,17 +28,24 @@ function Record(props) {
       return <Field key={i} {...field} value={props.values[field.id]} />
     });
   return (
-    <li>
-      <h4>{props.name}</h4>
-      <p>Recorded on: {new Date(props.created).toLocaleString()}</p>
-      <ul>
+    <RecordListItem>
+      <RecordListItemName>
+        {props.name}
+      </RecordListItemName>
+
+      <RecordListItemTime>
+        Recorded on: {new Date(props.created).toLocaleString()}
+      </RecordListItemTime>
+      <RecordFieldList>
         {bodyFields}
-      </ul>
-      <button
-        type='button'
-        onClick={() => props.handleDeleteRecord(props.id)}
-      >Delete Record</button>
-    </li>
+      </RecordFieldList>
+      <RecordListItemDeleteButtonContainer>
+        <button
+          type='button'
+          onClick={() => props.handleDeleteRecord(props.id)}
+        >Delete Record</button>
+      </RecordListItemDeleteButtonContainer>
+    </RecordListItem>
   )
 }
 

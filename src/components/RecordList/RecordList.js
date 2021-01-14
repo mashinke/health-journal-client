@@ -1,5 +1,6 @@
 import React from 'react';
 import RecordApiService from '../../services/record-api-service';
+import { RecordListContainer } from '../RecordListComponents/RecordListComponents';
 import Record from '../Record/Record';
 
 
@@ -23,10 +24,8 @@ export default function RecordList(props) {
     />
   ));
   return (
-    <div>
-      <ul>
-        {showRecords}
-      </ul>
-    </div>
+    <RecordListContainer>
+      {showRecords}
+    </RecordListContainer>
   )
 }
