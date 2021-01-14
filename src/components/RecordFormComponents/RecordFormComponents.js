@@ -30,7 +30,7 @@ export const SelectFormContainer = styled.div`
   background-color: ${props => props.theme.secondary.medium};
   text-align: right;
   color: ${props => props.theme.secondary.text};
-  @media (min-width: 30rem){
+  @media (min-width: 45rem){
     margin-left: .25rem;
   }
 `;
@@ -46,7 +46,7 @@ export const FormMetaContainer = styled.div`
   background-color: ${props => props.theme.primary.medium};
   text-align: right;
   color: ${props => props.theme.primary.text};
-  @media (min-width: 30rem){
+  @media (min-width: 45rem){
     margin-right: .25rem;
   }
 `;
@@ -56,7 +56,7 @@ export const FormHeader = styled.div`
     flex-direction: column;
     justify-content: stretch;
     margin: 0 0 .5rem 0;
-    @media (min-width: 30rem){
+    @media (min-width: 45rem){
       flex-direction: row-reverse;
   }
 `;
@@ -138,8 +138,14 @@ export const FormFieldContainer = styled.div`
   background-color: ${props => props.theme.secondary.medium};
   display: flex;
   @media (min-width: 30rem) {
-    width: calc((100% - 1rem) / 2);
-}
+    width: calc((100% - .5rem) / 2);
+  }
+  @media (min-width: 45rem) {
+    width: calc((100% - .75rem) / 3);
+  }
+  @media (min-width: 60rem){
+    width: calc((100% - 1rem) / 4);
+  }
 `;
 
 export const FormFieldInputContainer = styled.div`
