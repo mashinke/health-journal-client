@@ -44,6 +44,8 @@ export const ItemsList = styled.ul`
   justify-content: stretch;
   height: 5rem;
   overflow-y: auto;
+  position: absolute;
+  width: 100%;
 `;
 
 export const DropdownListItem = styled.li`

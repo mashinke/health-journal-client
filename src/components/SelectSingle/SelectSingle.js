@@ -49,26 +49,29 @@ function SelectSingle(props) {
             {buttonLabel}
           </SelectSingleButton>
         </SelectSingleButtonContainer>
-        <ItemsList
-          {...getMenuProps()}
-          isOpen={isOpen}
-        >
-          {isOpen
-            && items.map((item, index) => (
-              <DropdownListItem
-                style={
-                  highlightedIndex === index
-                    ? { backgroundColor: '#bde4ff' }
-                    : {}
-                }
-                key={`${item}${index}`}
-                {...getItemProps({ item, index })}
-              >
-                {item.label}
-              </DropdownListItem>
-            ))}
-        </ItemsList>
-
+        <div style={{
+          position: 'relative'
+        }}>
+          <ItemsList
+            {...getMenuProps()}
+            isOpen={isOpen}
+          >
+            {isOpen
+              && items.map((item, index) => (
+                <DropdownListItem
+                  style={
+                    highlightedIndex === index
+                      ? { backgroundColor: '#bde4ff' }
+                      : {}
+                  }
+                  key={`${item}${index}`}
+                  {...getItemProps({ item, index })}
+                >
+                  {item.label}
+                </DropdownListItem>
+              ))}
+          </ItemsList>
+        </div>
       </SelectSingleContainer>
     </>
   )
