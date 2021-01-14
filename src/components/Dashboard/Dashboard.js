@@ -46,10 +46,17 @@ function Dashboard(props) {
   const [dashboardState, dashboardDispatch] = useReducer(
     dashboardStateReducer,
     {
-      forms: [],
+      forms: [
+        {
+          name: '',
+          fields: [],
+          values: {},
+          description: '',
+        }
+      ],
       modifiedForms: [],
       records: [],
-      currentForm: null,
+      currentForm: 0,
       displayRecordForm: false,
       displayRecordList: false,
       activeFilters: {
@@ -79,11 +86,13 @@ function Dashboard(props) {
   useEffect(() => {
     FormApiService.getForms()
       .then(res => {
-        const action = {
-          type: 'POPULATE_FORMS',
-          payload: res
-        };
-        dashboardDispatch(action);
+        if (res.length > 0) {
+          const action = {
+            type: 'POPULATE_FORMS',
+            payload: res
+          };
+          dashboardDispatch(action);
+        }
       }).catch(setApiError)
   }, []);
 
