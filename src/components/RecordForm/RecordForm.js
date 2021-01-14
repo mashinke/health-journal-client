@@ -22,7 +22,8 @@ import {
   AddFieldLabel,
   AddFieldLabelIcon,
   FormHeader,
-  FormTitle
+  FormTitle,
+  DoubleWidthFieldContainer
 } from '../RecordFormComponents/RecordFormComponents';
 import {
   DeleteButton,
@@ -333,9 +334,8 @@ function RecordForm(props) {
           )
 
         const value = currentForm.values[field.id];
-
-        return (
-          <FormFieldContainer key={field.id}>
+        const formFieldChildren = (
+          <>
             <FieldUpDownButtonsContainer>
               <UpButton
                 onClick={() => handleMoveField(
@@ -362,6 +362,19 @@ function RecordForm(props) {
                 onClick={() => handleToggleDeleteField(i)}
               />
             </div>
+          </>
+        )
+        if (field.max - field.min >= 9) {
+          return (
+            <DoubleWidthFieldContainer>
+              {formFieldChildren}
+            </DoubleWidthFieldContainer>
+          )
+        }
+
+        return (
+          <FormFieldContainer key={field.id}>
+            {formFieldChildren}
           </FormFieldContainer>
         )
       });

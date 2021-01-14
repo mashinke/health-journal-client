@@ -32,10 +32,6 @@ const RoundButton = styled(Button)`
   border-radius: 50%;
 `;
 
-const SquareButton = styled(Button)`
-  border-radius: .5rem;
-`;
-
 const BigRoundButton = styled(RoundButton)`
   height: 2.5rem;
   width: 2.5rem;
@@ -51,50 +47,32 @@ const TinyRoundButton = styled(RoundButton)`
   width: 1.25rem;
 `;
 
-const BigSquareButton = styled(SquareButton)`
-  height: 2.5rem;
-  line-height: 2.125rem;
-  width: 2.5rem;
-`;
-
 const BigRoundSecondaryColorButton = styled(BigRoundButton)`
 background-color: ${props => props.theme.secondary.light};
+border-color: ${props => props.theme.secondary.verydark};
 :hover {
   background-color: ${props => props.theme.secondary.medium};
   border-color: ${props => props.theme.secondary.text};
 }
 `;
 
-const BigRoundPrimaryColorButton = styled(BigRoundButton)`
-background-color: ${props => props.theme.primary.light};
-:hover {
-  background-color: ${props => props.theme.primary.medium};
-  border-color: ${props => props.theme.primary.text};
-}
-`;
 
 const SmallRoundPrimaryColorButton = styled(SmallRoundButton)`
 background-color: ${props => props.theme.primary.light};
+border-color: ${props => props.theme.primary.verydark};
 :hover {
   background-color: ${props => props.theme.primary.medium};
   border-color: ${props => props.theme.primary.text};
 }
 `;
 
-const BigSquareSecondaryColorButton = styled(BigSquareButton)`
-  background-color: ${props => props.theme.secondary.light};
-  :hover {
-    background-color: ${props => props.theme.secondary.medium};
-    border-color: ${props => props.theme.secondary.text};
-  }
-`
-
 const TinyRoundPrimaryColorButton = styled(TinyRoundButton)`
-  background-color: ${props => props.theme.primary.light};
-  :hover {
-    background-color: ${props => props.theme.primary.medium};
-    border-color: ${props => props.theme.primary.dark};
-  }
+background-color: ${props => props.theme.primary.light};
+border-color: ${props => props.theme.primary.verydark};
+:hover {
+  background-color: ${props => props.theme.primary.medium};
+  border-color: ${props => props.theme.primary.text};
+}
 `;
 
 export function LogoutButton(props) {
@@ -381,13 +359,18 @@ export function RangeNumberButton(props) {
     <SmallRoundPrimaryColorButton
       aria-label={`select ${props.value}`}
       {...props}
-      style={props.checked
-        ? {
-          backgroundColor: theme.primary.text,
-          color: theme.primary.light
-        }
-        : {}
-      }
+      style={{
+        color: theme.primary.text,
+        fontWeight: 'bold',
+        backgroundColor: `${props.checked
+          ? theme.primary.dark
+          : theme.primary.light
+          }`,
+        border: `${(props.checked)
+          ? `2px solid ${theme.primary.verydark}`
+          : `2px solid ${theme.primary.dark}`
+          }`
+      }}
     >
       {props.value}
     </SmallRoundPrimaryColorButton>

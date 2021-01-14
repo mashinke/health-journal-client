@@ -148,6 +148,19 @@ export const FormFieldContainer = styled.div`
   }
 `;
 
+export const DoubleWidthFieldContainer = styled(FormFieldContainer)`
+
+@media (min-width: 30rem) {
+  width: 100%;
+}
+@media (min-width: 45rem) {
+  width: calc((100% - .5rem) / 3 * 2);
+}
+@media (min-width: 60rem){
+  width: calc((100% - .5rem) / 2);
+}
+`;
+
 export const FormFieldInputContainer = styled.div`
   margin: 0 .25rem;
   flex-grow: 1;
@@ -242,7 +255,7 @@ export const RadioInputContainer = styled.span`
 
 export const RangeRadioContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
 `;
