@@ -5,12 +5,6 @@ export const DateRangeSelectContainer = styled.div`
   flex-direction: column;
   margin: .5rem;
   padding: 0;
-  :empty {
-    margin-top: 0;
-  }
-  :nth-child(2) {
-    margin-top: 0;
-  }
 `;
 
 export const DateRangeSelectControls = styled.div`
@@ -24,6 +18,9 @@ display: flex;
 flex-wrap: wrap;
 justify-content: center;
 align-content: flex-start;
+:first-child {
+  margin: 0;
+}
 `;
 
 export const DateRangeSelectInput = styled.div`
@@ -54,7 +51,7 @@ margin: auto .5rem auto;
 
 export const ShowDateFilter = styled.div`
 padding: .125rem;
-margin: .5rem 0 0 0;
+margin: 0;
 background-color: ${props => props.theme.secondary.medium};
 border: 1px solid ${props => props.theme.secondary.dark};
 border-radius: .5rem;

@@ -77,8 +77,16 @@ export default function RecordFilterControls(props) {
         />
       </FilterSelectBar>
       {
-        // (props.showMultiSelect || props.showDatePicker)
-        <FilterControlBox>
+        ((
+          props.filters.forms.length > 0
+          || props.showMultiSelect
+        )
+          || (
+            (props.filters.created.to
+              && props.filters.created.from
+            ) || props.showDatePicker
+          ))
+        && <FilterControlBox>
           {
             (props.filters.forms.length > 0
               || props.showMultiSelect)
@@ -93,7 +101,13 @@ export default function RecordFilterControls(props) {
             />
           }
           {
-            <DateRangeSelect
+            (
+              (props.filters.created.to
+                && props.filters.created.from
+              ) || props.showDatePicker
+            )
+
+            && <DateRangeSelect
               id='form-date-range-picker'
               label='Select date range:'
               fromDate={props.filters.created.from}
@@ -106,6 +120,6 @@ export default function RecordFilterControls(props) {
           }
         </FilterControlBox>
       }
-    </div>
+    </div >
   )
 }

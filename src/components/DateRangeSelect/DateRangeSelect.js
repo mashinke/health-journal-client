@@ -51,7 +51,6 @@ export default function DateRangeSelect(props) {
         break;
     }
   }
-
   return (
     <DateRangeSelectContainer id={props.id}>
       {props.fromDate && props.toDate
