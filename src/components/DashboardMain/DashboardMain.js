@@ -8,6 +8,7 @@ const DashboardMain = styled.main`
   flex-direction: column;
   @media (min-width: 45rem){
     height: calc(100vh - 4.25rem);
+    margin: 0 10%;
   }
 `;
 

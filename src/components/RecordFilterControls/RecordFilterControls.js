@@ -37,9 +37,6 @@ function handleDateFilterChange(dispatch) {
 
 export default function RecordFilterControls(props) {
 
-  const [showMultiSelect, setShowMultiSelect] = useState(false);
-  const [showDatePicker, setShowDatePicker] = useState(false)
-
   const formFilterItems = props.forms.filter(item => {
     for (let form of props.filters.forms) {
       if (form.id === item.id) return false;
@@ -58,8 +55,6 @@ export default function RecordFilterControls(props) {
     props.dispatch({
       type: 'TOGGLE_MULTI_SELECT'
     })
-    // setShowMultiSelect(!showMultiSelect);
-    // setShowDatePicker(false);
   }
 
   function handleToggleShowDatePicker() {
@@ -67,14 +62,8 @@ export default function RecordFilterControls(props) {
     props.dispatch({
       type: 'TOGGLE_DATE_PICKER'
     })
-    // setShowDatePicker(!showDatePicker);
-    // setShowMultiSelect(false);
   }
 
-  function handleShowMultiSelect() {
-    setShowMultiSelect(true);
-    setShowDatePicker(false);
-  }
   console.log(props)
   return (
     <div>
@@ -106,7 +95,7 @@ export default function RecordFilterControls(props) {
           {
             <DateRangeSelect
               id='form-date-range-picker'
-              label='Select date range'
+              label='Select date range:'
               fromDate={props.filters.created.from}
               toDate={props.filters.created.to}
               show={props.showDatePicker}

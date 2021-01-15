@@ -1,6 +1,6 @@
 import React from 'react';
 import RecordApiService from '../../services/record-api-service';
-import { RecordListContainer } from '../RecordDisplayComponents/RecordDisplayComponents';
+import { RecordListContainer, RecordListHeading } from '../RecordDisplayComponents/RecordDisplayComponents';
 import Record from '../Record/Record';
 
 
@@ -25,6 +25,9 @@ export default function RecordList(props) {
   ));
   return (
     <RecordListContainer>
+      <RecordListHeading>
+        Recorded Entries
+      </RecordListHeading>
       {showRecords}
     </RecordListContainer>
   )

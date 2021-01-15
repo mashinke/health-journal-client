@@ -10,35 +10,58 @@ export const RecordDisplayContainer = styled.section`
   }
 `;
 
-export const SummaryContainer = styled(OuterListContainer)`
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: stretch;
-  background-color: ${props => props.theme.primary.dark};
-  border-color: ${props => props.theme.primary.verydark};
-  margin: 0 1rem .5rem;
-  @media (min-width: 45rem) {
-    margin: 0 1rem 0 .25rem;
-  }
+export const SummaryContainer = styled.div`
+flex-grow: 1;
+`;
+
+export const SummaryListContainer = styled(OuterListContainer)`
+  background-color: ${props => props.theme.secondary.medium};
+  border-color: ${props => props.theme.secondary.dark};
 `;
 
 export const SummaryItemContainer = styled(OuterListItemContainer)`
   background-color: ${props => props.theme.primary.medium};
   border-color: ${props => props.theme.primary.dark};
+  flex-direction: column;
   flex-grow: 1;
-  width: 100%;
-  padding: 0;
+  @media (min-width: 45rem) {
+    width: calc((100% - .5rem) / 2);
+  }
+`;
+
+export const SummaryItemHeading = styled.h4`
+margin: .5rem 0 .25rem .25rem;
+`;
+
+export const SummaryItemBody = styled.div`
+font-size: 5rem;
+text-align: center;
+margin: auto;
+padding: 2rem;  
+background-color: ${props => props.theme.primary.light};
+border: 1px solid ${props => props.theme.primary.dark};
+border-radius: .5rem;
 `;
 
 export const RecordListContainer = styled(OuterListContainer)`
   flex-wrap: nowrap;
   flex-direction: column;
-  margin: 0 1rem;
+  margin: 0 1rem;  
+  background-color: ${props => props.theme.primary.medium};
+  border-color: ${props => props.theme.primary.dark};
   @media (min-width: 45rem){
     max-width: calc((100% - 2.5rem) / 2);
     overflow-y: auto;
     margin: 0 .25rem 0 1rem;
 }
+`;
+
+export const RecordListHeading = styled.h3`
+margin: .5rem 0 .25rem .25rem;
+`;
+
+export const SummaryListHeading = styled(RecordListHeading)`
+color: ${props => props.theme.secondary.text};
 `;
 
 export const RecordListItem = styled(OuterListItemContainer)`
@@ -76,14 +99,14 @@ export const RecordFieldList = styled(OuterListContainer)`
   flex-direction: column;
   padding: .25rem;
   margin: 0 .25rem .25rem;
-  background-color: ${props => props.theme.primary.medium};
-  border-color: ${props => props.theme.primary.dark};
+  background-color: ${props => props.theme.primary.dark};
+  border-color: ${props => props.theme.primary.verydark};
   align-content: stretch;
 
 `;
 
 export const RecordFieldListItem = styled.li`
-  border: 1px solid ${props => props.theme.primary.dark};
+  border: 1px solid ${props => props.theme.primary.verydark};
   background-color: ${props => props.theme.primary.light};
   border-radius: .25rem;
   margin: .125rem;
