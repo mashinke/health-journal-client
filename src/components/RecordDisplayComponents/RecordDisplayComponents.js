@@ -11,36 +11,74 @@ export const RecordDisplayContainer = styled.section`
 `;
 
 export const SummaryContainer = styled.div`
-flex-grow: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 .5rem 0;
+  @media (min-width: 45rem) {
+    margin-bottom: 0;
+  }
 `;
 
 export const SummaryListContainer = styled(OuterListContainer)`
   background-color: ${props => props.theme.secondary.medium};
   border-color: ${props => props.theme.secondary.dark};
+  border-radius: 0 0 .5rem .5rem;
+  border-top: 0;
+  margin: 0 1rem 0;
+  flex-grow: 1;
+  align-content: stretch;
+  @media (min-width: 45rem){
+    margin-left: .25rem;
+  }
+`;
+
+export const SummaryListHeading = styled.h3`
+  margin: 0 1rem;
+  padding: .25rem;
+  color: ${props => props.theme.secondary.text};
+  background-color: ${props => props.theme.secondary.medium};
+  border: 1px solid ${props => props.theme.secondary.dark};
+  border-radius: .5rem .5rem 0 0;
+  border-bottom: 0;
+  align-content: stretch;
+  @media (min-width: 45rem){
+    margin-left: .25rem;
+  }
 `;
 
 export const SummaryItemContainer = styled(OuterListItemContainer)`
   background-color: ${props => props.theme.primary.medium};
   border-color: ${props => props.theme.primary.dark};
   flex-direction: column;
-  flex-grow: 1;
+  :last-child:nth-child(odd){
+    flex-grow: 1;
+  }
   @media (min-width: 45rem) {
+    width: 100%;
+  }
+  @media (min-width: 60rem) {
     width: calc((100% - .5rem) / 2);
   }
 `;
 
 export const SummaryItemHeading = styled.h4`
-margin: .5rem 0 .25rem .25rem;
+margin: .5rem 0 .25rem;
 `;
 
-export const SummaryItemBody = styled.div`
-font-size: 5rem;
-text-align: center;
-margin: auto;
-padding: 2rem;  
+export const SummaryItemBodyContainer = styled.div`
+display: flex;
 background-color: ${props => props.theme.primary.light};
 border: 1px solid ${props => props.theme.primary.dark};
 border-radius: .5rem;
+height: 100%;
+`;
+
+export const SummaryItemBody = styled.div`
+font-size: 4rem;
+text-align: center;
+margin: auto;
+padding: 1rem;  
 `;
 
 export const RecordListContainer = styled(OuterListContainer)`
@@ -57,11 +95,8 @@ export const RecordListContainer = styled(OuterListContainer)`
 `;
 
 export const RecordListHeading = styled.h3`
-margin: .5rem 0 .25rem .25rem;
-`;
-
-export const SummaryListHeading = styled(RecordListHeading)`
-color: ${props => props.theme.secondary.text};
+  margin: 0 1rem 0 .25rem;
+  padding: .25rem;
 `;
 
 export const RecordListItem = styled(OuterListItemContainer)`
