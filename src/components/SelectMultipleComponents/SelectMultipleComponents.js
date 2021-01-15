@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SelectMultipleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: .5rem;
+  margin: .5rem .5rem 0 .5rem;
   padding: 0;
 `;
 
