@@ -1,6 +1,6 @@
 import React from 'react';
 import RecordApiService from '../../services/record-api-service';
-import { RecordListContainer } from '../RecordListComponents/RecordListComponents';
+import { RecordListContainer } from '../RecordDisplayComponents/RecordDisplayComponents';
 import Record from '../Record/Record';
 
 

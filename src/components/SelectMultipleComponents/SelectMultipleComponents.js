@@ -19,8 +19,14 @@ export const ItemsList = styled.ul`
   flex: 5;
   align-items: flex-start;
   align-content: flex-start;
-  height: 5rem;
+  height: 2.5rem;
+  max-height: 2.5rem;
   overflow-y: auto;
+`;
+
+export const DropDownItemsList = styled(ItemsList)`
+  height: 5rem;
+  max-height: unset;
 `;
 
 export const DropdownListItem = styled.li`

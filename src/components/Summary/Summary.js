@@ -1,24 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
-import SummaryItem from '../SummaryItem/SummaryItem';
+import {
+  SummaryContainer,
+  SummaryItemContainer
+} from '../RecordDisplayComponents/RecordDisplayComponents';
 
-const SummaryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 function Summary(props) {
   return (
-    <section>
-      <SummaryContainer>
-        <SummaryItem>
-          total records
-        </SummaryItem>
-        <SummaryItem>
-          
-        </SummaryItem>
-      </SummaryContainer>
-    </section>
+    <SummaryContainer>
+      <SummaryItemContainer>Item one</SummaryItemContainer>
+      <SummaryItemContainer>Item two</SummaryItemContainer>
+      <SummaryItemContainer>Item three</SummaryItemContainer>
+    </SummaryContainer>
   )
 }
 

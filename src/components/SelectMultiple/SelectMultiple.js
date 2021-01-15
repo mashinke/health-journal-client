@@ -4,6 +4,7 @@ import {
   ButtonsContainer,
   DropDownContainer,
   ItemsList,
+  DropDownItemsList,
   DropdownListItem,
   SelectedListItem,
   SelectButton,
@@ -116,7 +117,7 @@ export default function SelectMultiple(props) {
               Reset
           </SelectButton>
           </ButtonsContainer>
-          <ItemsList {...getMenuProps()}>
+          <DropDownItemsList {...getMenuProps()}>
             {
               items.map((item, index) => (
                 <DropdownListItem
@@ -128,7 +129,7 @@ export default function SelectMultiple(props) {
                 </DropdownListItem>
               ))
             }
-          </ItemsList>
+          </DropDownItemsList>
         </DropDownContainer>
       }
     </SelectMultipleContainer >

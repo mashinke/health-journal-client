@@ -31,27 +31,34 @@ export default function DateRangeSelect(props) {
 
   return (
     <DateRangeSelectContainer id={props.id}>
-      <DateRangeSelectLabel htmlFor={props.id}>
-        {props.label}
-      </DateRangeSelectLabel>
-      <DateRangeSelectInputContainer>
-        <DateRangeSelectInputLabel htmlFor='from-date'>
-          From:
+      {props.fromDate && props.toDate
+        && <div>{props.fromDate.toString()}{props.toDate.toString()}</div>}
+      {
+        props.show
+        && <>
+          <DateRangeSelectLabel htmlFor={props.id}>
+            {props.label}
+          </DateRangeSelectLabel>
+          <DateRangeSelectInputContainer>
+            <DateRangeSelectInputLabel htmlFor='from-date'>
+              From:
         </DateRangeSelectInputLabel>
-        <DatePicker
-          value={fromDate}
-          maxDate={new Date()}
-          onChange={value => handleDateChange('FROM', value)}
-        />
-        <DateRangeSelectInputLabel htmlFor='to-date'>
-          To:
+            <DatePicker
+              value={fromDate}
+              maxDate={new Date()}
+              onChange={value => handleDateChange('FROM', value)}
+            />
+            <DateRangeSelectInputLabel htmlFor='to-date'>
+              To:
         </DateRangeSelectInputLabel>
-        <DatePicker
-          value={toDate}
-          maxDate={new Date()}
-          onChange={value => handleDateChange('TO', value)}
-        />
-      </DateRangeSelectInputContainer>
+            <DatePicker
+              value={toDate}
+              maxDate={new Date()}
+              onChange={value => handleDateChange('TO', value)}
+            />
+          </DateRangeSelectInputContainer>
+        </>
+      }
     </DateRangeSelectContainer>
   )
 }

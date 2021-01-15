@@ -54,20 +54,28 @@ export default function RecordFilterControls(props) {
     })
 
   function handleToggleShowMultiSelect() {
-    setShowMultiSelect(!showMultiSelect);
-    setShowDatePicker(false);
+    console.log('sms')
+    props.dispatch({
+      type: 'TOGGLE_MULTI_SELECT'
+    })
+    // setShowMultiSelect(!showMultiSelect);
+    // setShowDatePicker(false);
   }
 
   function handleToggleShowDatePicker() {
-    setShowDatePicker(!showDatePicker);
-    setShowMultiSelect(false);
+    console.log('sdp')
+    props.dispatch({
+      type: 'TOGGLE_DATE_PICKER'
+    })
+    // setShowDatePicker(!showDatePicker);
+    // setShowMultiSelect(false);
   }
 
   function handleShowMultiSelect() {
     setShowMultiSelect(true);
     setShowDatePicker(false);
   }
-
+  console.log(props)
   return (
     <div>
       <FilterSelectBar>
@@ -80,15 +88,14 @@ export default function RecordFilterControls(props) {
         />
       </FilterSelectBar>
       {
-        (showMultiSelect || showDatePicker)
-        && <FilterControlBox>
+        // (props.showMultiSelect || props.showDatePicker)
+        <FilterControlBox>
           {
             (props.filters.forms.length > 0
-              || showMultiSelect)
+              || props.showMultiSelect)
             && <SelectMultiple
               selectedItems={props.filters.forms}
-              show={showMultiSelect}
-              showOn={handleShowMultiSelect}
+              show={props.showMultiSelect}
               toggleShow={handleToggleShowMultiSelect}
               buttonLabel='Select forms'
               label='Filter by form'
@@ -97,14 +104,12 @@ export default function RecordFilterControls(props) {
             />
           }
           {
-            showDatePicker
-            && <DateRangeSelect
-              show={showDatePicker}
-              toggleShow={handleToggleShowDatePicker}
+            <DateRangeSelect
               id='form-date-range-picker'
               label='Select date range'
               fromDate={props.filters.created.from}
               toDate={props.filters.created.to}
+              show={props.showDatePicker}
               dispatch={
                 handleDateFilterChange(props.dispatch)
               }
@@ -112,6 +117,6 @@ export default function RecordFilterControls(props) {
           }
         </FilterControlBox>
       }
-    </div >
+    </div>
   )
 }

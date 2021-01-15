@@ -1,11 +1,20 @@
 import React from 'react';
+import { DeleteButton } from '../Button/Button';
 import {
   StringDisplay,
   NumberDisplay,
   BooleanDisplay,
   RangeDisplay
 } from '../DisplayField/DisplayField';
-import { RecordFieldList, RecordListItem, RecordListItemDeleteButtonContainer, RecordListItemName, RecordListItemTime } from '../RecordListComponents/RecordListComponents';
+import {
+  RecordFieldList,
+  RecordListItem,
+  RecordListItemHeader,
+  RecordListItemDeleteButtonContainer,
+  RecordListItemName,
+  RecordListItemTime,
+  RecordFieldListItemMeta
+} from '../RecordDisplayComponents/RecordDisplayComponents';
 
 function Record(props) {
   const bodyFields = props.fields.map(
@@ -29,22 +38,26 @@ function Record(props) {
     });
   return (
     <RecordListItem>
-      <RecordListItemName>
-        {props.name}
-      </RecordListItemName>
+      <RecordListItemHeader>
+        <RecordFieldListItemMeta>
+          <RecordListItemName>
+            {props.name}
+          </RecordListItemName>
 
-      <RecordListItemTime>
-        Recorded on: {new Date(props.created).toLocaleString()}
-      </RecordListItemTime>
+          <RecordListItemTime>
+            Recorded on: {new Date(props.created).toLocaleString()}
+          </RecordListItemTime>
+        </RecordFieldListItemMeta>
+        <RecordListItemDeleteButtonContainer>
+          <DeleteButton
+            aria-label='delete record'
+            onClick={() => props.handleDeleteRecord(props.id)}
+          />
+        </RecordListItemDeleteButtonContainer>
+      </RecordListItemHeader>
       <RecordFieldList>
         {bodyFields}
       </RecordFieldList>
-      <RecordListItemDeleteButtonContainer>
-        <button
-          type='button'
-          onClick={() => props.handleDeleteRecord(props.id)}
-        >Delete Record</button>
-      </RecordListItemDeleteButtonContainer>
     </RecordListItem>
   )
 }

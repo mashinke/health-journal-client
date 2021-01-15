@@ -59,6 +59,8 @@ function Dashboard(props) {
       currentForm: 0,
       displayRecordForm: false,
       displayRecordList: false,
+      showMultiSelect: false,
+      showDatePicker: false,
       activeFilters: {
         forms: [],
         created: {
@@ -143,6 +145,8 @@ function Dashboard(props) {
               filters={dashboardState.activeFilters}
               records={filteredRecords}
               setApiError={setApiError}
+              showDatePicker={dashboardState.showDatePicker}
+              showMultiSelect={dashboardState.showMultiSelect}
               displayRecordList={dashboardState.displayRecordList}
             />
         }

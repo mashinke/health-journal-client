@@ -4,6 +4,20 @@ const dashboardStateReducer = (state, action) => {
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
+    case 'TOGGLE_MULTI_SELECT': {
+      return {
+        ...state,
+        showMultiSelect: !state.showMultiSelect,
+        showDatePicker: false
+      }
+    }
+    case 'TOGGLE_DATE_PICKER': {
+      return {
+        ...state,
+        showDatePicker: !state.showDatePicker,
+        showMultiSelect: false
+      }
+    }
     case 'DELETE_RECORD': {
       const records = state.records.filter(record =>
         record.id !== action.payload.recordId)

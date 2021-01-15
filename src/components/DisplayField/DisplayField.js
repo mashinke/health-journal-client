@@ -1,33 +1,35 @@
 import React from 'react';
-
+import {
+  RecordFieldListItem
+} from '../RecordDisplayComponents/RecordDisplayComponents';
 export function StringDisplay(props) {
   return (
-    <li>
+    <RecordFieldListItem>
       <span>{props.label}: </span>
       <span>{props.value}</span>
-    </li>
+    </RecordFieldListItem>
   )
 }
 
 export function NumberDisplay(props) {
   return (
-    <li>
+    <RecordFieldListItem>
       <span>{props.label}: </span>
       <span>{props.value}</span>
-    </li>
+    </RecordFieldListItem>
   )
 }
 
 export function BooleanDisplay(props) {
   return (
-    <li>
+    <RecordFieldListItem>
       <span>{props.label}: </span>
       <span>{
         props.value
           ? '\u2713'
           : '\u2717'
       }</span>
-    </li>
+    </RecordFieldListItem>
   )
 }
 
@@ -38,9 +40,9 @@ export function RangeDisplay(props) {
     else numbers.push('\u25cb')
   }
   return (
-    <li>
+    <RecordFieldListItem>
       <span>{props.label}: </span>
       <span>{numbers}</span>
-    </li>
+    </RecordFieldListItem>
   )
 }
