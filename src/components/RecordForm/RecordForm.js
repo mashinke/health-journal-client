@@ -295,7 +295,6 @@ function RecordForm(props) {
               fields
             });
         }
-
         props.dispatch({
           type: 'UPDATE_CURRENT_FORM',
           payload: {
@@ -303,9 +302,7 @@ function RecordForm(props) {
             values: {}
           }
         });
-        props.dispatch({
-          type: 'TOGGLE_DISPLAY_RECORD_FORM'
-        })
+        console.log('display')
       }
 
       let record;
@@ -317,6 +314,10 @@ function RecordForm(props) {
           payload: record
         }
       );
+
+      props.dispatch({
+        type: 'TOGGLE_DISPLAY_RECORD_FORM'
+      });
     } catch (error) { props.setApiError(error) }
   }
 
