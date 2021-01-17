@@ -113,9 +113,9 @@ export default function SelectMultiple(props) {
                 {(selectedItem && selectedItem.name) || props.buttonLabel}
               </SelectButtonLabel>
             </SelectButton >
-            <SelectButton onClick={() => reset()}>
+            {/* <SelectButton onClick={() => reset()}>
               Reset
-          </SelectButton>
+          </SelectButton> <- this needs to be fixed */}
           </ButtonsContainer>
           <DropDownItemsList {...getMenuProps()}>
             {
