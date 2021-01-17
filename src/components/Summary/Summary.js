@@ -24,6 +24,7 @@ function Summary(props) {
   let mostConsecutiveDays = 0;
 
   if (props.records.length > 0) {
+    console.log('figuring...')
     const lastDate = new Date(props.records[0].created)
       .toLocaleDateString();
     const firstDate = new Date(props.records[props.records.length - 1].created)
@@ -39,7 +40,9 @@ function Summary(props) {
       currentDate = currentDate.toLocaleDateString();
       if (recordDays[currentDate]) currentCount++;
       if (currentCount > mostSoFar) mostSoFar = currentCount;
+      console.log(currentCount, mostSoFar)
     }
+    if (currentCount > mostSoFar) mostSoFar = currentCount;
     mostConsecutiveDays = mostSoFar;
   }
 
