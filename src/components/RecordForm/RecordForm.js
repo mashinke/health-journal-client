@@ -412,7 +412,9 @@ function RecordForm(props) {
         />
         <FormMetaContainer>
           {currentForm.name === '' &&
-            <FormNameValidationError>
+            <FormNameValidationError
+              aria-errormessage='form-name'
+            >
               Please enter a name for your entry form
           </FormNameValidationError>}
           <FormNameContainer>
@@ -420,6 +422,7 @@ function RecordForm(props) {
               New Record:
           </FormNameLabel>
             <FormNameInput
+              aria-invalid={currentForm.name === ''}
               id='form-name'
               type='text'
               value={currentForm.name}
