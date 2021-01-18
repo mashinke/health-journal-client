@@ -468,7 +468,7 @@ function RecordForm(props) {
         !formIsValid && <p>Please correct errors before submitting</p>
       }
       <FormSubmitResetContainer>
-        <SubmitButton />
+        <SubmitButton disabled={!formIsValid} />
         <ResetButton />
       </FormSubmitResetContainer>
     </RecordFormContainer >

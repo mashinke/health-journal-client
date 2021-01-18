@@ -48,16 +48,25 @@ const TinyRoundButton = styled(RoundButton)`
 `;
 
 const BigRoundSecondaryColorButton = styled(BigRoundButton)`
+color: ${props => props.theme.secondary.text};
 background-color: ${props => props.theme.secondary.light};
 border-color: ${props => props.theme.secondary.verydark};
 :hover {
   background-color: ${props => props.theme.secondary.medium};
   border-color: ${props => props.theme.secondary.text};
 }
+:disabled {
+  color: ${props => props.theme.secondary.dark};
+  :hover {
+    background-color: ${props => props.theme.secondary.light};
+    border-color: ${props => props.theme.secondary.verydark};
+  }
+}
 `;
 
 
 const SmallRoundPrimaryColorButton = styled(SmallRoundButton)`
+color: ${props => props.theme.primary.text};
 background-color: ${props => props.theme.primary.light};
 border-color: ${props => props.theme.primary.verydark};
 :hover {
@@ -67,6 +76,7 @@ border-color: ${props => props.theme.primary.verydark};
 `;
 
 const TinyRoundPrimaryColorButton = styled(TinyRoundButton)`
+color: ${props => props.theme.primary.text};
 background-color: ${props => props.theme.primary.light};
 border-color: ${props => props.theme.primary.verydark};
 :hover {
@@ -76,12 +86,11 @@ border-color: ${props => props.theme.primary.verydark};
 `;
 
 export function LogoutButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.secondary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.5rem'
@@ -97,12 +106,11 @@ export function LogoutButton(props) {
 };
 
 export function NewRecordButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.secondary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.5rem'
@@ -118,12 +126,11 @@ export function NewRecordButton(props) {
 };
 
 export function NewFormButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1rem'
@@ -139,12 +146,11 @@ export function NewFormButton(props) {
 }
 
 export function FilterByForm(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.25rem'
@@ -163,12 +169,11 @@ export function FilterByForm(props) {
 }
 
 export function FilterByDate(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.25rem'
@@ -187,12 +192,11 @@ export function FilterByDate(props) {
 }
 
 export function DeleteButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1rem'
@@ -208,12 +212,11 @@ export function DeleteButton(props) {
 }
 
 export function UpButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1rem'
@@ -233,12 +236,11 @@ export function UpButton(props) {
 }
 
 export function DownButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1rem'
@@ -259,12 +261,11 @@ export function DownButton(props) {
 
 
 export function UndoDeleteButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.25rem'
@@ -289,7 +290,7 @@ export function YesButton(props) {
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.25rem'
@@ -324,7 +325,7 @@ export function NoButton(props) {
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.25rem'
@@ -360,7 +361,7 @@ export function RangeNumberButton(props) {
       aria-label={`select ${props.value}`}
       {...props}
       style={{
-        color: theme.primary.text,
+        color: 'inherit',
         fontWeight: 'bold',
         backgroundColor: `${props.checked
           ? theme.primary.dark
@@ -378,12 +379,11 @@ export function RangeNumberButton(props) {
 }
 
 export function SubmitButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.secondary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.5rem'
@@ -399,12 +399,11 @@ export function SubmitButton(props) {
 };
 
 export function ResetButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.secondary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.5rem'
@@ -421,12 +420,11 @@ export function ResetButton(props) {
 
 
 export function AddFieldButton(props) {
-  const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
       value={
         {
-          color: theme.primary.text,
+          color: 'inherit',
           style: {
             verticalAlign: 'middle',
             fontSize: '1.25rem'
