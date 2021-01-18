@@ -41,7 +41,7 @@ function RecordForm(props) {
   function validateForm() {
     if (currentForm.fields.length === 0)
       return false;
-    if (currentForm.name === '' || currentForm.description === '')
+    if (currentForm.name === '')
       return false;
     for (let field of currentForm.fields) {
       if (!validateField(field))
@@ -133,12 +133,10 @@ function RecordForm(props) {
         ))
       }
 
-
       payload.fields[index] = {
         ...payload.fields[index],
         label,
         duplicateError: checkDuplicates(
-          currentForm,
           label
         )
       };
@@ -195,7 +193,6 @@ function RecordForm(props) {
       id: uuid(),
       duplicateError: checkDuplicates(currentForm, label)
     }
-    console.log(newField)
 
     if (type === 'range') {
       newField.min = 1;
@@ -264,7 +261,6 @@ function RecordForm(props) {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
-    console.log('handle submit')
     let { id: formId, values, modified, name, description, fields } = currentForm;
 
     let newCurrentForm;
@@ -302,7 +298,6 @@ function RecordForm(props) {
             values: {}
           }
         });
-        console.log('display')
       }
 
       let record;
@@ -412,6 +407,7 @@ function RecordForm(props) {
           forms={props.state.forms}
         />
         <FormMetaContainer>
+          {currentForm.name === '' && <p>Please enter a name</p>}
           <FormNameContainer>
             <FormNameLabel htmlFor='form-name'>
               New Record:
