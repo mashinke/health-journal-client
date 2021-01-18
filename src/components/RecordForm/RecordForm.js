@@ -47,6 +47,8 @@ function RecordForm(props) {
     for (let field of currentForm.fields) {
       if (!validateField(field))
         return false;
+      if (field.minmaxError === true)
+        return false;
     }
     return true;
   }
@@ -153,11 +155,14 @@ function RecordForm(props) {
 
   function handleMinMaxEdit(index, value, id) {
     return function (minmax) {
+      let minmaxError = false;
       if (
-        minmax.min === currentForm.fields[index].max
-        || minmax.max === currentForm.fields[index].min
-      )
-        return;
+        (minmax.min >= currentForm.fields[index].max)
+        || (minmax.max <= currentForm.fields[index].min)
+      ) {
+        minmaxError = true;
+        console.log('minmax error')
+      }
 
       if (minmax.min && value < minmax.min)
         value = minmax.min;
@@ -179,7 +184,8 @@ function RecordForm(props) {
 
       payload.fields[index] = {
         ...payload.fields[index],
-        ...minmax
+        ...minmax,
+        minmaxError
       }
 
       props.dispatch({

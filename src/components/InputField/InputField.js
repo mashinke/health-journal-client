@@ -18,7 +18,8 @@ import {
   FormFieldMinMaxContainer,
   RangeRadioContainer,
   FormFieldInputContainer,
-  FieldValidationError
+  FieldValidationError,
+  MinMaxValidationError
 } from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
@@ -134,7 +135,9 @@ function RangeInput(props) {
           />
         </FormFieldMinMaxContainer>
       </FormFieldRangeLegend>
-      <RangeRadioContainer>{radios}</RangeRadioContainer>
+      <RangeRadioContainer>{props.minmaxError
+        ? <MinMaxValidationError>min/max values invalid</MinMaxValidationError>
+        : radios}</RangeRadioContainer>
     </FormFieldRangeInput>
   )
 }

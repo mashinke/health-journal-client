@@ -97,6 +97,8 @@ export const FormNameValidationError = styled(ValidationError)`
 
 `;
 
+export const MinMaxValidationError = styled(ValidationError)``;
+
 export const FormDescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
