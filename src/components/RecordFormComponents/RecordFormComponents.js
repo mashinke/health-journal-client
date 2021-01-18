@@ -84,6 +84,19 @@ export const FormNameInput = styled.input`
   }
 `;
 
+export const ValidationError = styled.div`
+  color: ${props => props.theme.primary.light};
+  background-color: ${props => props.theme.primary.text};
+  text-align: left;
+  padding: .25rem;
+  border-radius: .5rem;
+  border: 1px solid ${props => props.theme.primary.dark}
+`;
+
+export const FormNameValidationError = styled(ValidationError)`
+
+`;
+
 export const FormDescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -145,6 +158,10 @@ export const FormFieldInputContainer = styled.div`
 export const FormFieldLabel = styled.label`
   width: 100%;
   margin: 0 0 .5rem 0;
+`;
+
+export const FieldValidationError = styled(ValidationError)`
+  margin: .5rem 0 0 0;
 `;
 
 export const FormFieldNameInput = styled.input

@@ -23,7 +23,8 @@ import {
   AddFieldLabelIcon,
   FormHeader,
   FormTitle,
-  DoubleWidthFieldContainer
+  DoubleWidthFieldContainer,
+  FormNameValidationError
 } from '../RecordFormComponents/RecordFormComponents';
 import {
   DeleteButton,
@@ -59,8 +60,10 @@ function RecordForm(props) {
   }
 
   function checkDuplicates(label) {
+    console.log(currentForm, 'label', label)
     for (let field of currentForm.fields) {
       if (field.label === label) {
+        console.log('whoops')
         return true;
       };
     }
@@ -187,11 +190,12 @@ function RecordForm(props) {
   }
 
   function handleAddField({ value: type, label }) {
+    label = `New ${label} Field`;
     const newField = {
       type,
-      label: `New ${label} Field`,
+      label,
       id: uuid(),
-      duplicateError: checkDuplicates(currentForm, label)
+      duplicateError: checkDuplicates(label)
     }
 
     if (type === 'range') {
@@ -407,7 +411,10 @@ function RecordForm(props) {
           forms={props.state.forms}
         />
         <FormMetaContainer>
-          {currentForm.name === '' && <p>Please enter a name</p>}
+          {currentForm.name === '' &&
+            <FormNameValidationError>
+              Please enter a name for your entry form
+          </FormNameValidationError>}
           <FormNameContainer>
             <FormNameLabel htmlFor='form-name'>
               New Record:

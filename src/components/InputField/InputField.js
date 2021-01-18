@@ -17,13 +17,15 @@ import {
   FormFieldMinMaxInput,
   FormFieldMinMaxContainer,
   RangeRadioContainer,
-  FormFieldInputContainer
+  FormFieldInputContainer,
+  FieldValidationError
 } from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
   const label = props.label
   return (
     <FormFieldTextInput
+      id={props.id}
       name={label}
       value={props.value}
       onChange={event => props.handleFieldValueChange(
@@ -37,6 +39,7 @@ function StringInput(props) {
 function NumberInput(props) {
   return (
     <FormFieldNumberInput
+      id={props.id}
       name={props.label}
       value={props.value}
       onChange={event => props.handleFieldValueChange(
@@ -49,7 +52,9 @@ function NumberInput(props) {
 
 function BooleanInput(props) {
   return (
-    <FormFieldBooleanInput>
+    <FormFieldBooleanInput
+      id={props.id}
+    >
       <YesButton
         checked={props.value}
         onClick={event => props.handleFieldValueChange(
@@ -85,12 +90,13 @@ function RangeInput(props) {
     )
   }
   return (
-    <FormFieldRangeInput>
-      {
-        props.duplicateError && <p>Duplicate labels not allowed!</p>
-      }
+    <FormFieldRangeInput
+      id={props.id}
+    >
       <FormFieldRangeLegend>
         <FormFieldRangeName
+          id={`${props.id}-label`}
+          aria-invalid={(props.duplicateError || props.label === '')}
           type='text'
           value={props.label}
           onChange={(event) => props.handleLabelEdit(event.target.value)}
@@ -166,14 +172,9 @@ export default function InputField(props) {
       break;
     default: break;
   }
+
   return (
     <FormFieldInputContainer>
-      {
-        props.duplicateError && <p>Duplicate labels not allowed!</p>
-      }
-      {
-        props.label === '' && <p>Field must have a label!</p>
-      }
       {
         props.type !== 'range'
         &&
@@ -181,6 +182,8 @@ export default function InputField(props) {
           htmlFor={props.label}
         >
           <FormFieldNameInput
+            id={`${props.id}-label`}
+            aria-invalid={(props.duplicateError || props.label === '')}
             type='text'
             value={props.label}
             onChange={(event) => props.handleLabelEdit(event.target.value)}
@@ -188,6 +191,22 @@ export default function InputField(props) {
         </FormFieldLabel>
       }
       {field}
+      {
+        props.duplicateError
+        && <FieldValidationError
+          aria-errormessage={props.id}
+        >
+          Duplicate labels not allowed
+        </FieldValidationError>
+      }
+      {
+        props.label === ''
+        && <FieldValidationError
+          aria-errormessage={props.id}
+        >
+          Please enter a label
+          </FieldValidationError>
+      }
     </FormFieldInputContainer>
   )
 }
