@@ -114,12 +114,14 @@ function RecordForm(props) {
     event.preventDefault();
 
     const payload = props.state.modifiedForms.find((form) => form.id === currentForm.id);
-    props.dispatch(
-      {
-        type: 'UPDATE_CURRENT_FORM',
-        payload,
-      },
-    );
+    if (payload) {
+      props.dispatch(
+        {
+          type: 'UPDATE_CURRENT_FORM',
+          payload,
+        },
+      );
+    }
   }
 
   function handleLabelEdit(index) {
