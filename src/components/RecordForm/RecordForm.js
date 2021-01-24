@@ -269,7 +269,6 @@ function RecordForm(props) {
       values, modified, name, description,
     } = currentForm;
 
-    console.log(values);
     let newCurrentForm;
 
     try {
