@@ -194,7 +194,7 @@ function RecordForm(props) {
     const showLabel = `New ${label} Field`;
     const newField = {
       type,
-      showLabel,
+      label: showLabel,
       id: uuid(),
       duplicateError: checkDuplicates(showLabel),
     };

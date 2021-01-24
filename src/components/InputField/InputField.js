@@ -181,6 +181,7 @@ export default function InputField(props) {
     handleLabelEdit,
 
   } = props;
+  console.log('inputField', label);
   let field;
   switch (props.type) {
     case 'number':
