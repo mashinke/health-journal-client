@@ -264,11 +264,12 @@ function RecordForm(props) {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
-    let { formId, fields } = currentForm;
+    let { id: formId, fields } = currentForm;
     const {
-      id: values, modified, name, description,
+      values, modified, name, description,
     } = currentForm;
 
+    console.log(values);
     let newCurrentForm;
 
     try {

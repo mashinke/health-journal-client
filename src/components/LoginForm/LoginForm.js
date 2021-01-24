@@ -74,7 +74,9 @@ function LoginForm(props) {
           </FormInput>
           <SubmitButton>Login</SubmitButton>
           {' '}
-          <HaveAccountLink to="/register">Don&apost have an account?</HaveAccountLink>
+          <HaveAccountLink to="/register">
+            Don&apos;t have an account?
+          </HaveAccountLink>
 
         </StyledForm>
       </FormMain>
