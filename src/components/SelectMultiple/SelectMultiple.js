@@ -83,16 +83,16 @@ export default function SelectMultiple(props) {
     <SelectMultipleContainer>
       <ItemsList>
         {
-          selectedItemsProp.map((selectedItemInState, index) => (
+          selectedItemsProp.map((item, index) => (
             <SelectedListItem
-              key={`selected-item-${selectedItemsProp.value} `}
-              {...getSelectedItemProps({ selectedItemInState, index })}
+              key={`selected-item-${item.id} `}
+              {...getSelectedItemProps({ item, index })}
             >
-              {selectedItemInState.name}
+              {item.name}
               <DeleteButton
                 onClick={(event) => {
                   event.stopPropagation();
-                  removeSelectedItem(selectedItemInState);
+                  removeSelectedItem(item);
                 }}
               >
                 &#10005;
