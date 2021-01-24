@@ -364,12 +364,12 @@ export function RangeNumberButton(props) {
         color: 'inherit',
         fontWeight: 'bold',
         backgroundColor: `${checked
-          ? theme.dark
+          ? theme.primary.dark
           : theme.primary.light
         }`,
         border: `${(checked)
           ? `2px solid ${theme.primary.verydark}`
-          : '2px solid theme.primary.dark}'
+          : `2px solid ${theme.primary.dark}`
         }`,
       }}
     >
