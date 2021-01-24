@@ -14,7 +14,8 @@ import dashboardStateReducer from './dashboardStateReducer';
 const filterFunctions = {
   forms: (record, filter) => {
     if (filter.length === 0) return true;
-    return filter.map((item) => item.id).includes(record.formId);
+    const result = filter.map((item) => item.id).includes(record.formId);
+    return result;
   },
   created: (record, filter) => {
     const dateCreated = new Date(record.created);
@@ -30,9 +31,9 @@ const filterFunctions = {
 };
 
 function filterCallBack(filters) {
-  let result = true;
   // eslint-disable-next-line func-names
   return function (record) {
+    let result = true;
     // for (const [key, filter] of Object.entries(filters))
     Object.entries(filters).forEach(([key, filter]) => {
       if (!filterFunctions[key](record, filter)) result = false;
