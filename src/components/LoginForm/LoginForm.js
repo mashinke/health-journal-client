@@ -1,7 +1,18 @@
 import React, { useState, useContext } from 'react';
 import AuthApiService from '../../services/auth-api-service';
 import UserContext from '../../contexts/UserContext';
-import { FormInput, HaveAccountLink, Input, Label, SubmitButton, FormHeader, FormContainer, FormMain, StyledForm, FormTitle } from '../Form/Form';
+import {
+  FormInput,
+  HaveAccountLink,
+  Input,
+  Label,
+  SubmitButton,
+  FormHeader,
+  FormContainer,
+  FormMain,
+  StyledForm,
+  FormTitle,
+} from '../Form/Form';
 
 function LoginForm(props) {
   const userContext = useContext(UserContext);
@@ -16,16 +27,16 @@ function LoginForm(props) {
       email: email.value,
       password: password.value,
     })
-      .then(res => {
+      .then((res) => {
         email.value = '';
         password.value = '';
         userContext.processLogin(res.authToken);
         props.onLoginSuccess();
         userContext.clearError();
       })
-      .catch(res => {
+      .catch((res) => {
         setError(res.error);
-      })
+      });
   }
   return (
     <FormContainer>
@@ -33,44 +44,46 @@ function LoginForm(props) {
       <FormMain>
         <FormTitle>Login</FormTitle>
         <StyledForm
-          className='LoginForm'
+          className="LoginForm"
           onSubmit={handleSubmit}
         >
-          <div role='alert'>
+          <div role="alert">
             {error && <p>{error}</p>}
           </div>
           <FormInput>
-            <Label htmlFor='login-email-input'>
-              Email</Label>
+            <Label htmlFor="login-email-input">
+              Email
+            </Label>
             <Input
-              type='text'
-              id='login-email-input'
-              name='email'
+              type="text"
+              id="login-email-input"
+              name="email"
               required
             />
           </FormInput>
           <FormInput>
-            <Label htmlFor='login-password-input'>
-              Password</Label>
+            <Label htmlFor="login-password-input">
+              Password
+            </Label>
             <Input
-              id='login-password-input'
-              name='password'
-              type='password'
+              id="login-password-input"
+              name="password"
+              type="password"
               required
             />
           </FormInput>
           <SubmitButton>Login</SubmitButton>
           {' '}
-          <HaveAccountLink to='/register'>Don't have an account?</HaveAccountLink>
+          <HaveAccountLink to="/register">Don&apost have an account?</HaveAccountLink>
 
         </StyledForm>
       </FormMain>
     </FormContainer>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;
 
 LoginForm.defaultProps = {
-  onLoginSuccess: () => { }
-}
+  onLoginSuccess: () => { },
+};

@@ -19,97 +19,112 @@ import {
   RangeRadioContainer,
   FormFieldInputContainer,
   FieldValidationError,
-  MinMaxValidationError
+  MinMaxValidationError,
 } from '../RecordFormComponents/RecordFormComponents';
 
 function StringInput(props) {
-  const label = props.label
+  const { label, id, value } = props;
   return (
     <FormFieldTextInput
-      id={props.id}
+      id={id}
       name={label}
-      value={props.value}
-      onChange={event => props.handleFieldValueChange(
-        props.id,
-        event.target.value
+      value={value}
+      onChange={(event) => props.handleFieldValueChange(
+        id,
+        event.target.value,
       )}
     />
-  )
+  );
 }
 
 function NumberInput(props) {
+  const {
+    id, label, value, handleFieldValueChange,
+  } = props;
   return (
     <FormFieldNumberInput
-      id={props.id}
-      name={props.label}
-      value={props.value}
-      onChange={event => props.handleFieldValueChange(
-        props.id,
-        Number(event.target.value)
+      id={id}
+      name={label}
+      value={value}
+      onChange={(event) => handleFieldValueChange(
+        id,
+        Number(event.target.value),
       )}
     />
-  )
+  );
 }
 
 function BooleanInput(props) {
+  const { id, value, handleFieldValueChange } = props;
   return (
     <FormFieldBooleanInput
-      id={props.id}
+      id={id}
     >
       <YesButton
-        checked={props.value}
-        onClick={event => props.handleFieldValueChange(
-          props.id,
-          !!!props.value
+        checked={value}
+        onClick={() => handleFieldValueChange(
+          id,
+          !value,
         )}
       />
       <NoButton
-        checked={props.value}
-        onClick={event => props.handleFieldValueChange(
-          props.id,
-          !!!props.value
+        checked={value}
+        onClick={() => handleFieldValueChange(
+          id,
+          !props.value,
         )}
       />
     </FormFieldBooleanInput>
-  )
+  );
 }
 
 function RangeInput(props) {
+  const {
+    value,
+    min,
+    max,
+    id,
+    duplicateError,
+    minmaxError,
+    label,
+    handleLabelEdit,
+    handleMinMaxEdit,
+    handleFieldValueChange,
+  } = props;
   const theme = useContext(ThemeContext);
   const radios = [];
-  for (let i = props.min; i <= props.max; i++) {
+  for (let i = min; i <= max; i += 1) {
     radios.push(
       <FormFieldRangeRadio
         key={i}
         label={i}
-        parentId={props.id}
-        id={`${props.id}-${i}`}
+        parentId={id}
+        id={`${id}-${i}`}
         value={i}
-        checked={(i === props.value)}
-        handleValueChange={props.handleFieldValueChange}
-      />
-    )
+        checked={(i === value)}
+        handleValueChange={handleFieldValueChange}
+      />,
+    );
   }
   return (
     <FormFieldRangeInput
-      id={props.id}
+      id={id}
     >
       <FormFieldRangeLegend>
         <FormFieldRangeName
-          id={`${props.id}-label`}
-          aria-invalid={(props.duplicateError || props.label === '')}
-          type='text'
-          value={props.label}
-          onChange={(event) => props.handleLabelEdit(event.target.value)}
+          id={`${id}-label`}
+          aria-invalid={(duplicateError || label === '')}
+          type="text"
+          value={label}
+          onChange={(event) => handleLabelEdit(event.target.value)}
         />
         <FormFieldMinMaxContainer>
           <FormFieldMinMaxInput
-            type='number'
-            value={props.min}
-            onChange={event =>
-              props.handleMinMaxEdit(
-                { min: Number(event.target.value) }
-              )}
+            type="number"
+            value={min}
+            onChange={(event) => handleMinMaxEdit(
+              { min: Number(event.target.value) },
+            )}
           />
           <IconContext.Provider
             value={
@@ -118,44 +133,54 @@ function RangeInput(props) {
                 style: {
                   verticalAlign: 'middle',
                   fontSize: '1.25rem',
-                  margin: 'auto 0'
-                }
+                  margin: 'auto 0',
+                },
               }
             }
           >
             <RiArrowLeftSLine />
           </IconContext.Provider>
           <FormFieldMinMaxInput
-            type='number'
-            value={props.max}
-            onChange={event =>
-              props.handleMinMaxEdit(
-                { max: Number(event.target.value) }
-              )}
+            type="number"
+            value={max}
+            onChange={(event) => handleMinMaxEdit(
+              { max: Number(event.target.value) },
+            )}
           />
         </FormFieldMinMaxContainer>
       </FormFieldRangeLegend>
-      <RangeRadioContainer>{props.minmaxError
-        ? <MinMaxValidationError>min/max values invalid</MinMaxValidationError>
-        : radios}</RangeRadioContainer>
+      <RangeRadioContainer>
+        {minmaxError
+          ? <MinMaxValidationError>min/max values invalid</MinMaxValidationError>
+          : radios}
+      </RangeRadioContainer>
     </FormFieldRangeInput>
-  )
+  );
 }
 
 function TimeInput(props) {
+  const { value, id, handleFieldValueChange } = props;
   return (
     <TimePicker
-      onChange={value => props.handleFieldValueChange(
-        props.id,
-        value
+      onChange={(newValue) => handleFieldValueChange(
+        id,
+        newValue,
       )}
-      disableClock={true}
-      value={props.value}
+      disableClock
+      value={value}
     />
-  )
+  );
 }
 
 export default function InputField(props) {
+  const {
+    type,
+    label,
+    id,
+    duplicateError,
+    handleLabelEdit,
+
+  } = props;
   let field;
   switch (props.type) {
     case 'number':
@@ -179,37 +204,42 @@ export default function InputField(props) {
   return (
     <FormFieldInputContainer>
       {
-        props.type !== 'range'
-        &&
+        type !== 'range'
+        && (
         <FormFieldLabel
-          htmlFor={props.label}
+          htmlFor={label}
         >
           <FormFieldNameInput
-            id={`${props.id}-label`}
-            aria-invalid={(props.duplicateError || props.label === '')}
-            type='text'
-            value={props.label}
-            onChange={(event) => props.handleLabelEdit(event.target.value)}
+            id={`${id}-label`}
+            aria-invalid={(duplicateError || label === '')}
+            type="text"
+            value={label}
+            onChange={(event) => handleLabelEdit(event.target.value)}
           />
         </FormFieldLabel>
+        )
       }
       {field}
       {
-        props.duplicateError
-        && <FieldValidationError
-          aria-errormessage={props.id}
+        duplicateError
+        && (
+        <FieldValidationError
+          aria-errormessage={id}
         >
           Duplicate labels not allowed
         </FieldValidationError>
+        )
       }
       {
-        props.label === ''
-        && <FieldValidationError
-          aria-errormessage={props.id}
+        label === ''
+        && (
+        <FieldValidationError
+          aria-errormessage={id}
         >
           Please enter a label
-          </FieldValidationError>
+        </FieldValidationError>
+        )
       }
     </FormFieldInputContainer>
-  )
+  );
 }

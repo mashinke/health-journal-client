@@ -4,15 +4,15 @@ import RegistrationForm from '../../components/RegistrationForm/RegistrationForm
 function RegistrationRoute(props) {
   function handleRegistrationSuccess() {
     const { history } = props;
-    history.push('/login')
-  };
+    history.push('/login');
+  }
 
   return (
     <RegistrationForm
       onRegistrationSuccess={handleRegistrationSuccess}
     />
   );
-};
+}
 
 export default RegistrationRoute;
 

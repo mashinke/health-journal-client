@@ -1,17 +1,18 @@
+import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { useContext } from 'react';
+
 import { IconContext } from 'react-icons';
 import { RiAddLine } from 'react-icons/ri';
 import { OuterListContainer, OuterListItemContainer } from '../StyledComponents/StyledComponents';
 
 export const FormTitle = styled.h2`
   margin: 0 0 .5rem 0;
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .5rem .5rem;
   padding: .25rem 1rem .25rem .25rem;
-  background-color: ${props => props.theme.secondary.medium};
+  background-color: ${(props) => props.theme.secondary.medium};
   text-align: center;
-  color: ${props => props.theme.secondary.text};
+  color: ${(props) => props.theme.secondary.text};
 `;
 
 export const SelectFormLabel = styled.label`
@@ -25,12 +26,12 @@ export const SelectFormContainer = styled.div`
   flex-direction: column;
   flex: 1;
   justify-content: space-evenly;
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .5rem .5rem;
   padding: .25rem 1rem .25rem .25rem;
-  background-color: ${props => props.theme.secondary.medium};
+  background-color: ${(props) => props.theme.secondary.medium};
   text-align: right;
-  color: ${props => props.theme.secondary.text};
+  color: ${(props) => props.theme.secondary.text};
   @media (min-width: 45rem){
     margin-left: .25rem;
   }
@@ -41,12 +42,12 @@ export const FormMetaContainer = styled.div`
   flex-direction: column;
   flex: 2;
   justify-content: flex-start;
-  border: 1px solid ${props => props.theme.primary.dark};
+  border: 1px solid ${(props) => props.theme.primary.dark};
   border-radius: .5rem .5rem;
   padding: .25rem 1rem .25rem .25rem;
-  background-color: ${props => props.theme.primary.medium};
+  background-color: ${(props) => props.theme.primary.medium};
   text-align: right;
-  color: ${props => props.theme.primary.text};
+  color: ${(props) => props.theme.primary.text};
   @media (min-width: 45rem){
     margin-right: .25rem;
   }
@@ -75,22 +76,22 @@ export const FormNameInput = styled.input`
   font-size: inherit;
   border: none;
   color: inherit;
-  background-color: ${props => props.theme.primary.medium};
+  background-color: ${(props) => props.theme.primary.medium};
   margin: 0 0 0 1rem;
   width: calc(100% - 1rem);
   transition: 200ms all;
   :hover, :focus {
-    background-color: ${props => props.theme.primary.light};
+    background-color: ${(props) => props.theme.primary.light};
   }
 `;
 
 export const ValidationError = styled.div`
-  color: ${props => props.theme.primary.light};
-  background-color: ${props => props.theme.primary.text};
+  color: ${(props) => props.theme.primary.light};
+  background-color: ${(props) => props.theme.primary.text};
   text-align: left;
   padding: .25rem;
   border-radius: .5rem;
-  border: 1px solid ${props => props.theme.primary.dark}
+  border: 1px solid ${(props) => props.theme.primary.dark}
 `;
 
 export const FormNameValidationError = styled(ValidationError)`
@@ -113,7 +114,7 @@ export const FormDescriptionLabel = styled.label`
 export const FormDescriptionInput = styled.textarea`
   font-size: inherit;
   font-family: inherit;
-  background-color: ${props => props.theme.primary.medium};
+  background-color: ${(props) => props.theme.primary.medium};
   border: none;
   border-radius: .25rem;
   color: inherit;
@@ -121,7 +122,7 @@ export const FormDescriptionInput = styled.textarea`
   width: 100%;
   transition: 200ms all;
   :hover, :focus {
-    background-color: ${props => props.theme.primary.light};
+    background-color: ${(props) => props.theme.primary.light};
   }
 `;
 
@@ -169,25 +170,25 @@ export const FieldValidationError = styled(ValidationError)`
 export const FormFieldNameInput = styled.input
   .attrs({ type: 'text', maxLength: '25' })`
   width: 100%;
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .25rem;
   padding: .25rem;
-  background-color: ${props => props.theme.secondary.medium};
+  background-color: ${(props) => props.theme.secondary.medium};
   font-size: 1rem;
-  color: ${props => props.theme.secondary.text};
+  color: ${(props) => props.theme.secondary.text};
   :hover, :focus {
-    background-color: ${props => props.theme.secondary.light};
+    background-color: ${(props) => props.theme.secondary.light};
   }
-`
+`;
 
 const FormFieldInput = styled.input`
   padding: .25rem;
-  background-color: ${props => props.theme.primary.light};
-  border: 1px solid ${props => props.theme.primary.dark};
-  color: ${props => props.theme.primary.text};
+  background-color: ${(props) => props.theme.primary.light};
+  border: 1px solid ${(props) => props.theme.primary.dark};
+  color: ${(props) => props.theme.primary.text};
   border-radius: .25rem;
   :hover, :focus {
-  background-color: ${props => props.theme.primary.light};
+  background-color: ${(props) => props.theme.primary.light};
   }
 `;
 
@@ -207,14 +208,14 @@ export const FormFieldBooleanInput = styled.div`
 `;
 
 export const FormFieldRangeInput = styled.fieldset`
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .25rem;
   `;
 
 export const FormFieldRangeLegend = styled.legend`
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .25rem;
   padding: .25rem;
   `;
@@ -255,7 +256,6 @@ export const FieldUpDownButtonsContainer = styled.div`
   justify-content: space-between;
 `;
 
-
 export const AddFieldContainer = styled(FormFieldContainer)`
     display: flex;
     flex-direction: row-reverse;
@@ -276,14 +276,14 @@ export const AddFieldLabel = styled.label`
   width: 2rem;
   min-width: 2rem;
   line-height: 1.625rem;
-  background-color: ${props => props.theme.primary.light};
+  background-color: ${(props) => props.theme.primary.light};
   :hover {
-    background-color: ${props => props.theme.primary.medium};
-    border-color: ${props => props.theme.primary.text};
+    background-color: ${(props) => props.theme.primary.medium};
+    border-color: ${(props) => props.theme.primary.text};
   }
 `;
 
-export function AddFieldLabelIcon(props) {
+export function AddFieldLabelIcon() {
   const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
@@ -292,14 +292,14 @@ export function AddFieldLabelIcon(props) {
           color: theme.primary.text,
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <RiAddLine />
     </IconContext.Provider>
-  )
+  );
 }
 
 export const FormSubmitResetContainer = styled.div`
@@ -307,12 +307,12 @@ export const FormSubmitResetContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  border: 1px solid ${props => props.theme.primary.dark};
+  border: 1px solid ${(props) => props.theme.primary.dark};
   border-radius: .5rem .5rem;
   padding: .25rem 1rem .25rem .25rem;
-  background-color: ${props => props.theme.primary.medium};
+  background-color: ${(props) => props.theme.primary.medium};
   text-align: right;
-  color: ${props => props.theme.primary.text};
+  color: ${(props) => props.theme.primary.text};
 `;
 
 export const FieldDeletedMessage = styled.div`

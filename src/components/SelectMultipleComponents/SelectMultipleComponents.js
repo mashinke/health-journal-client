@@ -10,8 +10,8 @@ export const SelectMultipleContainer = styled.div`
 export const ItemsList = styled.ul`
   padding: .125rem;
   margin: 0;
-  background-color: ${props => props.theme.secondary.medium};
-  border: 1px solid ${props => props.theme.secondary.dark};
+  background-color: ${(props) => props.theme.secondary.medium};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .5rem;
   list-style: none;
   display: flex;
@@ -33,11 +33,10 @@ export const DropdownListItem = styled.li`
   line-height: 1.25rem;
   margin: .125rem;
   padding: .25rem;
-  background-color: ${props =>
-    props.isHighlighted
-      ? props.theme.primary.medium
-      : props.theme.primary.light};
-  border: 1px solid ${props => props.theme.primary.dark};
+  background-color: ${(props) => (props.isHighlighted
+    ? props.theme.primary.medium
+    : props.theme.primary.light)};
+  border: 1px solid ${(props) => props.theme.primary.dark};
   cursor: pointer;
   border-radius: .25rem;
 `;
@@ -53,9 +52,9 @@ export const ButtonsContainer = styled.div`
 `;
 
 export const SelectButton = styled.button`
-  color: ${props => props.theme.primary.text};
-  background-color: ${props => props.theme.primary.light};
-  border: 1px solid ${props => props.theme.primary.medium};
+  color: ${(props) => props.theme.primary.text};
+  background-color: ${(props) => props.theme.primary.light};
+  border: 1px solid ${(props) => props.theme.primary.medium};
   border-radius: .25rem;
   width: 3.5rem;
   height: 2.5rem;
@@ -63,10 +62,9 @@ export const SelectButton = styled.button`
   transition: 200ms all;
   cursor: pointer;
   :hover {
-    background-color: ${props => props.theme.primary.medium};
+    background-color: ${(props) => props.theme.primary.medium};
   }
 `;
-
 
 export const SelectButtonLabel = styled.label`
 cursor: pointer;

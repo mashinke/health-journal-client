@@ -4,7 +4,7 @@ import {
   StringDisplay,
   NumberDisplay,
   BooleanDisplay,
-  RangeDisplay
+  RangeDisplay,
 } from '../DisplayField/DisplayField';
 import {
   RecordFieldList,
@@ -13,12 +13,15 @@ import {
   RecordListItemDeleteButtonContainer,
   RecordListItemName,
   RecordListItemTime,
-  RecordFieldListItemMeta
+  RecordFieldListItemMeta,
 } from '../RecordDisplayComponents/RecordDisplayComponents';
 
 function Record(props) {
-  const bodyFields = props.fields.map(
-    (field, i) => {
+  const {
+    id, fields, values, name, created, handleDeleteRecord,
+  } = props;
+  const bodyFields = fields.map(
+    (field) => {
       let Field;
       switch (field.type) {
         case 'number':
@@ -34,24 +37,27 @@ function Record(props) {
           Field = StringDisplay;
           break;
       }
-      return <Field key={i} {...field} value={props.values[field.id]} />
-    });
+      return <Field key={`field-${field.id}`} {...field} value={values[field.id]} />;
+    },
+  );
   return (
     <RecordListItem>
       <RecordListItemHeader>
         <RecordFieldListItemMeta>
           <RecordListItemName>
-            {props.name}
+            {name}
           </RecordListItemName>
 
           <RecordListItemTime>
-            Recorded on: {new Date(props.created).toLocaleString()}
+            Recorded on:
+            {' '}
+            {new Date(created).toLocaleString()}
           </RecordListItemTime>
         </RecordFieldListItemMeta>
         <RecordListItemDeleteButtonContainer>
           <DeleteButton
-            aria-label='delete record'
-            onClick={() => props.handleDeleteRecord(props.id)}
+            aria-label="delete record"
+            onClick={() => handleDeleteRecord(id)}
           />
         </RecordListItemDeleteButtonContainer>
       </RecordListItemHeader>
@@ -59,7 +65,7 @@ function Record(props) {
         {bodyFields}
       </RecordFieldList>
     </RecordListItem>
-  )
+  );
 }
 
 export default Record;

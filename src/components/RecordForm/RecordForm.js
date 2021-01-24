@@ -24,7 +24,7 @@ import {
   FormHeader,
   FormTitle,
   DoubleWidthFieldContainer,
-  FormNameValidationError
+  FormNameValidationError,
 } from '../RecordFormComponents/RecordFormComponents';
 import {
   DeleteButton,
@@ -37,123 +37,121 @@ import {
 import SelectSingle from '../SelectSingle/SelectSingle';
 
 function RecordForm(props) {
-  const currentForm = props.state.forms[props.state.currentForm];
+  const { state, dispatch } = props;
+  const currentForm = state.forms[state.currentForm];
 
-  function validateForm() {
-    if (currentForm.fields.length === 0)
-      return false;
-    if (currentForm.name === '')
-      return false;
-    for (let field of currentForm.fields) {
-      if (!validateField(field))
-        return false;
-      if (field.minmaxError === true)
-        return false;
-    }
+  function validateField(field) {
+    if (field.duplicateError) return false;
+    if (field.label === '') return false;
     return true;
   }
 
-  function validateField(field) {
-    if (field.duplicateError)
-      return false;
-    if (field.label === '')
-      return false;
-    return true;
+  function validateForm() {
+    let validForm = true;
+
+    if (currentForm.fields.length === 0) validForm = false;
+    if (currentForm.name === '') validForm = false;
+    currentForm.fields.forEach((field) => {
+      if (!validateField(field)) validForm = false;
+      if (field.minmaxError === true) validForm = false;
+    });
+    return validForm;
   }
 
   function checkDuplicates(label) {
-    console.log(currentForm, 'label', label)
-    for (let field of currentForm.fields) {
+    let duplicate = false;
+    currentForm.fields.forEach((field) => {
       if (field.label === label) {
-        console.log('whoops')
-        return true;
-      };
-    }
-    return false;
+        duplicate = true;
+      }
+    });
+    return duplicate;
   }
 
   function handleFormNameEdit(name) {
     const payload = {
       ...currentForm,
       name,
-      modified: 'true'
-    }
+      modified: 'true',
+    };
     props.dispatch({
       type: 'UPDATE_CURRENT_FORM',
-      payload
-    })
+      payload,
+    });
   }
 
   function handleFormDescriptionEdit(description) {
     const payload = {
       ...currentForm,
       description,
-      modified: 'true'
-    }
+      modified: 'true',
+    };
     props.dispatch({
       type: 'UPDATE_CURRENT_FORM',
-      payload
-    })
+      payload,
+    });
   }
 
   function handleToggleDeleteField(index) {
     const payload = {
       ...currentForm,
       fields: [
-        ...currentForm.fields
-      ]
-    }
+        ...currentForm.fields,
+      ],
+    };
 
     payload.fields[index].deleted = !payload.fields[index].deleted;
 
     props.dispatch(
       {
         type: 'UPDATE_CURRENT_FORM',
-        payload
-      }
-    )
+        payload,
+      },
+    );
   }
 
   function handleResetForm(event) {
     event.preventDefault();
 
-    const payload = props.state.modifiedForms.find(form =>
-      form.id === currentForm.id)
+    const payload = props.state.modifiedForms.find((form) => form.id === currentForm.id);
     props.dispatch(
       {
         type: 'UPDATE_CURRENT_FORM',
-        payload
-      }
-    )
+        payload,
+      },
+    );
   }
 
   function handleLabelEdit(index) {
+    // eslint-disable-next-line func-names
     return function (label) {
-
       const payload = {
         ...currentForm,
         modified: true,
-        fields: currentForm.fields.map(field => (
+        fields: currentForm.fields.map((field) => (
           { ...field }
-        ))
-      }
+        )),
+      };
 
       payload.fields[index] = {
         ...payload.fields[index],
         label,
         duplicateError: checkDuplicates(
-          label
-        )
+          label,
+        ),
       };
 
       props.dispatch({
         type: 'UPDATE_CURRENT_FORM',
-        payload
-      })
-    }
+        payload,
+      });
+    };
   }
 
   function handleMinMaxEdit(index, value, id) {
+    let showVal = value;
+
+    // eslint-disable-next-line func-names
     return function (minmax) {
       let minmaxError = false;
       if (
@@ -161,48 +159,45 @@ function RecordForm(props) {
         || (minmax.max <= currentForm.fields[index].min)
       ) {
         minmaxError = true;
-        console.log('minmax error')
       }
 
-      if (minmax.min && value < minmax.min)
-        value = minmax.min;
+      if (minmax.min && value < minmax.min) showVal = minmax.min;
 
-      else if (minmax.max && value > minmax.max)
-        value = minmax.max;
+      else if (minmax.max && value > minmax.max) showVal = minmax.max;
 
       const payload = {
         ...currentForm,
         modified: true,
         fields: [
-          ...currentForm.fields
+          ...currentForm.fields,
         ],
         values: {
           ...currentForm.values,
-          [id]: value
-        }
-      }
+          [id]: showVal,
+        },
+      };
 
       payload.fields[index] = {
         ...payload.fields[index],
         ...minmax,
-        minmaxError
-      }
+        minmaxError,
+      };
 
       props.dispatch({
         type: 'UPDATE_CURRENT_FORM',
-        payload
-      })
-    }
+        payload,
+      });
+    };
   }
 
   function handleAddField({ value: type, label }) {
-    label = `New ${label} Field`;
+    const showLabel = `New ${label} Field`;
     const newField = {
       type,
-      label,
+      showLabel,
       id: uuid(),
-      duplicateError: checkDuplicates(label)
-    }
+      duplicateError: checkDuplicates(showLabel),
+    };
 
     if (type === 'range') {
       newField.min = 1;
@@ -213,17 +208,17 @@ function RecordForm(props) {
       ...currentForm,
       fields: [
         ...currentForm.fields,
-        newField
+        newField,
       ],
-      modified: true
-    }
+      modified: true,
+    };
 
     props.dispatch(
       {
         type: 'UPDATE_CURRENT_FORM',
-        payload
-      }
-    )
+        payload,
+      },
+    );
   }
 
   function handleFieldValueChange(id, value) {
@@ -231,23 +226,22 @@ function RecordForm(props) {
       ...currentForm,
       values: {
         ...currentForm.values,
-        [id]: value
-      }
-    }
+        [id]: value,
+      },
+    };
     props.dispatch(
       {
         type: 'UPDATE_CURRENT_FORM',
-        payload
-      }
-    )
+        payload,
+      },
+    );
   }
 
   function handleMoveField(index, direction) {
-
     const payload = {
       ...currentForm,
-      fields: [...currentForm.fields]
-    }
+      fields: [...currentForm.fields],
+    };
     const tmp = payload.fields[index];
 
     if (direction === 'UP' && index > 0) {
@@ -262,82 +256,84 @@ function RecordForm(props) {
       return;
     }
 
-
     props.dispatch({
       type: 'UPDATE_CURRENT_FORM',
-      payload
-    })
+      payload,
+    });
   }
 
   async function handleSubmitForm(event) {
     event.preventDefault();
-    let { id: formId, values, modified, name, description, fields } = currentForm;
+    let { formId, fields } = currentForm;
+    const {
+      id: values, modified, name, description,
+    } = currentForm;
 
     let newCurrentForm;
 
     try {
       if (modified) {
         fields = fields
-          .filter(field => !field.deleted)
-          .map(field => {
+          .filter((field) => !field.deleted)
+          .map((field) => {
             const { oldLabel, ...rest } = field;
             return { ...rest };
-          })
+          });
         if (!formId) {
           newCurrentForm = await FormApiService.postForm({
             name,
             description,
-            fields
+            fields,
           });
 
           formId = newCurrentForm.id;
-        }
-        else {
+        } else {
           newCurrentForm = await FormApiService.patchForm(
             formId,
             {
               name,
               description,
-              fields
-            });
+              fields,
+            },
+          );
         }
         props.dispatch({
           type: 'UPDATE_CURRENT_FORM',
           payload: {
             ...newCurrentForm,
-            values: {}
-          }
+            values: {},
+          },
         });
       }
 
-      let record;
-      record = await RecordApiService.postRecord({ formId, values });
+      const record = await RecordApiService.postRecord({ formId, values });
 
       props.dispatch(
         {
           type: 'ADD_RECORD',
-          payload: record
-        }
+          payload: record,
+        },
       );
 
       props.dispatch({
-        type: 'TOGGLE_DISPLAY_RECORD_FORM'
+        type: 'TOGGLE_DISPLAY_RECORD_FORM',
       });
-    } catch (error) { props.setApiError(error) }
+    } catch (error) { props.setApiError(error); }
   }
 
   const formFields = currentForm.fields
     .map(
       (field, i) => {
-        if (field.deleted)
+        if (field.deleted) {
           return (
-            <FormFieldContainer key={i}>
+            <FormFieldContainer key={field.id}>
               <FieldDeletedMessage>Field deleted</FieldDeletedMessage>
               <UndoDeleteButton
                 onClick={() => handleToggleDeleteField(i)}
               />
             </FormFieldContainer>
-          )
+          );
+        }
 
         const value = currentForm.values[field.id];
         const formFieldChildren = (
@@ -346,13 +342,13 @@ function RecordForm(props) {
               <UpButton
                 onClick={() => handleMoveField(
                   i,
-                  'UP'
+                  'UP',
                 )}
               />
               <DownButton
                 onClick={() => handleMoveField(
                   i,
-                  'DOWN'
+                  'DOWN',
                 )}
               />
             </FieldUpDownButtonsContainer>
@@ -369,87 +365,82 @@ function RecordForm(props) {
               />
             </div>
           </>
-        )
+        );
         if (field.max - field.min >= 9) {
           return (
             <DoubleWidthFieldContainer>
               {formFieldChildren}
             </DoubleWidthFieldContainer>
-          )
+          );
         }
 
         return (
           <FormFieldContainer key={field.id}>
             {formFieldChildren}
           </FormFieldContainer>
-        )
-      });
+        );
+      },
+    );
 
-
-  const addFieldItems =
-    Object.entries({
-      string: 'Text',
-      number: 'Number',
-      boolean: 'Yes/No',
-      range: 'Range',
-      time: 'Time'
-    }).map(([value, label]) => {
-      return {
-        label,
-        value
-      }
-    });
+  const addFieldItems = Object.entries({
+    string: 'Text',
+    number: 'Number',
+    boolean: 'Yes/No',
+    range: 'Range',
+    time: 'Time',
+  }).map(([value, label]) => ({
+    label,
+    value,
+  }));
 
   const formIsValid = validateForm(currentForm);
 
   return (
     <RecordFormContainer
-      onSubmit={event =>
-        handleSubmitForm(event)}
-      onReset={event =>
-        handleResetForm(event)}
+      onSubmit={(event) => handleSubmitForm(event)}
+      onReset={(event) => handleResetForm(event)}
     >
       <FormTitle>Create an Entry</FormTitle>
       <FormHeader>
         <SelectForm
           buttonLabel={currentForm.name}
-          dispatch={props.dispatch}
-          forms={props.state.forms}
+          dispatch={dispatch}
+          forms={state.forms}
         />
         <FormMetaContainer>
-          {currentForm.name === '' &&
+          {currentForm.name === ''
+            && (
             <FormNameValidationError
-              aria-errormessage='form-name'
+              aria-errormessage="form-name"
             >
               Please enter a name for your entry form
-          </FormNameValidationError>}
+            </FormNameValidationError>
+            )}
           <FormNameContainer>
-            <FormNameLabel htmlFor='form-name'>
+            <FormNameLabel htmlFor="form-name">
               New Record:
-          </FormNameLabel>
+            </FormNameLabel>
             <FormNameInput
               aria-invalid={currentForm.name === ''}
-              id='form-name'
-              type='text'
+              id="form-name"
+              type="text"
               value={currentForm.name}
-              onChange={(event) =>
-                handleFormNameEdit(
-                  event.target.value
-                )}
+              onChange={(event) => handleFormNameEdit(
+                event.target.value,
+              )}
             />
           </FormNameContainer>
           <FormDescriptionContainer>
             <FormDescriptionLabel
-              htmlFor='form-description'
+              htmlFor="form-description"
             >
               Description:
-          </FormDescriptionLabel>
+            </FormDescriptionLabel>
             <FormDescriptionInput
-              id='form-description'
-              type='text'
+              id="form-description"
+              type="text"
               value={currentForm.description}
-              onChange={event =>
-                handleFormDescriptionEdit(event.target.value)}
+              onChange={(event) => handleFormDescriptionEdit(event.target.value)}
             />
           </FormDescriptionContainer>
         </FormMetaContainer>
@@ -466,7 +457,7 @@ function RecordForm(props) {
             handleSelectItem={handleAddField}
             label={<AddFieldLabelIcon />}
             StyledLabel={AddFieldLabel}
-            buttonLabel='Select a field to add'
+            buttonLabel="Select a field to add"
           />
         </AddFieldContainer>
       </FormFieldsContainer>
@@ -477,8 +468,8 @@ function RecordForm(props) {
         <SubmitButton disabled={!formIsValid} />
         <ResetButton />
       </FormSubmitResetContainer>
-    </RecordFormContainer >
-  )
+    </RecordFormContainer>
+  );
 }
 
 export default RecordForm;

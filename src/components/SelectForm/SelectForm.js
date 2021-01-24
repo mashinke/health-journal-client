@@ -1,60 +1,58 @@
 import React from 'react';
-import { NewFormButton } from '../Button/Button';
 import {
   SelectFormLabel,
   SelectFormContainer,
-  SelectFormInteractiveContainer
 } from '../RecordFormComponents/RecordFormComponents';
 import SelectSingle from '../SelectSingle/SelectSingle';
 
 function SelectForm(props) {
+  const { forms, buttonLabel, dispatch } = props;
   function handleCurrentFormChange({ value }) {
-    console.log('val', value)
     if (value === 'NEW_FORM') {
-      props.dispatch(
+      dispatch(
         {
           type: 'ADD_FORM',
           payload: {
             values: {},
             fields: [],
             name: '',
-            description: ''
-          }
-        }
-      )
+            description: '',
+          },
+        },
+      );
     } else {
-      props.dispatch(
+      dispatch(
         {
           type: 'CHANGE_CURRENT_FORM',
-          payload: value
-        }
-      )
+          payload: value,
+        },
+      );
     }
   }
 
-  const selectItems = props.forms.map((form, i) => (
+  const selectItems = forms.map((form, i) => (
     {
       value: i,
-      label: form.name
+      label: form.name,
     }
   ));
 
   selectItems.push({
     value: 'NEW_FORM',
-    label: '<new form>'
-  })
+    label: '<new form>',
+  });
 
   return (
     <SelectFormContainer>
       <SelectSingle
         items={selectItems}
         handleSelectItem={handleCurrentFormChange}
-        label='What are you recording?'
+        label="What are you recording?"
         StyledLabel={SelectFormLabel}
-        buttonLabel={props.buttonLabel || 'New Form'}
+        buttonLabel={buttonLabel || 'New Form'}
       />
-    </SelectFormContainer >
-  )
-};
+    </SelectFormContainer>
+  );
+}
 
 export default SelectForm;

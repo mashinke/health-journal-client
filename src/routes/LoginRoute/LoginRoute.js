@@ -6,14 +6,14 @@ function LoginRoute(props) {
     const { location, history } = props;
     const destination = (location.state || {}).from || '/';
     history.push(destination);
-  };
+  }
 
   return (
     <LoginForm
       onLoginSuccess={handleLoginSuccess}
     />
-  )
-};
+  );
+}
 
 export default LoginRoute;
 
@@ -21,5 +21,5 @@ LoginRoute.defaultProps = {
   location: {},
   history: {
     push: () => { },
-  }
+  },
 };

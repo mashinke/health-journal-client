@@ -21,8 +21,8 @@ export const SummaryContainer = styled.div`
 `;
 
 export const SummaryListContainer = styled(OuterListContainer)`
-  background-color: ${props => props.theme.secondary.medium};
-  border-color: ${props => props.theme.secondary.dark};
+  background-color: ${(props) => props.theme.secondary.medium};
+  border-color: ${(props) => props.theme.secondary.dark};
   border-radius: 0 0 .5rem .5rem;
   border-top: 0;
   margin: 0 1rem 0;
@@ -36,9 +36,9 @@ export const SummaryListContainer = styled(OuterListContainer)`
 export const SummaryListHeading = styled.h3`
   margin: 0 1rem;
   padding: .25rem;
-  color: ${props => props.theme.secondary.text};
-  background-color: ${props => props.theme.secondary.medium};
-  border: 1px solid ${props => props.theme.secondary.dark};
+  color: ${(props) => props.theme.secondary.text};
+  background-color: ${(props) => props.theme.secondary.medium};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .5rem .5rem 0 0;
   border-bottom: 0;
   align-content: stretch;
@@ -48,8 +48,8 @@ export const SummaryListHeading = styled.h3`
 `;
 
 export const SummaryItemContainer = styled(OuterListItemContainer)`
-  background-color: ${props => props.theme.primary.medium};
-  border-color: ${props => props.theme.primary.dark};
+  background-color: ${(props) => props.theme.primary.medium};
+  border-color: ${(props) => props.theme.primary.dark};
   flex-direction: column;
   :last-child:nth-child(odd){
     flex-grow: 1;
@@ -68,8 +68,8 @@ margin: .5rem 0 .25rem;
 
 export const SummaryItemBodyContainer = styled.div`
 display: flex;
-background-color: ${props => props.theme.primary.light};
-border: 1px solid ${props => props.theme.primary.dark};
+background-color: ${(props) => props.theme.primary.light};
+border: 1px solid ${(props) => props.theme.primary.dark};
 border-radius: .5rem;
 height: 100%;
 `;
@@ -85,8 +85,8 @@ export const RecordListContainer = styled(OuterListContainer)`
   flex-wrap: nowrap;
   flex-direction: column;
   margin: 0 1rem;  
-  background-color: ${props => props.theme.primary.medium};
-  border-color: ${props => props.theme.primary.dark};
+  background-color: ${(props) => props.theme.primary.medium};
+  border-color: ${(props) => props.theme.primary.dark};
   @media (min-width: 45rem){
     max-width: calc((100% - 2.5rem) / 2);
     overflow-y: auto;
@@ -134,15 +134,15 @@ export const RecordFieldList = styled(OuterListContainer)`
   flex-direction: column;
   padding: .25rem;
   margin: 0 .25rem .25rem;
-  background-color: ${props => props.theme.primary.dark};
-  border-color: ${props => props.theme.primary.verydark};
+  background-color: ${(props) => props.theme.primary.dark};
+  border-color: ${(props) => props.theme.primary.verydark};
   align-content: stretch;
 
 `;
 
 export const RecordFieldListItem = styled.li`
-  border: 1px solid ${props => props.theme.primary.verydark};
-  background-color: ${props => props.theme.primary.light};
+  border: 1px solid ${(props) => props.theme.primary.verydark};
+  background-color: ${(props) => props.theme.primary.light};
   border-radius: .25rem;
   margin: .125rem;
   padding: .25rem;

@@ -3,22 +3,21 @@ import RecordApiService from '../../services/record-api-service';
 import { RecordListContainer, RecordListHeading } from '../RecordDisplayComponents/RecordDisplayComponents';
 import Record from '../Record/Record';
 
-
 export default function RecordList(props) {
-  console.log(props.filter)
+  const { records } = props;
   async function handleDeleteRecord(recordId) {
     try {
       await RecordApiService.deleteRecord(recordId);
       props.dispatch({
         type: 'DELETE_RECORD',
-        payload: ({ recordId })
-      })
-    } catch (error) { props.setApiError(error) }
+        payload: ({ recordId }),
+      });
+    } catch (error) { props.setApiError(error); }
   }
 
-  const showRecords = props.records.map(record => (
+  const showRecords = records.map((record) => (
     <Record
-      key={record.id}
+      key={`record-${record.id}`}
       handleDeleteRecord={handleDeleteRecord}
       {...record}
     />
@@ -30,5 +29,5 @@ export default function RecordList(props) {
       </RecordListHeading>
       {showRecords}
     </RecordListContainer>
-  )
+  );
 }

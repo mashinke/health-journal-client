@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import DatePicker from 'react-date-picker/dist/entry.nostyle';
 import { RiArrowRightLine } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
@@ -12,21 +13,22 @@ import {
   ShowDateFilter,
   ShowDateFilterFromTo,
   ShowDateFilterFromToArrow,
-  ShowDateFilterFromToDates
+  ShowDateFilterFromToDates,
 } from '../DateSelectComponents/DateSelectComponents';
 import './DateRangeSelect.css';
-import { ThemeContext } from 'styled-components';
 import { DeleteButton } from '../Button/Button';
 
 export default function DateRangeSelect(props) {
-  const { fromDate, toDate, dispatch } = props
+  const {
+    id, fromDate, toDate, dispatch, show, label,
+  } = props;
   const theme = useContext(ThemeContext);
 
   function handleClearFilter() {
     dispatch({
       to: null,
-      from: null
-    })
+      from: null,
+    });
   }
 
   function handleDateChange(type, value) {
@@ -35,7 +37,7 @@ export default function DateRangeSelect(props) {
         if (toDate === null || value <= toDate) {
           dispatch({
             to: toDate,
-            from: value
+            from: value,
           });
         }
         break;
@@ -43,8 +45,8 @@ export default function DateRangeSelect(props) {
         if (fromDate === null || value >= fromDate) {
           dispatch({
             to: value,
-            from: fromDate
-          })
+            from: fromDate,
+          });
         }
         break;
       default:
@@ -52,19 +54,20 @@ export default function DateRangeSelect(props) {
     }
   }
   return (
-    <DateRangeSelectContainer id={props.id}>
-      {props.fromDate && props.toDate
-        && <ShowDateFilter>
+    <DateRangeSelectContainer id={id}>
+      {fromDate && toDate
+        && (
+        <ShowDateFilter>
           <ShowDateFilterFromTo>
             <ShowDateFilterFromToDates>
-              {props.fromDate.toLocaleDateString(
+              {fromDate.toLocaleDateString(
                 undefined,
                 {
                   weekday: 'long',
                   year: 'numeric',
                   month: 'long',
-                  day: 'numeric'
-                }
+                  day: 'numeric',
+                },
               )}
             </ShowDateFilterFromToDates>
             <ShowDateFilterFromToArrow>
@@ -74,8 +77,8 @@ export default function DateRangeSelect(props) {
                     color: theme.primary.text,
                     style: {
                       verticalAlign: 'middle',
-                      fontSize: '1.25rem'
-                    }
+                      fontSize: '1.25rem',
+                    },
                   }
                 }
               >
@@ -83,50 +86,55 @@ export default function DateRangeSelect(props) {
               </IconContext.Provider>
             </ShowDateFilterFromToArrow>
             <ShowDateFilterFromToDates>
-              {props.toDate.toLocaleDateString(
+              {toDate.toLocaleDateString(
                 undefined,
                 {
                   weekday: 'long',
                   year: 'numeric',
                   month: 'long',
-                  day: 'numeric'
-                }
+                  day: 'numeric',
+                },
               )}
             </ShowDateFilterFromToDates>
           </ShowDateFilterFromTo>
-          <DeleteButton type='button'
-            onClick={() => handleClearFilter()} />
-        </ShowDateFilter>}
+          <DeleteButton
+            type="button"
+            onClick={() => handleClearFilter()}
+          />
+        </ShowDateFilter>
+        )}
       {
-        props.show
-        && <DateRangeSelectControls>
-          <DateRangeSelectLabel htmlFor={props.id}>
-            {props.label}
+        show
+        && (
+        <DateRangeSelectControls>
+          <DateRangeSelectLabel htmlFor={id}>
+            {label}
           </DateRangeSelectLabel>
           <DateRangeSelectInputContainer>
             <DateRangeSelectInput>
-              <DateRangeSelectInputLabel htmlFor='from-date'>
+              <DateRangeSelectInputLabel htmlFor="from-date">
                 From:
-            </DateRangeSelectInputLabel>
+              </DateRangeSelectInputLabel>
               <DatePicker
                 value={fromDate}
                 maxDate={new Date()}
-                onChange={value => handleDateChange('FROM', value)}
+                onChange={(value) => handleDateChange('FROM', value)}
               />
             </DateRangeSelectInput>
             <DateRangeSelectInput>
-              <DateRangeSelectInputLabel htmlFor='to-date'>
+              <DateRangeSelectInputLabel htmlFor="to-date">
                 To:
-            </DateRangeSelectInputLabel>
+              </DateRangeSelectInputLabel>
               <DatePicker
                 value={toDate}
                 maxDate={new Date()}
-                onChange={value => handleDateChange('TO', value)}
+                onChange={(value) => handleDateChange('TO', value)}
               />
             </DateRangeSelectInput>
           </DateRangeSelectInputContainer>
         </DateRangeSelectControls>
+        )
       }
-    </DateRangeSelectContainer >
-  )
+    </DateRangeSelectContainer>
+  );
 }

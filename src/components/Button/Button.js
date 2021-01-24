@@ -8,17 +8,16 @@ import {
   RiCheckLine,
   RiArrowUpSLine,
   RiArrowDownSLine,
-  RiArrowGoBackFill
+  RiArrowGoBackFill,
 
 } from 'react-icons/ri';
 import styled, { ThemeContext } from 'styled-components';
 import { IconContext } from 'react-icons';
 
 const Button = styled.button
-  .attrs(props => ({
-    type: props.type || 'button'
-  })
-  )`
+  .attrs((props) => ({
+    type: props.type || 'button',
+  }))`
   display: inline-block;
   padding: 0;
   text-align: center;
@@ -48,40 +47,39 @@ const TinyRoundButton = styled(RoundButton)`
 `;
 
 const BigRoundSecondaryColorButton = styled(BigRoundButton)`
-color: ${props => props.theme.secondary.text};
-background-color: ${props => props.theme.secondary.light};
-border-color: ${props => props.theme.secondary.verydark};
+color: ${(props) => props.theme.secondary.text};
+background-color: ${(props) => props.theme.secondary.light};
+border-color: ${(props) => props.theme.secondary.verydark};
 :hover {
-  background-color: ${props => props.theme.secondary.medium};
-  border-color: ${props => props.theme.secondary.text};
+  background-color: ${(props) => props.theme.secondary.medium};
+  border-color: ${(props) => props.theme.secondary.text};
 }
 :disabled {
-  color: ${props => props.theme.secondary.dark};
+  color: ${(props) => props.theme.secondary.dark};
   :hover {
-    background-color: ${props => props.theme.secondary.light};
-    border-color: ${props => props.theme.secondary.verydark};
+    background-color: ${(props) => props.theme.secondary.light};
+    border-color: ${(props) => props.theme.secondary.verydark};
   }
 }
 `;
 
-
 const SmallRoundPrimaryColorButton = styled(SmallRoundButton)`
-color: ${props => props.theme.primary.text};
-background-color: ${props => props.theme.primary.light};
-border-color: ${props => props.theme.primary.verydark};
+color: ${(props) => props.theme.primary.text};
+background-color: ${(props) => props.theme.primary.light};
+border-color: ${(props) => props.theme.primary.verydark};
 :hover {
-  background-color: ${props => props.theme.primary.medium};
-  border-color: ${props => props.theme.primary.text};
+  background-color: ${(props) => props.theme.primary.medium};
+  border-color: ${(props) => props.theme.primary.text};
 }
 `;
 
 const TinyRoundPrimaryColorButton = styled(TinyRoundButton)`
-color: ${props => props.theme.primary.text};
-background-color: ${props => props.theme.primary.light};
-border-color: ${props => props.theme.primary.verydark};
+color: ${(props) => props.theme.primary.text};
+background-color: ${(props) => props.theme.primary.light};
+border-color: ${(props) => props.theme.primary.verydark};
 :hover {
-  background-color: ${props => props.theme.primary.medium};
-  border-color: ${props => props.theme.primary.text};
+  background-color: ${(props) => props.theme.primary.medium};
+  border-color: ${(props) => props.theme.primary.text};
 }
 `;
 
@@ -93,8 +91,8 @@ export function LogoutButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.5rem'
-          }
+            fontSize: '1.5rem',
+          },
         }
       }
     >
@@ -102,8 +100,8 @@ export function LogoutButton(props) {
         <RiLogoutBoxRLine />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
-  )
-};
+  );
+}
 
 export function NewRecordButton(props) {
   return (
@@ -113,8 +111,8 @@ export function NewRecordButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.5rem'
-          }
+            fontSize: '1.5rem',
+          },
         }
       }
     >
@@ -122,8 +120,8 @@ export function NewRecordButton(props) {
         <RiAddLine />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
-  )
-};
+  );
+}
 
 export function NewFormButton(props) {
   return (
@@ -133,8 +131,8 @@ export function NewFormButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1rem'
-          }
+            fontSize: '1rem',
+          },
         }
       }
     >
@@ -142,7 +140,7 @@ export function NewFormButton(props) {
         <RiAddLine />
       </TinyRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function FilterByForm(props) {
@@ -153,19 +151,19 @@ export function FilterByForm(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <SmallRoundPrimaryColorButton
         {...props}
-        aria-label='filter selection by form'
+        aria-label="filter selection by form"
       >
         <RiFileList3Line />
       </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function FilterByDate(props) {
@@ -176,19 +174,19 @@ export function FilterByDate(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <SmallRoundPrimaryColorButton
         {...props}
-        aria-label='filter selection by date range'
+        aria-label="filter selection by date range"
       >
         <RiCalendar2Line />
       </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function DeleteButton(props) {
@@ -199,8 +197,8 @@ export function DeleteButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1rem'
-          }
+            fontSize: '1rem',
+          },
         }
       }
     >
@@ -208,7 +206,7 @@ export function DeleteButton(props) {
         <RiCloseLine />
       </TinyRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function UpButton(props) {
@@ -219,20 +217,21 @@ export function UpButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1rem'
-          }
+            fontSize: '1rem',
+          },
         }
       }
     >
       <div>
         <TinyRoundPrimaryColorButton
-          aria-label='move field up'
-          {...props}>
+          aria-label="move field up"
+          {...props}
+        >
           <RiArrowUpSLine />
         </TinyRoundPrimaryColorButton>
       </div>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function DownButton(props) {
@@ -243,22 +242,22 @@ export function DownButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1rem'
-          }
+            fontSize: '1rem',
+          },
         }
       }
     >
       <div>
         <TinyRoundPrimaryColorButton
-          aria-label='move field down'
-          {...props}>
+          aria-label="move field down"
+          {...props}
+        >
           <RiArrowDownSLine />
         </TinyRoundPrimaryColorButton>
       </div>
     </IconContext.Provider>
-  )
+  );
 }
-
 
 export function UndoDeleteButton(props) {
   return (
@@ -268,24 +267,24 @@ export function UndoDeleteButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <SmallRoundPrimaryColorButton
         {...props}
-        aria-label='undo field deletion'
+        aria-label="undo field deletion"
       >
         <RiArrowGoBackFill />
       </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function YesButton(props) {
+  const { checked } = props;
   const theme = useContext(ThemeContext);
-  console.log('yesbutton')
   return (
     <IconContext.Provider
       value={
@@ -293,33 +292,34 @@ export function YesButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <SmallRoundPrimaryColorButton
         {...props}
-        aria-label='check box'
+        aria-label="check box"
         style={{
-          backgroundColor: `${props.checked
+          backgroundColor: `${checked
             ? theme.primary.dark
             : theme.primary.light
-            }`,
-          border: `${props.checked
+          }`,
+          border: `${checked
             ? `2px solid ${theme.primary.verydark}`
             : `2px solid ${theme.primary.dark}`
-            }`
+          }`,
         }}
 
       >
         <RiCheckLine />
       </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
 export function NoButton(props) {
+  const { value, checked } = props;
   const theme = useContext(ThemeContext);
   return (
     <IconContext.Provider
@@ -328,54 +328,54 @@ export function NoButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <SmallRoundPrimaryColorButton
         {...props}
-        aria-label={`${props.value ? 'uncheck' : 'check'} box`}
+        aria-label={`${value ? 'uncheck' : 'check'} box`}
         style={{
-          backgroundColor: `${!props.checked
+          backgroundColor: `${!checked
             ? theme.primary.dark
             : theme.primary.light
-            }`,
-          border: `${(!props.checked)
+          }`,
+          border: `${(!checked)
             ? `2px solid ${theme.primary.verydark}`
             : `2px solid ${theme.primary.dark}`
-            }`
+          }`,
         }}
       >
         <RiCloseLine />
       </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }
 
-
 export function RangeNumberButton(props) {
+  const { value, checked } = props;
   const theme = useContext(ThemeContext);
   return (
     <SmallRoundPrimaryColorButton
-      aria-label={`select ${props.value}`}
+      aria-label={`select ${value}`}
       {...props}
       style={{
         color: 'inherit',
         fontWeight: 'bold',
-        backgroundColor: `${props.checked
-          ? theme.primary.dark
+        backgroundColor: `${checked
+          ? theme.dark
           : theme.primary.light
-          }`,
-        border: `${(props.checked)
+        }`,
+        border: `${(checked)
           ? `2px solid ${theme.primary.verydark}`
-          : `2px solid ${theme.primary.dark}`
-          }`
+          : '2px solid theme.primary.dark}'
+        }`,
       }}
     >
-      {props.value}
+      {value}
     </SmallRoundPrimaryColorButton>
-  )
+  );
 }
 
 export function SubmitButton(props) {
@@ -386,17 +386,17 @@ export function SubmitButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.5rem'
-          }
+            fontSize: '1.5rem',
+          },
         }
       }
     >
-      <BigRoundSecondaryColorButton {...props} type='submit'>
+      <BigRoundSecondaryColorButton {...props} type="submit">
         <RiCheckLine />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
-  )
-};
+  );
+}
 
 export function ResetButton(props) {
   return (
@@ -406,18 +406,17 @@ export function ResetButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.5rem'
-          }
+            fontSize: '1.5rem',
+          },
         }
       }
     >
-      <BigRoundSecondaryColorButton {...props} type='reset'>
+      <BigRoundSecondaryColorButton {...props} type="reset">
         <RiArrowGoBackFill />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
-  )
-};
-
+  );
+}
 
 export function AddFieldButton(props) {
   return (
@@ -427,17 +426,17 @@ export function AddFieldButton(props) {
           color: 'inherit',
           style: {
             verticalAlign: 'middle',
-            fontSize: '1.25rem'
-          }
+            fontSize: '1.25rem',
+          },
         }
       }
     >
       <SmallRoundPrimaryColorButton
-        aria-label={`add a new field`}
+        aria-label="add a new field"
         {...props}
       >
         <RiAddLine />
       </SmallRoundPrimaryColorButton>
     </IconContext.Provider>
-  )
+  );
 }

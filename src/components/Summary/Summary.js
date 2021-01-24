@@ -6,25 +6,20 @@ import {
   SummaryItemContainer,
   SummaryItemHeading,
   SummaryItemBody,
-  SummaryItemBodyContainer
+  SummaryItemBodyContainer,
 } from '../RecordDisplayComponents/RecordDisplayComponents';
 
-
 function Summary(props) {
-  const recordDays = props.records.reduce((hash, record) => {
+  const { records } = props;
+  const recordDays = records.reduce((hash, record) => {
     const recordDate = new Date(record.created).toLocaleDateString();
-    if (hash[recordDate])
-      hash[recordDate]++;
-    else
-      hash[recordDate] = 1;
-
-    return hash;
-  }, {})
+    if (hash[recordDate]) return { ...hash, recordDate: hash[recordDate] + 1 };
+    return { ...hash, recordDate: 1 };
+  }, {});
 
   let mostConsecutiveDays = 0;
 
-  if (props.records.length > 0) {
-    console.log('figuring...')
+  if (records.length > 0) {
     const lastDate = new Date(props.records[0].created)
       .toLocaleDateString();
     const firstDate = new Date(props.records[props.records.length - 1].created)
@@ -36,11 +31,10 @@ function Summary(props) {
 
     while (currentDate !== lastDate) {
       currentDate = new Date(currentDate);
-      currentDate.setDate(currentDate.getDate() + 1)
+      currentDate.setDate(currentDate.getDate() + 1);
       currentDate = currentDate.toLocaleDateString();
-      if (recordDays[currentDate]) currentCount++;
+      if (recordDays[currentDate]) currentCount += 1;
       if (currentCount > mostSoFar) mostSoFar = currentCount;
-      console.log(currentCount, mostSoFar)
     }
     if (currentCount > mostSoFar) mostSoFar = currentCount;
     mostConsecutiveDays = mostSoFar;
@@ -55,17 +49,17 @@ function Summary(props) {
         <SummaryItemContainer>
           <SummaryItemHeading>
             Total Records Selected:
-        </SummaryItemHeading>
+          </SummaryItemHeading>
           <SummaryItemBodyContainer>
             <SummaryItemBody>
-              {props.records.length}
+              {records.length}
             </SummaryItemBody>
           </SummaryItemBodyContainer>
         </SummaryItemContainer>
         <SummaryItemContainer>
           <SummaryItemHeading>
             Days with at least one entry:
-        </SummaryItemHeading>
+          </SummaryItemHeading>
           <SummaryItemBodyContainer>
             <SummaryItemBody>
               {Object.keys(recordDays).length}
@@ -75,7 +69,7 @@ function Summary(props) {
         <SummaryItemContainer>
           <SummaryItemHeading>
             Most consecutive days with at least one entry:
-        </SummaryItemHeading>
+          </SummaryItemHeading>
           <SummaryItemBodyContainer>
             <SummaryItemBody>
               {mostConsecutiveDays}
@@ -84,7 +78,7 @@ function Summary(props) {
         </SummaryItemContainer>
       </SummaryListContainer>
     </SummaryContainer>
-  )
+  );
 }
 
 export default Summary;

@@ -4,11 +4,11 @@ import UserContext from '../../contexts/UserContext';
 import { LogoutButton, NewRecordButton } from '../Button/Button';
 
 const AppHeader = styled.header`
-  background-color: ${props => props.theme.primary.medium};
+  background-color: ${(props) => props.theme.primary.medium};
   line-height: 4rem;
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid ${props => props.theme.primary.dark};
+  border-bottom: 1px solid ${(props) => props.theme.primary.dark};
 `;
 const AppName = styled.h1`
   font-size: 1.75rem;
@@ -28,7 +28,7 @@ function Header(props) {
       <NewRecordButton onClick={() => props.newRecord()} />
       <LogoutButton onClick={() => userContext.processLogout()} />
     </AppHeader>
-  )
+  );
 }
 
 export default Header;

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const OuterListContainer = styled.ul`
 margin: .5rem 0 .5rem 0;
-border: 1px solid ${props => props.theme.secondary.verydark};
+border: 1px solid ${(props) => props.theme.secondary.verydark};
 border-radius: .5rem .5rem;
 padding: 0 .25rem;
-background-color: ${props => props.theme.secondary.dark};
+background-color: ${(props) => props.theme.secondary.dark};
 display: flex;
 margin: 0;
 flex-direction: column;
@@ -20,9 +20,9 @@ flex-direction: column;
 export const OuterListItemContainer = styled.li`
   margin: .25rem 0;
   padding: .5rem .5rem .5rem .25rem;
-  border: 1px solid ${props => props.theme.secondary.dark};
+  border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .5rem;
-  background-color: ${props => props.theme.secondary.medium};
+  background-color: ${(props) => props.theme.secondary.medium};
   display: flex;
   @media (min-width: 30rem) {
     width: calc((100% - .5rem) / 2);

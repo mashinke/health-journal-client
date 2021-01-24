@@ -1,61 +1,56 @@
-import config from '../config'
-import TokenService from './token-service'
+/* eslint-disable prefer-promise-reject-errors */
+import config from '../config';
+import TokenService from './token-service';
 
 const RecordApiService = {
   getRecords() {
     return fetch(`${config.API_ENDPOINT}/record`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${TokenService.getAuthToken()}`
-      }
+        Authorization: `Bearer ${TokenService.getAuthToken()}`,
+      },
     })
-      .then(res =>
-        (!res.ok)
-          ? res.json().then(err => Promise.reject(
-            {
-              status: res.status,
-              message: err
-            }
-          ))
-          : res.json()
-      )
+      .then((res) => ((!res.ok)
+        ? res.json().then((err) => Promise.reject(
+          {
+            status: res.status,
+            message: err,
+          },
+        ))
+        : res.json()));
   },
   postRecord(record) {
     return fetch(`${config.API_ENDPOINT}/record`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${TokenService.getAuthToken()}`,
-        'content-type': 'application/json'
+        Authorization: `Bearer ${TokenService.getAuthToken()}`,
+        'content-type': 'application/json',
       },
-      body: JSON.stringify(record)
-    }).then(res =>
-      (!res.ok)
-        ? res.json().then(err => Promise.reject(
-          {
-            status: res.status,
-            message: err
-          }
-        ))
-        : res.json()
-    )
+      body: JSON.stringify(record),
+    }).then((res) => ((!res.ok)
+      ? res.json().then((err) => Promise.reject(
+        {
+          status: res.status,
+          message: err,
+        },
+      ))
+      : res.json()));
   },
   deleteRecord(recordId) {
     return fetch(`${config.API_ENDPOINT}/record/${recordId}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${TokenService.getAuthToken()}`,
-      }
-    }).then(res =>
-      (!res.ok)
-        ? res.json().then(err => Promise.reject(
-          {
-            status: res.status,
-            message: err
-          }
-        ))
-        : true
-    )
-  }
-}
+        Authorization: `Bearer ${TokenService.getAuthToken()}`,
+      },
+    }).then((res) => ((!res.ok)
+      ? res.json().then((err) => Promise.reject(
+        {
+          status: res.status,
+          message: err,
+        },
+      ))
+      : true));
+  },
+};
 
 export default RecordApiService;

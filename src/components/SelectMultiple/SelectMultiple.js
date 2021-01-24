@@ -12,12 +12,14 @@ import {
   SelectMultipleContainer,
 } from '../SelectMultipleComponents/SelectMultipleComponents';
 import { DeleteButton } from '../Button/Button';
+
 export default function SelectMultiple(props) {
   const {
     items,
-    selectedItems,
-    handleSelectedItemsChange
-
+    selectedItems: selectedItemsProp,
+    handleSelectedItemsChange,
+    show,
+    buttonLabel,
   } = props;
 
   const {
@@ -25,12 +27,11 @@ export default function SelectMultiple(props) {
     getDropdownProps,
     addSelectedItem,
     removeSelectedItem,
-    reset
+    // reset,
   } = useMultipleSelection(
     {
-      onSelectedItemsChange: ({ selectedItems }) =>
-        handleSelectedItemsChange(selectedItems)
-    }
+      onSelectedItemsChange: ({ selectedItems }) => handleSelectedItemsChange(selectedItems),
+    },
   );
 
   const {
@@ -40,12 +41,12 @@ export default function SelectMultiple(props) {
     getLabelProps,
     getMenuProps,
     highlightedIndex,
-    getItemProps
+    getItemProps,
   } = useSelect(
     {
       selectedItem: null,
       defaultHighlightedIndex: 0,
-      items: items,
+      items,
       stateReducer: (state, actionAndChanges) => {
         const { changes, type } = actionAndChanges;
         switch (type) {
@@ -55,64 +56,67 @@ export default function SelectMultiple(props) {
             return {
               ...changes,
               isOpen: true, // keep the menu open after selection.
-            }
+            };
           default:
             break;
         }
         return changes;
       },
+      // eslint-disable-next-line no-shadow
       onStateChange: ({ type, selectedItem }) => {
         switch (type) {
           case useSelect.stateChangeTypes.MenuKeyDownEnter:
           case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
           case useSelect.stateChangeTypes.ItemClick:
             if (selectedItem) {
-              addSelectedItem(selectedItem)
+              addSelectedItem(selectedItem);
             }
             break;
           default:
             break;
         }
-      }
-    }
+      },
+    },
   );
 
   return (
     <SelectMultipleContainer>
       <ItemsList>
         {
-          selectedItems.map((selectedItem, index) => (
+          selectedItemsProp.map((selectedItemInState, index) => (
             <SelectedListItem
-              key={`selected-item-${index} `}
-              {...getSelectedItemProps({ selectedItem, index })}
+              key={`selected-item-${selectedItemsProp.value} `}
+              {...getSelectedItemProps({ selectedItemInState, index })}
             >
-              {selectedItem.name}
+              {selectedItemInState.name}
               <DeleteButton
                 onClick={(event) => {
                   event.stopPropagation();
-                  removeSelectedItem(selectedItem);
+                  removeSelectedItem(selectedItemInState);
                 }}
               >
                 &#10005;
-            </DeleteButton>
+              </DeleteButton>
             </SelectedListItem>
           ))
         }
       </ItemsList>
       {
-        props.show
-        && <DropDownContainer>
+        show
+        && (
+        <DropDownContainer>
           <ButtonsContainer>
             <SelectButton
               {
               ...getToggleButtonProps(
-                getDropdownProps({ preventKeyAction: isOpen }))
+                getDropdownProps({ preventKeyAction: isOpen }),
+              )
               }
             >
               <SelectButtonLabel {...getLabelProps()}>
-                {(selectedItem && selectedItem.name) || props.buttonLabel}
+                {(selectedItem && selectedItem.name) || buttonLabel}
               </SelectButtonLabel>
-            </SelectButton >
+            </SelectButton>
             {/* <SelectButton onClick={() => reset()}>
               Reset
           </SelectButton> <- this needs to be fixed */}
@@ -122,7 +126,7 @@ export default function SelectMultiple(props) {
               items.map((item, index) => (
                 <DropdownListItem
                   isHighlighted={highlightedIndex === index}
-                  key={`${item.id} ${index} `}
+                  key={item.id}
                   {...getItemProps({ item, index })}
                 >
                   {item.name}
@@ -131,7 +135,8 @@ export default function SelectMultiple(props) {
             }
           </DropDownItemsList>
         </DropDownContainer>
+        )
       }
-    </SelectMultipleContainer >
-  )
+    </SelectMultipleContainer>
+  );
 }

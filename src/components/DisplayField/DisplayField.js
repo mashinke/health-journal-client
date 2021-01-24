@@ -1,48 +1,74 @@
 import React from 'react';
 import {
-  RecordFieldListItem
+  RecordFieldListItem,
 } from '../RecordDisplayComponents/RecordDisplayComponents';
+
 export function StringDisplay(props) {
+  const { label, value } = props;
   return (
     <RecordFieldListItem>
-      <span>{props.label}: </span>
-      <span>{props.value}</span>
+      <span>
+        {label}
+        :
+        {' '}
+      </span>
+      <span>{value}</span>
     </RecordFieldListItem>
-  )
+  );
 }
 
 export function NumberDisplay(props) {
+  const { label, value } = props;
   return (
     <RecordFieldListItem>
-      <span>{props.label}: </span>
-      <span>{props.value}</span>
+      <span>
+        {label}
+        :
+        {' '}
+      </span>
+      <span>{value}</span>
     </RecordFieldListItem>
-  )
+  );
 }
 
 export function BooleanDisplay(props) {
+  const { label, value } = props;
   return (
     <RecordFieldListItem>
-      <span>{props.label}: </span>
-      <span>{
-        props.value
+      <span>
+        {label}
+        :
+        {' '}
+      </span>
+      <span>
+        {
+        value
           ? '\u2713'
           : '\u2717'
-      }</span>
+      }
+
+      </span>
     </RecordFieldListItem>
-  )
+  );
 }
 
 export function RangeDisplay(props) {
-  const numbers = []
-  for (let i = props.min; i <= props.max; i++) {
-    if (i === props.value) numbers.push('\u25cf');
-    else numbers.push('\u25cb')
+  const {
+    min, max, value, label,
+  } = props;
+  const numbers = [];
+  for (let i = min; i <= max; i += 1) {
+    if (i === value) numbers.push('\u25cf');
+    else numbers.push('\u25cb');
   }
   return (
     <RecordFieldListItem>
-      <span>{props.label}: </span>
+      <span>
+        {label}
+        :
+        {' '}
+      </span>
       <span>{numbers}</span>
     </RecordFieldListItem>
-  )
+  );
 }

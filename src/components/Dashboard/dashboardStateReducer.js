@@ -1,6 +1,6 @@
 const dashboardStateReducer = (state, action) => {
   const currentForm = { ...state.forms[state.currentForm] };
-  let forms = [...state.forms];
+  const forms = [...state.forms];
   forms[state.currentForm] = currentForm;
 
   switch (action.type) {
@@ -8,32 +8,31 @@ const dashboardStateReducer = (state, action) => {
       return {
         ...state,
         showMultiSelect: !state.showMultiSelect,
-        showDatePicker: false
-      }
+        showDatePicker: false,
+      };
     }
     case 'TOGGLE_DATE_PICKER': {
       return {
         ...state,
         showDatePicker: !state.showDatePicker,
-        showMultiSelect: false
-      }
+        showMultiSelect: false,
+      };
     }
     case 'DELETE_RECORD': {
-      const records = state.records.filter(record =>
-        record.id !== action.payload.recordId)
+      const records = state.records.filter((record) => record.id !== action.payload.recordId);
       return {
         ...state,
-        records
-      }
+        records,
+      };
     }
     case 'FILTER_RECORDS': {
       return {
         ...state,
         activeFilters: {
           ...state.activeFilters,
-          ...action.payload
-        }
-      }
+          ...action.payload,
+        },
+      };
     }
     case 'UPDATE_CURRENT_FORM': {
       const { modified } = currentForm;
@@ -41,9 +40,7 @@ const dashboardStateReducer = (state, action) => {
       const oldForm = {};
       if (!modified) {
         Object.assign(oldForm, currentForm);
-        oldForm.fields = currentForm.fields.map(field => {
-          return { ...field }
-        });
+        oldForm.fields = currentForm.fields.map((field) => ({ ...field }));
         modifiedForms.push(oldForm);
       }
 
@@ -51,14 +48,15 @@ const dashboardStateReducer = (state, action) => {
         state.currentForm,
         1,
         {
-          ...action.payload
-        });
+          ...action.payload,
+        },
+      );
 
       return {
         ...state,
         forms,
-        modifiedForms
-      }
+        modifiedForms,
+      };
     }
     case 'ADD_FORM': {
       forms.push(action.payload);
@@ -66,14 +64,14 @@ const dashboardStateReducer = (state, action) => {
       return {
         ...state,
         currentForm: forms.length - 1,
-        forms
-      }
+        forms,
+      };
     }
     case 'POPULATE_RECORDS': {
       return {
         ...state,
         records: action.payload,
-        currentRecords: action.payload
+        currentRecords: action.payload,
       };
     }
     case 'ADD_RECORD': {
@@ -82,41 +80,44 @@ const dashboardStateReducer = (state, action) => {
       return {
         ...state,
         forms,
-        records
+        records,
       };
     }
     case 'TOGGLE_DISPLAY_RECORD_LIST': {
       return {
         ...state,
         displayRecordList: !state.displayRecordList,
-        displayRecordForm: false
+        displayRecordForm: false,
       };
     }
     case 'TOGGLE_DISPLAY_RECORD_FORM': {
       return {
         ...state,
         displayRecordForm: !state.displayRecordForm,
-        displayRecordList: false
+        displayRecordList: false,
       };
     }
     case 'POPULATE_FORMS': {
-      action.payload.forEach(form => form.values = {});
+      const popForms = action.payload.map((form) => ({
+        ...form,
+        values: {},
+      }));
       return {
         ...state,
-        forms: action.payload,
-        currentForm: 0
+        forms: popForms,
+        currentForm: 0,
       };
     }
     case 'CHANGE_CURRENT_FORM': {
       return {
         ...state,
-        currentForm: action.payload
+        currentForm: action.payload,
       };
     }
     default: {
       return state;
     }
   }
-}
+};
 
 export default dashboardStateReducer;

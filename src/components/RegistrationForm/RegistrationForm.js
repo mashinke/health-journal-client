@@ -12,7 +12,7 @@ import {
   FormMain,
   FormDescription,
   StyledForm,
-  FormTitle
+  FormTitle,
 } from '../Form/Form';
 
 function RegistrationForm(props) {
@@ -25,14 +25,14 @@ function RegistrationForm(props) {
     AuthApiService.postUser({
       email: email.value,
       username: username.value,
-      password: password.value
+      password: password.value,
     })
-      .then(res => {
+      .then(() => {
         AuthApiService.postLogin({
           email: email.value,
-          password: password.value
+          password: password.value,
         })
-          .then(res => {
+          .then((res) => {
             email.value = '';
             username.value = '';
             password.value = '';
@@ -41,9 +41,9 @@ function RegistrationForm(props) {
             userContext.clearError();
           });
       })
-      .catch(res => {
+      .catch((res) => {
         setError(res.error);
-      })
+      });
   }
 
   return (
@@ -52,60 +52,64 @@ function RegistrationForm(props) {
       <FormMain>
         <FormDescription>
           Track, manage, and gain insights from your health information.
-    </FormDescription>
+        </FormDescription>
         <FormTitle>Sign up</FormTitle>
         <StyledForm
-          className='RegistrationForm'
+          className="RegistrationForm"
           onSubmit={handleSubmit}
         >
           <div
-            role='alert'
-            className='alert'>
+            role="alert"
+            className="alert"
+          >
             {error && <p>{error}</p>}
           </div>
           <FormInput>
-            <Label htmlFor='registration-name-input'>
-              email</Label>
+            <Label htmlFor="registration-name-input">
+              email
+            </Label>
             <Input
-              type='email'
-              id='registration-email-input'
-              name='email'
+              type="email"
+              id="registration-email-input"
+              name="email"
               required
             />
           </FormInput>
           <FormInput>
-            <Label htmlFor='registration-username-input'>
-              username</Label>
+            <Label htmlFor="registration-username-input">
+              username
+            </Label>
             <Input
-              type='text'
-              id='registration-username-input'
-              name='username'
+              type="text"
+              id="registration-username-input"
+              name="username"
               required
             />
           </FormInput>
           <FormInput>
-            <Label htmlFor='registration-password-input'>
-              password</Label>
+            <Label htmlFor="registration-password-input">
+              password
+            </Label>
             <Input
-              type='password'
-              id='registration-password-input'
-              name='password'
+              type="password"
+              id="registration-password-input"
+              name="password"
               required
             />
           </FormInput>
           <footer>
             <SubmitButton>Sign up</SubmitButton>
             {' '}
-            <HaveAccountLink to='/login'>Already have an account?</HaveAccountLink>
+            <HaveAccountLink to="/login">Already have an account?</HaveAccountLink>
           </footer>
         </StyledForm>
       </FormMain>
     </FormContainer>
-  )
+  );
 }
 
 export default RegistrationForm;
 
 RegistrationForm.defaultProps = {
-  onRegistrationSuccess: () => { }
-}
+  onRegistrationSuccess: () => { },
+};

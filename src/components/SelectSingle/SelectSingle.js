@@ -5,7 +5,7 @@ import {
   DropdownListItem,
   SelectSingleContainer,
   SelectSingleButton,
-  SelectSingleButtonContainer
+  SelectSingleButtonContainer,
 } from '../SelectSingleComponents/SelectSingleComponents';
 
 function SelectSingle(props) {
@@ -14,12 +14,11 @@ function SelectSingle(props) {
     handleSelectItem,
     label,
     StyledLabel,
-    buttonLabel
+    buttonLabel,
   } = props;
 
   const {
     isOpen,
-    selectedItem,
     getToggleButtonProps,
     getLabelProps,
     getMenuProps,
@@ -27,9 +26,8 @@ function SelectSingle(props) {
     getItemProps,
   } = useSelect({
     items,
-    onSelectedItemChange: ({ selectedItem }) =>
-      handleSelectItem(selectedItem)
-  })
+    onSelectedItemChange: ({ selectedItem }) => handleSelectItem(selectedItem),
+  });
 
   return (
     <>
@@ -37,7 +35,8 @@ function SelectSingle(props) {
         StyledLabel
           ? <StyledLabel {...getLabelProps()}>{label}</StyledLabel>
 
-          : <label {...getLabelProps()} >{label}</label>
+          // eslint-disable-next-line jsx-a11y/label-has-associated-control
+          : <label {...getLabelProps()}>{label}</label>
       }
       <SelectSingleContainer>
         <SelectSingleButtonContainer
@@ -45,13 +44,15 @@ function SelectSingle(props) {
         >
           <SelectSingleButton
             type="button"
-            {...getToggleButtonProps()}>
+            {...getToggleButtonProps()}
+          >
             {buttonLabel}
           </SelectSingleButton>
         </SelectSingleButtonContainer>
         <div style={{
-          position: 'relative'
-        }}>
+          position: 'relative',
+        }}
+        >
           <ItemsList
             {...getMenuProps()}
             isOpen={isOpen}
@@ -64,7 +65,7 @@ function SelectSingle(props) {
                       ? { backgroundColor: '#bde4ff' }
                       : {}
                   }
-                  key={`${item}${index}`}
+                  key={`${item}-${item.value}`}
                   {...getItemProps({ item, index })}
                 >
                   {item.label}
@@ -74,8 +75,7 @@ function SelectSingle(props) {
         </div>
       </SelectSingleContainer>
     </>
-  )
+  );
 }
-
 
 export default SelectSingle;

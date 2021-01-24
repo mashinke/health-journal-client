@@ -1,70 +1,74 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SelectMultiple from '../SelectMultiple/SelectMultiple';
 import DateRangeSelect from '../DateRangeSelect/DateRangeSelect';
 import { FilterByForm, FilterByDate } from '../Button/Button';
 import {
   FilterSelectBar,
   FilterControlBox,
-  FilterSelectLabel
+  FilterSelectLabel,
 } from '../FilterControlComponents/FilterControlComponents';
 
 function handleFormsFilterChange(dispatch) {
+  // eslint-disable-next-line func-names
   return function (forms) {
     dispatch(
       {
         type: 'FILTER_RECORDS',
         payload: {
-          forms
-        }
-      }
-    )
-  }
+          forms,
+        },
+      },
+    );
+  };
 }
 
 function handleDateFilterChange(dispatch) {
+  // eslint-disable-next-line func-names
   return function (range) {
     const created = range;
     dispatch(
       {
         type: 'FILTER_RECORDS',
         payload: {
-          created
-        }
-      }
-    )
-  }
+          created,
+        },
+      },
+    );
+  };
 }
 
 export default function RecordFilterControls(props) {
-
-  const formFilterItems = props.forms.filter(item => {
-    for (let form of props.filters.forms) {
-      if (form.id === item.id) return false;
-    }
-    return true;
+  const {
+    forms,
+    filters,
+    dispatch,
+    showMultiSelect,
+    showDatePicker,
+  } = props;
+  const formFilterItems = forms.filter((item) => {
+    let filter = true;
+    filters.forms.forEach((form) => {
+      if (form.id === item.id) filter = false;
+    });
+    return filter;
   })
-    .map(({ id, name }) => {
-      return {
-        id,
-        name
-      }
-    })
+    .map(({ id, name }) => ({
+      id,
+      name,
+    }));
 
   function handleToggleShowMultiSelect() {
-    console.log('sms')
-    props.dispatch({
-      type: 'TOGGLE_MULTI_SELECT'
-    })
+    dispatch({
+      type: 'TOGGLE_MULTI_SELECT',
+    });
   }
 
   function handleToggleShowDatePicker() {
-    console.log('sdp')
-    props.dispatch({
-      type: 'TOGGLE_DATE_PICKER'
-    })
+    dispatch({
+      type: 'TOGGLE_DATE_PICKER',
+    });
   }
 
-  console.log(props)
   return (
     <div>
       <FilterSelectBar>
@@ -78,48 +82,54 @@ export default function RecordFilterControls(props) {
       </FilterSelectBar>
       {
         ((
-          props.filters.forms.length > 0
-          || props.showMultiSelect
+          filters.forms.length > 0
+          || showMultiSelect
         )
           || (
-            (props.filters.created.to
-              && props.filters.created.from
-            ) || props.showDatePicker
+            (filters.created.to
+              && filters.created.from
+            ) || showDatePicker
           ))
-        && <FilterControlBox>
+        && (
+        <FilterControlBox>
           {
-            (props.filters.forms.length > 0
-              || props.showMultiSelect)
-            && <SelectMultiple
-              selectedItems={props.filters.forms}
-              show={props.showMultiSelect}
+            (filters.forms.length > 0
+              || showMultiSelect)
+            && (
+            <SelectMultiple
+              selectedItems={filters.forms}
+              show={showMultiSelect}
               toggleShow={handleToggleShowMultiSelect}
-              buttonLabel='Select forms'
-              label='Filter by form'
-              handleSelectedItemsChange={handleFormsFilterChange(props.dispatch)}
+              buttonLabel="Select forms"
+              label="Filter by form"
+              handleSelectedItemsChange={handleFormsFilterChange(dispatch)}
               items={formFilterItems}
             />
+            )
           }
           {
             (
-              (props.filters.created.to
-                && props.filters.created.from
-              ) || props.showDatePicker
+              (filters.created.to
+                && filters.created.from
+              ) || showDatePicker
             )
 
-            && <DateRangeSelect
-              id='form-date-range-picker'
-              label='Select date range:'
-              fromDate={props.filters.created.from}
-              toDate={props.filters.created.to}
-              show={props.showDatePicker}
+            && (
+            <DateRangeSelect
+              id="form-date-range-picker"
+              label="Select date range:"
+              fromDate={filters.created.from}
+              toDate={filters.created.to}
+              show={showDatePicker}
               dispatch={
-                handleDateFilterChange(props.dispatch)
+                handleDateFilterChange(dispatch)
               }
             />
+            )
           }
         </FilterControlBox>
+        )
       }
-    </div >
-  )
+    </div>
+  );
 }

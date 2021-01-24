@@ -15,10 +15,9 @@ const AppContainer = styled.div`
   flex-direction: column;
 `;
 
-
 function App() {
   const [theme, setTheme] = useState({ primary: {}, secondary: {} });
-  useEffect(() => setTheme(ThemeService.getTheme()), [])
+  useEffect(() => setTheme(ThemeService.getTheme()), []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,17 +27,17 @@ function App() {
         <Switch>
           <PublicOnlyRoute
             exact
-            path={'/login'}
+            path="/login"
             component={LoginRoute}
           />
           <PublicOnlyRoute
             exact
-            path={'/register'}
+            path="/register"
             component={RegistrationRoute}
           />
           <PrivateRoute
             exact
-            path={'/'}
+            path="/"
             component={DashboardRoute}
           />
         </Switch>

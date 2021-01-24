@@ -10,8 +10,8 @@ export const DateRangeSelectContainer = styled.div`
 export const DateRangeSelectControls = styled.div`
 padding: .125rem;
 margin: .5rem 0 0 0;
-background-color: ${props => props.theme.secondary.medium};
-border: 1px solid ${props => props.theme.secondary.dark};
+background-color: ${(props) => props.theme.secondary.medium};
+border: 1px solid ${(props) => props.theme.secondary.dark};
 border-radius: .5rem;
 list-style: none;
 display: flex;
@@ -28,8 +28,8 @@ export const DateRangeSelectInput = styled.div`
 display: flex;
 margin: .125rem;
 padding: .25rem;
-background-color: ${props => props.theme.primary.light};
-border: 1px solid ${props => props.theme.primary.dark};
+background-color: ${(props) => props.theme.primary.light};
+border: 1px solid ${(props) => props.theme.primary.dark};
 border-radius: .25rem;
 `;
 
@@ -52,8 +52,8 @@ margin: auto .5rem auto;
 export const ShowDateFilter = styled.div`
 padding: .125rem;
 margin: 0;
-background-color: ${props => props.theme.secondary.medium};
-border: 1px solid ${props => props.theme.secondary.dark};
+background-color: ${(props) => props.theme.secondary.medium};
+border: 1px solid ${(props) => props.theme.secondary.dark};
 border-radius: .5rem;
 list-style: none;
 display: flex;
@@ -66,8 +66,8 @@ export const ShowDateFilterFromTo = styled.div`
   display: flex;
   margin: .125rem;
   padding: .25rem;
-  background-color: ${props => props.theme.primary.light};
-  border: 1px solid ${props => props.theme.primary.dark};
+  background-color: ${(props) => props.theme.primary.light};
+  border: 1px solid ${(props) => props.theme.primary.dark};
   border-radius: .25rem;
 `;
 
