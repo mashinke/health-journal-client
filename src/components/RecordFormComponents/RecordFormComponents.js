@@ -130,12 +130,13 @@ export const RecordFormContainer = styled.form`
   margin: 0 1rem;
 `;
 
-export const FormFieldsContainer = styled(OuterListContainer)``;
+export const FormFieldsContainer = styled(OuterListContainer)`
+`;
 
-export const FormFieldContainer = styled(OuterListItemContainer)``;
+export const FormFieldContainer = styled(OuterListItemContainer)`
+`;
 
 export const RangeFieldContainer = styled(FormFieldContainer)`
-
 @media (min-width: 30rem) {
   width: 100%;
 }
@@ -195,6 +196,7 @@ const FormFieldInput = styled.input`
 export const FormFieldTextInput = styled.textarea`
 padding: .25rem;
 width: 100%;
+height: 1.5rem;
 background-color: ${(props) => props.theme.primary.light};
 border: 1px solid ${(props) => props.theme.primary.dark};
 color: ${(props) => props.theme.primary.text};
@@ -208,7 +210,7 @@ background-color: ${(props) => props.theme.primary.light};
 export const FormFieldNumberInput = styled(FormFieldInput)
   .attrs({ type: 'number' })`
   max-width: 3rem;
-  margin 0 0 0 auto;
+  margin auto;
   `;
 
 export const FormFieldBooleanInput = styled.div`
