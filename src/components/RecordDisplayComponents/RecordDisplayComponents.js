@@ -48,6 +48,7 @@ export const SummaryListHeading = styled.h3`
 `;
 
 export const SummaryItemContainer = styled(OuterListItemContainer)`
+  padding-left: .5rem;
   background-color: ${(props) => props.theme.primary.medium};
   border-color: ${(props) => props.theme.primary.dark};
   flex-direction: column;
