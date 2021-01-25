@@ -134,7 +134,7 @@ export const FormFieldsContainer = styled(OuterListContainer)``;
 
 export const FormFieldContainer = styled(OuterListItemContainer)``;
 
-export const DoubleWidthFieldContainer = styled(FormFieldContainer)`
+export const RangeFieldContainer = styled(FormFieldContainer)`
 
 @media (min-width: 30rem) {
   width: 100%;
@@ -150,7 +150,7 @@ export const DoubleWidthFieldContainer = styled(FormFieldContainer)`
 export const FormFieldInputContainer = styled.div`
   margin: 0 .25rem;
   flex-grow: 1;
-  max-width: calc(100% - 3rem);
+  max-width: calc(100% - 3.75rem);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -218,6 +218,8 @@ export const FormFieldBooleanInput = styled.div`
 export const FormFieldRangeInput = styled.fieldset`
   border: 1px solid ${(props) => props.theme.secondary.dark};
   border-radius: .25rem;
+  width: calc(100 - 1rem)%;
+  padding: .5rem;
   `;
 
 export const FormFieldRangeLegend = styled.legend`
@@ -241,14 +243,18 @@ export const FormFieldMinMaxContainer = styled.div`
 
 export const FormFieldMinMaxInput = styled(FormFieldNumberInput)
   .attrs({ type: 'number' })`
-  max-width: 2.5rem;
+  max-width: 2em;
   margin: .25rem 0;
-
+  /* Hide HTML5 Up and Down arrows. */
+  -moz-appearance: textfield;
+  ::-webkit-outer-spin-button, ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
   `;
 
 export const RadioInputContainer = styled.span`
   padding: .125rem;
-
   `;
 
 export const RangeRadioContainer = styled.div`

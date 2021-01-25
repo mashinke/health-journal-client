@@ -12,6 +12,7 @@ import {
   FormNameLabel,
   FormDescriptionLabel,
   FormFieldContainer,
+  RangeFieldContainer,
   FieldUpDownButtonsContainer,
   FormSubmitResetContainer,
   FormDescriptionContainer,
@@ -23,7 +24,6 @@ import {
   AddFieldLabelIcon,
   FormHeader,
   FormTitle,
-  DoubleWidthFieldContainer,
   FormNameValidationError,
 } from '../RecordFormComponents/RecordFormComponents';
 import {
@@ -357,7 +357,6 @@ function RecordForm(props) {
             </FieldUpDownButtonsContainer>
             <InputField
               {...field}
-              key={field.id}
               value={value === undefined ? '' : value}
               handleFieldValueChange={handleFieldValueChange}
               handleLabelEdit={handleLabelEdit(i)}
@@ -370,16 +369,19 @@ function RecordForm(props) {
             </div>
           </>
         );
-        if (field.max - field.min >= 9) {
+        if (field.type === 'range') {
           return (
-            <DoubleWidthFieldContainer>
+            <RangeFieldContainer
+              key={field.id}
+            >
               {formFieldChildren}
-            </DoubleWidthFieldContainer>
+            </RangeFieldContainer>
           );
         }
-
         return (
-          <FormFieldContainer key={field.id}>
+          <FormFieldContainer
+            key={field.id}
+          >
             {formFieldChildren}
           </FormFieldContainer>
         );
