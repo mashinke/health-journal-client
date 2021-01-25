@@ -112,16 +112,14 @@ function RecordForm(props) {
 
   function handleResetForm(event) {
     event.preventDefault();
-    if (currentForm.modified) {
-      const payload = props.state.modifiedForms.find((form) => form.id === currentForm.id);
-      if (payload) {
-        props.dispatch(
-          {
-            type: 'UPDATE_CURRENT_FORM',
-            payload,
-          },
-        );
-      }
+    const payload = props.state.modifiedForms.find((form) => form.id === currentForm.id);
+    if (payload) {
+      props.dispatch(
+        {
+          type: 'UPDATE_CURRENT_FORM',
+          payload,
+        },
+      );
     }
   }
 
@@ -306,6 +304,9 @@ function RecordForm(props) {
             ...newCurrentForm,
             values: {},
           },
+        });
+        props.dispatch({
+          type: 'CLEAR_RESET_FORM',
         });
       }
 

@@ -34,6 +34,14 @@ const dashboardStateReducer = (state, action) => {
         },
       };
     }
+    case 'CLEAR_RESET_FORM': {
+      const { id } = currentForm;
+      const modifiedForms = state.modifiedForms.filter((form) => form.id !== id);
+      return {
+        ...state,
+        modifiedForms,
+      };
+    }
     case 'UPDATE_CURRENT_FORM': {
       const { modified } = currentForm;
       const modifiedForms = [...state.modifiedForms];
