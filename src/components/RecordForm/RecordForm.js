@@ -72,7 +72,7 @@ function RecordForm(props) {
     const payload = {
       ...currentForm,
       name,
-      modified: 'true',
+      modified: true,
     };
     props.dispatch({
       type: 'UPDATE_CURRENT_FORM',
@@ -84,7 +84,7 @@ function RecordForm(props) {
     const payload = {
       ...currentForm,
       description,
-      modified: 'true',
+      modified: true,
     };
     props.dispatch({
       type: 'UPDATE_CURRENT_FORM',
@@ -95,12 +95,16 @@ function RecordForm(props) {
   function handleToggleDeleteField(index) {
     const payload = {
       ...currentForm,
+      modified: true,
       fields: [
         ...currentForm.fields,
       ],
     };
 
-    payload.fields[index].deleted = !payload.fields[index].deleted;
+    payload.fields[index] = {
+      ...payload.fields[index],
+      deleted: !payload.fields[index].deleted,
+    };
 
     props.dispatch(
       {
