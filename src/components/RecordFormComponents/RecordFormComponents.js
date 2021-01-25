@@ -192,8 +192,16 @@ const FormFieldInput = styled.input`
   }
 `;
 
-export const FormFieldTextInput = styled(FormFieldInput)
-  .attrs({ type: 'text', size: '12' })`
+export const FormFieldTextInput = styled.textarea`
+padding: .25rem;
+width: 100%;
+background-color: ${(props) => props.theme.primary.light};
+border: 1px solid ${(props) => props.theme.primary.dark};
+color: ${(props) => props.theme.primary.text};
+border-radius: .25rem;
+:hover, :focus {
+background-color: ${(props) => props.theme.primary.light};
+}
   flex-grow: 2;
   `;
 
@@ -259,7 +267,7 @@ export const FieldUpDownButtonsContainer = styled.div`
 export const AddFieldContainer = styled(FormFieldContainer)`
     display: flex;
     flex-direction: row-reverse;
-    // align-items: flex-start;
+    width: 100%;
   `;
 
 export const AddFieldLabel = styled.label`
