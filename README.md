@@ -11,6 +11,11 @@ Visit the [live app](https://health-journal.vercel.app/)
 
 (Note: the first API call may take a while, while the server activates)
 
+## Technology
+This project was developed with [__Node.js__](https://nodejs.org/) + [__Express.js__](http://expressjs.com/) + [__Knex.js__](https://knexjs.org/) + [__Postgresql__](https://www.postgresql.org/) 
+on the back end, and [__React__](https://reactjs.org/) + [__styled-components__](https://styled-components.com/) on the front end. The server is deployed on 
+[Heroku](https://www.heroku.com/), and the client on [Vercel](https://vercel.com/).
+
 
 ## Demo account credentials: 
 
