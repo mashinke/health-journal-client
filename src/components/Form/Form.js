@@ -22,13 +22,12 @@ export const FormMain = styled.main`
 `;
 
 export const FormDescription = styled.p`
-  margin: 0 0 1rem 1rem;
+  margin: 1rem;
   border: 1px solid ${(props) => props.theme.secondary.dark};
-  border-right: 0px;
-  border-radius: .5rem 0 0 .5rem;
-  padding: 1rem 1rem 1rem .5rem;
+  border-radius: .5rem;
+  padding: 1rem;
   background-color: ${(props) => props.theme.secondary.medium};
-  text-align: right;
+  text-align: left;
   color: ${(props) => props.theme.secondary.text};
 `;
 
