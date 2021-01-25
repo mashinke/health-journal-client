@@ -112,15 +112,16 @@ function RecordForm(props) {
 
   function handleResetForm(event) {
     event.preventDefault();
-
-    const payload = props.state.modifiedForms.find((form) => form.id === currentForm.id);
-    if (payload) {
-      props.dispatch(
-        {
-          type: 'UPDATE_CURRENT_FORM',
-          payload,
-        },
-      );
+    if (currentForm.modified) {
+      const payload = props.state.modifiedForms.find((form) => form.id === currentForm.id);
+      if (payload) {
+        props.dispatch(
+          {
+            type: 'UPDATE_CURRENT_FORM',
+            payload,
+          },
+        );
+      }
     }
   }
 
@@ -356,6 +357,7 @@ function RecordForm(props) {
             </FieldUpDownButtonsContainer>
             <InputField
               {...field}
+              key={field.id}
               value={value === undefined ? '' : value}
               handleFieldValueChange={handleFieldValueChange}
               handleLabelEdit={handleLabelEdit(i)}
