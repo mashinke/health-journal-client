@@ -10,6 +10,8 @@ import RecordForm from '../RecordForm/RecordForm';
 import DashboardMain from '../DashboardMain/DashboardMain';
 
 import dashboardStateReducer from './dashboardStateReducer';
+import DashboardLoading from '../DashboardLoading/DashboardLoading';
+import DashboardWelcome from '../DashboardWelcome/DashboardWelcome';
 
 const filterFunctions = {
   forms: (record, filter) => {
@@ -62,6 +64,8 @@ function Dashboard() {
       displayRecordList: false,
       showMultiSelect: false,
       showDatePicker: false,
+      recordListEmpty: true,
+      recordsLoading: true,
       activeFilters: {
         forms: [],
         created: {
@@ -123,6 +127,40 @@ function Dashboard() {
   const filteredRecords = dashboardState.records
     .filter(filterCallBack(dashboardState.activeFilters));
 
+  let dashboardContents;
+
+  if (dashboardState.recordsLoading) {
+    dashboardContents = <DashboardLoading />;
+  } else if (dashboardState.recordListEmpty && !dashboardState.displayRecordForm) {
+    dashboardContents = (
+      <DashboardWelcome>
+        <h2>Welcome to Health Journal!</h2>
+        <p>Click on the plus icon to create your first entry.</p>
+      </DashboardWelcome>
+    );
+  } else {
+    dashboardContents = dashboardState.displayRecordForm
+      ? (
+        <RecordForm
+          state={dashboardState}
+          dispatch={dashboardDispatch}
+          setApiError={setApiError}
+        />
+      )
+      : (
+        <RecordDisplay
+          dispatch={dashboardDispatch}
+          forms={dashboardState.forms}
+          filters={dashboardState.activeFilters}
+          records={filteredRecords}
+          setApiError={setApiError}
+          showDatePicker={dashboardState.showDatePicker}
+          showMultiSelect={dashboardState.showMultiSelect}
+          displayRecordList={dashboardState.displayRecordList}
+        />
+      );
+  }
+
   return (
     <>
       <Header
@@ -131,28 +169,7 @@ function Dashboard() {
       />
 
       <DashboardMain>
-        {
-          dashboardState.displayRecordForm
-            ? (
-              <RecordForm
-                state={dashboardState}
-                dispatch={dashboardDispatch}
-                setApiError={setApiError}
-              />
-            )
-            : (
-              <RecordDisplay
-                dispatch={dashboardDispatch}
-                forms={dashboardState.forms}
-                filters={dashboardState.activeFilters}
-                records={filteredRecords}
-                setApiError={setApiError}
-                showDatePicker={dashboardState.showDatePicker}
-                showMultiSelect={dashboardState.showMultiSelect}
-                displayRecordList={dashboardState.displayRecordList}
-              />
-            )
-        }
+        {dashboardContents}
       </DashboardMain>
     </>
   );

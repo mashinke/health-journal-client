@@ -76,10 +76,18 @@ const dashboardStateReducer = (state, action) => {
       };
     }
     case 'POPULATE_RECORDS': {
+      if (action.payload.length > 0) {
+        return {
+          ...state,
+          recordListEmpty: false,
+          records: action.payload,
+          currentRecords: action.payload,
+          recordsLoading: false,
+        };
+      }
       return {
         ...state,
-        records: action.payload,
-        currentRecords: action.payload,
+        recordsLoading: false,
       };
     }
     case 'ADD_RECORD': {
@@ -89,6 +97,7 @@ const dashboardStateReducer = (state, action) => {
         ...state,
         forms,
         records,
+        recordListEmpty: false,
       };
     }
     case 'TOGGLE_DISPLAY_RECORD_LIST': {

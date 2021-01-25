@@ -17,6 +17,7 @@ function RecordDisplay(props) {
     setApiError,
 
   } = props;
+
   return (
     <>
       <RecordFilterControls
