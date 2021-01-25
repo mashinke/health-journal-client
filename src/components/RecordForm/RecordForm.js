@@ -35,6 +35,7 @@ import {
   ResetButton,
 } from '../Button/Button';
 import SelectSingle from '../SelectSingle/SelectSingle';
+import { ScreenReaderText } from '../StyledComponents/StyledComponents';
 
 function RecordForm(props) {
   const { state, dispatch } = props;
@@ -466,7 +467,14 @@ function RecordForm(props) {
           <SelectSingle
             items={addFieldItems}
             handleSelectItem={handleAddField}
-            label={<AddFieldLabelIcon />}
+            label={(
+              <>
+                <AddFieldLabelIcon />
+                <ScreenReaderText>
+                  select a field to add
+                </ScreenReaderText>
+              </>
+            )}
             StyledLabel={AddFieldLabel}
             buttonLabel="Select a field to add"
           />

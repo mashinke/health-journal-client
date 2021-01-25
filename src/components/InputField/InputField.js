@@ -21,6 +21,7 @@ import {
   FieldValidationError,
   MinMaxValidationError,
 } from '../RecordFormComponents/RecordFormComponents';
+import { ScreenReaderText } from '../StyledComponents/StyledComponents';
 
 function StringInput(props) {
   const { label, id, value } = props;
@@ -115,11 +116,13 @@ function RangeInput(props) {
           id={`${id}-label`}
           aria-invalid={(duplicateError || label === '')}
           type="text"
+          title="edit field name"
           value={label}
           onChange={(event) => handleLabelEdit(event.target.value)}
         />
         <FormFieldMinMaxContainer>
           <FormFieldMinMaxInput
+            title="range minimum"
             type="number"
             value={min}
             onChange={(event) => handleMinMaxEdit(
@@ -141,6 +144,7 @@ function RangeInput(props) {
             <RiArrowLeftSLine />
           </IconContext.Provider>
           <FormFieldMinMaxInput
+            title="range maximum"
             type="number"
             value={max}
             onChange={(event) => handleMinMaxEdit(
@@ -207,15 +211,17 @@ export default function InputField(props) {
         type !== 'range'
         && (
         <FormFieldLabel
-          htmlFor={label}
+          htmlFor={id}
         >
           <FormFieldNameInput
             id={`${id}-label`}
             aria-invalid={(duplicateError || label === '')}
+            title="edit field name"
             type="text"
             value={label}
             onChange={(event) => handleLabelEdit(event.target.value)}
           />
+          <ScreenReaderText>{label}</ScreenReaderText>
         </FormFieldLabel>
         )
       }

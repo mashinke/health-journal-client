@@ -96,7 +96,10 @@ export function LogoutButton(props) {
         }
       }
     >
-      <BigRoundSecondaryColorButton {...props}>
+      <BigRoundSecondaryColorButton
+        aria-label="log out"
+        {...props}
+      >
         <RiLogoutBoxRLine />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
@@ -116,7 +119,10 @@ export function NewRecordButton(props) {
         }
       }
     >
-      <BigRoundSecondaryColorButton {...props}>
+      <BigRoundSecondaryColorButton
+        aria-label="make a new entry"
+        {...props}
+      >
         <RiAddLine />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
@@ -202,7 +208,10 @@ export function DeleteButton(props) {
         }
       }
     >
-      <TinyRoundPrimaryColorButton {...props}>
+      <TinyRoundPrimaryColorButton
+        aria-label="delete"
+        {...props}
+      >
         <RiCloseLine />
       </TinyRoundPrimaryColorButton>
     </IconContext.Provider>
@@ -391,7 +400,11 @@ export function SubmitButton(props) {
         }
       }
     >
-      <BigRoundSecondaryColorButton {...props} type="submit">
+      <BigRoundSecondaryColorButton
+        aria-label="submit entry"
+        {...props}
+        type="submit"
+      >
         <RiCheckLine />
       </BigRoundSecondaryColorButton>
     </IconContext.Provider>
