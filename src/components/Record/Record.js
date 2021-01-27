@@ -68,4 +68,8 @@ function Record(props) {
   );
 }
 
+Record.defaultProps = {
+  fields: [],
+};
+
 export default Record;
