@@ -3,7 +3,7 @@ import RecordApiService from '../../services/record-api-service';
 import { RecordListContainer, RecordListHeading } from '../RecordDisplayComponents/RecordDisplayComponents';
 import Record from '../Record/Record';
 
-export default function RecordList(props) {
+function RecordList(props) {
   const { records } = props;
   async function handleDeleteRecord(recordId) {
     try {
@@ -31,3 +31,9 @@ export default function RecordList(props) {
     </RecordListContainer>
   );
 }
+
+RecordList.defaultProps = {
+  records: [],
+};
+
+export default RecordList;
