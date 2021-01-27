@@ -55,4 +55,8 @@ function SelectForm(props) {
   );
 }
 
+SelectForm.defaultProps = {
+  forms: [],
+};
+
 export default SelectForm;
