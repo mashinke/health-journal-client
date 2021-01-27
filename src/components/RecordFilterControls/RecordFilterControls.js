@@ -37,7 +37,7 @@ function handleDateFilterChange(dispatch) {
   };
 }
 
-export default function RecordFilterControls(props) {
+function RecordFilterControls(props) {
   const {
     forms,
     filters,
@@ -133,3 +133,13 @@ export default function RecordFilterControls(props) {
     </div>
   );
 }
+
+RecordFilterControls.defaultProps = {
+  forms: [],
+  filters: {
+    forms: [],
+    created: {},
+  },
+};
+
+export default RecordFilterControls;
