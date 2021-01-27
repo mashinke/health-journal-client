@@ -78,4 +78,8 @@ function SelectSingle(props) {
   );
 }
 
+SelectSingle.defaultProps = {
+  items: [],
+};
+
 export default SelectSingle;
