@@ -81,4 +81,8 @@ function Summary(props) {
   );
 }
 
+Summary.defaultProps = {
+  records: [],
+};
+
 export default Summary;
