@@ -491,4 +491,15 @@ function RecordForm(props) {
   );
 }
 
+RecordForm.defaultProps = {
+  state: {
+    forms: [
+      {
+        fields: [],
+      },
+    ],
+    currentForm: 0,
+  },
+};
+
 export default RecordForm;
