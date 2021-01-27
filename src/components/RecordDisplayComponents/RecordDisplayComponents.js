@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { OuterListContainer, OuterListItemContainer } from '../StyledComponents/StyledComponents';
+import { OuterListContainer, OuterListItemContainer } from '../ListComponents/ListComponents';
 
 export const RecordDisplayContainer = styled.section`
   display: flex;

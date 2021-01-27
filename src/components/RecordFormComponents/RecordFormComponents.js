@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import { IconContext } from 'react-icons';
 import { RiAddLine } from 'react-icons/ri';
-import { OuterListContainer, OuterListItemContainer } from '../StyledComponents/StyledComponents';
+import { OuterListContainer, OuterListItemContainer } from '../ListComponents/ListComponents';
 
 export const FormTitle = styled.h2`
   margin: 0 0 .5rem 0;

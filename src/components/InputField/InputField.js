@@ -21,7 +21,7 @@ import {
   FieldValidationError,
   MinMaxValidationError,
 } from '../RecordFormComponents/RecordFormComponents';
-import { ScreenReaderText } from '../StyledComponents/StyledComponents';
+import ScreenReaderText from '../ScreenReaderText/ScreenReaderText';
 
 function StringInput(props) {
   const { label, id, value } = props;

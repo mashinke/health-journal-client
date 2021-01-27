@@ -35,7 +35,7 @@ import {
   ResetButton,
 } from '../Button/Button';
 import SelectSingle from '../SelectSingle/SelectSingle';
-import { ScreenReaderText } from '../StyledComponents/StyledComponents';
+import ScreenReaderText from '../ScreenReaderText/ScreenReaderText';
 
 function RecordForm(props) {
   const { state, dispatch } = props;
