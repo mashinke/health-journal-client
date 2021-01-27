@@ -39,4 +39,13 @@ function RecordDisplay(props) {
   );
 }
 
+RecordDisplay.defaultProps = {
+  forms: [],
+  records: [],
+  filters: {
+    forms: [],
+    created: {},
+  },
+};
+
 export default RecordDisplay;
