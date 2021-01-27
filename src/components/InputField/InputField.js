@@ -176,7 +176,7 @@ function TimeInput(props) {
   );
 }
 
-export default function InputField(props) {
+function InputField(props) {
   const {
     type,
     label,
@@ -249,3 +249,5 @@ export default function InputField(props) {
     </FormFieldInputContainer>
   );
 }
+
+export default InputField;
