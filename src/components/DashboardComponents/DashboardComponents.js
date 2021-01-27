@@ -1,6 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export const DashboardMain = styled.main`
+  margin: 0;
+  padding: .5rem 0;
+  background-color: ${(props) => props.theme.primary.light};
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 45rem){
+    height: calc(100vh - 4.25rem);
+    margin: 0 10%;
+  }
+`;
+
 const LoaderDiv = styled.div`
   display: inline-block;
   position: relative;
@@ -99,7 +111,7 @@ const LoaderDiv = styled.div`
 
 `;
 
-function DashboardLoading() {
+export function DashboardLoading() {
   return (
     <LoaderDiv>
       <div />
@@ -118,4 +130,12 @@ function DashboardLoading() {
   );
 }
 
-export default DashboardLoading;
+export const DashboardWelcome = styled.div`
+  margin: .5rem .5rem;
+  padding: 1rem;
+  background-color: ${(props) => props.theme.secondary.medium};
+  border-radius: .25rem;
+  border: 1px solid ${(props) => props.theme.secondary.dark};
+  color: ${(props) => props.theme.secondary.text};
+  text-align: center
+`;

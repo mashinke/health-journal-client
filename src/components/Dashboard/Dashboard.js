@@ -7,11 +7,13 @@ import RecordApiService from '../../services/record-api-service';
 import Header from '../Header/Header';
 import RecordDisplay from '../RecordDisplay/RecordDisplay';
 import RecordForm from '../RecordForm/RecordForm';
-import DashboardMain from '../DashboardMain/DashboardMain';
 
 import dashboardStateReducer from './dashboardStateReducer';
-import DashboardLoading from '../DashboardLoading/DashboardLoading';
-import DashboardWelcome from '../DashboardWelcome/DashboardWelcome';
+import {
+  DashboardLoading,
+  DashboardMain,
+  DashboardWelcome,
+} from '../DashboardComponents/DashboardComponents';
 
 const filterFunctions = {
   forms: (record, filter) => {
