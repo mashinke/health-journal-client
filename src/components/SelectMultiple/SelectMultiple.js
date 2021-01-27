@@ -13,7 +13,7 @@ import {
 } from '../SelectMultipleComponents/SelectMultipleComponents';
 import { DeleteButton } from '../Button/Button';
 
-export default function SelectMultiple(props) {
+function SelectMultiple(props) {
   const {
     items,
     selectedItems: selectedItemsProp,
@@ -140,3 +140,10 @@ export default function SelectMultiple(props) {
     </SelectMultipleContainer>
   );
 }
+
+SelectMultiple.defaultProps = {
+  selectedItems: [],
+  items: [],
+};
+
+export default SelectMultiple;
