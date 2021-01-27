@@ -32,4 +32,3 @@ export const OuterListItemContainer = styled.li`
     width: calc((100% - 1rem) / 4);
   }
 `;
-
