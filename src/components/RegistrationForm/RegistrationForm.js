@@ -13,7 +13,7 @@ import {
   FormDescription,
   StyledForm,
   FormTitle,
-} from '../Form/Form';
+} from '../FormComponents/FormComponents';
 
 function RegistrationForm(props) {
   const userContext = useContext(UserContext);

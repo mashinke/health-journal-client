@@ -12,7 +12,7 @@ import {
   FormMain,
   StyledForm,
   FormTitle,
-} from '../Form/Form';
+} from '../FormComponents/FormComponents';
 
 function LoginForm(props) {
   const userContext = useContext(UserContext);

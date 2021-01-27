@@ -54,6 +54,8 @@ export const HaveAccountLink = styled(Link)`
   }
 `;
 
+HaveAccountLink.defaultProps = { to: '' };
+
 export const FormInput = styled.div`
   margin: .75rem 0;
 `;
